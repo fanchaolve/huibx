@@ -11,6 +11,7 @@ import com.bb.hbx.pay.PayFactory;
 import com.bb.hbx.pay.alipay.Alipay;
 import com.bb.hbx.pay.llianlianpay.LianlianPay;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
+import com.bb.hbx.utils.Constants;
 
 /**
  * Created by fancl.
@@ -38,7 +39,7 @@ public class ConfimpaymentPresenter extends ConfimpaymentContract.Presenter {
 
     @Override
     public void getPaymentInfo(String paymentId, String orderNo) {
-        mModel.getPaymentInfo(paymentId, MyApplication.user.getUserId(), orderNo, postCallback);
+       
     }
 
     @Override
@@ -81,7 +82,11 @@ public class ConfimpaymentPresenter extends ConfimpaymentContract.Presenter {
 
     @Override
     public void getPaySign(PayDetail detail) {
-        mModel.getPaySign(detail, postCallback);
+        if (Integer.parseInt(detail.getPaymentId()) == Constants.LLPAY) {
+            mModel.getPaymentInfo(detail, postCallback);
+        } else if (Integer.parseInt(detail.getPaymentId()) == Constants.ZFBPAY) {
+            mModel.getPaySign(detail, postCallback);
+        }
     }
 
     @Override

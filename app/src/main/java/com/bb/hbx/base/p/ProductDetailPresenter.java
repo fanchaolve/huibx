@@ -241,30 +241,30 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
             return;
         }
 
-        if (mView.getTBRIDEtValue() == null || mView.getTBRIDEtValue().length() > 0) {
-            mView.showMsg("投保人的证件号码不能为空");
-            return;
-        }
-
-        if (mView.getBBRIDEtValue() == null || mView.getBBRIDEtValue().length() > 0) {
-            mView.showMsg("被保人的证件号码不能为空");
-            return;
-        }
-
-        if (mView.getTBRNameEtValue() == null || mView.getTBRNameEtValue().isEmpty()) {
-            mView.showMsg("投保人的名字不能为空");
-            return;
-        }
-
-        if (mView.getTBRMobileEtValue() == null || mView.getTBRMobileEtValue().isEmpty()) {
-            mView.showMsg("投保人的电话不能为空");
-            return;
-        }
-
-        if (mView.getBBRNameEtValue() == null || mView.getBBRNameEtValue().isEmpty()) {
-            mView.showMsg("被保人的名字不能为空");
-            return;
-        }
+//        if (mView.getTBRIDEtValue() == null || mView.getTBRIDEtValue().length() == 0) {
+//            mView.showMsg("投保人的证件号码不能为空");
+//            return;
+//        }
+//
+//        if (mView.getBBRIDEtValue() == null || mView.getBBRIDEtValue().length() == 0) {
+//            mView.showMsg("被保人的证件号码不能为空");
+//            return;
+//        }
+//
+//        if (mView.getTBRNameEtValue() == null || mView.getTBRNameEtValue().isEmpty()) {
+//            mView.showMsg("投保人的名字不能为空");
+//            return;
+//        }
+//
+//        if (mView.getTBRMobileEtValue() == null || mView.getTBRMobileEtValue().isEmpty()) {
+//            mView.showMsg("投保人的电话不能为空");
+//            return;
+//        }
+//
+//        if (mView.getBBRNameEtValue() == null || mView.getBBRNameEtValue().isEmpty()) {
+//            mView.showMsg("被保人的名字不能为空");
+//            return;
+//        }
 
         ProdectDetalRequest request = new ProdectDetalRequest();
         request.setUserId(MyApplication.user.getUserId());
@@ -281,15 +281,20 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 
         //------------------------------------------------------------
 
-        insured.setIdNo(mView.getBBRIDEtValue());
+        //insured.setIdNo(mView.getBBRIDEtValue());
+        insured.setIdNo("330621201203134673");
         insured.setIdType(beinsureridType);
-        insured.setInsuredName(mView.getBBRNameEtValue());
+        //insured.setInsuredName(mView.getBBRNameEtValue());
+        insured.setInsuredName("范冰冰");
         insuredList.add(insured);
         request.setInsuredList(insuredList);
-        request.setMobile(mView.getTBRMobileEtValue());
-        request.setIdNo(mView.getTBRIDEtValue());
+        //request.setMobile(mView.getTBRMobileEtValue());
+        request.setMobile("13656714459");
+        //request.setIdNo(mView.getTBRIDEtValue());
+        request.setIdNo("330621198903134673");
         request.setIdType(insureridType);
-        request.setApplicant(mView.getTBRNameEtValue());
+        //request.setApplicant(mView.getTBRNameEtValue());
+        request.setApplicant("范超略");
         request.setClassType("2");
         applyTrade(request);
 

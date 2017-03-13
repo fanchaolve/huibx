@@ -24,7 +24,7 @@ public interface ConfimpaymentContract {
 
         void verifyPayPwd(String userId, String payPwd, Callback callback);
 
-        void getPaymentInfo(String paymentId, String userId, String orderNo, Callback callback);
+        void getPaymentInfo(PayDetail detail, Callback callback);
 
     }
 

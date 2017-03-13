@@ -38,8 +38,8 @@ public class ConfimpaymentlModel implements ConfimpaymentContract.Model {
     }
 
     @Override
-    public void getPaymentInfo(String paymentId, String userId, String orderNo, Callback callback) {
-        Call call = service.getPaymentInfo(paymentId, userId, orderNo);
+    public void getPaymentInfo(PayDetail detail, Callback callback) {
+        Call call = service.getPaymentInfo(detail);
         call.enqueue(callback);
     }
 }

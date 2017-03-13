@@ -205,7 +205,7 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
             }
         }
         if (detail == null)
-           return;
+            return;
 
         priceObservable = new PriceObservable();
         priceObservable.addObserver(tv_needprice);
@@ -251,29 +251,32 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
                 AppManager.getInstance().showActivity(PolicydetailsActivity.class, bundle);
                 break;
             case R.id.tv_confim:
-//                int id = rg_select.getCheckedRadioButtonId();
-//                PayDetail detail2 = new PayDetail();
-//                detail2.setAcctBalanceJF(ck_jf.isChecked() ? detail.getAcctBalanceJF() : 0);
-//                detail2.setUserId(MyApplication.user.getUserId());
-//                detail2.setAcctBalanceYE(ck_ye.isChecked() ? detail.getAcctBalanceYE() : "0");
-//                detail2.setCouponCode(detail.getCouponCode());
-//                detail2.setDeductible(detail.getDeductible());
-//                detail2.setPayDeadline(detail.getPayDeadline());
-//                detail2.setCouponList(detail.getCouponList());
-//                detail2.setPayments(detail.getPayments());
-//                detail2.setProductName(detail.getProductName());
-//                detail2.setTradeId(detail.getTradeId());
-//                detail2.setPayPrice(detail.getPayPrice());
-//                if (id == R.id.rg_zfbid) {
-//                    detail2.setPaymentId(Constants.ZFBPAY + "");
-//                    mPresenter.getPaySign(detail2);
-//                } else if (id == R.id.rg_wxid) {
-//                    detail2.setPaymentId(Constants.WXPAY + "");
-//                    mPresenter.getPaySign(detail2);
-//                } else {
-//                    showMsg("抱歉没有支付方式可以支付");
-//                }
-                mPresenter.getPaymentInfo("90","20170225132939065004");
+                int id = rg_select.getCheckedRadioButtonId();
+                PayDetail detail2 = new PayDetail();
+                detail2.setAcctBalanceJF(ck_jf.isChecked() ? detail.getAcctBalanceJF() : 0);
+                detail2.setUserId(MyApplication.user.getUserId());
+                detail2.setAcctBalanceYE(ck_ye.isChecked() ? detail.getAcctBalanceYE() : "0");
+                detail2.setCouponCode(detail.getCouponCode());
+                detail2.setDeductible(detail.getDeductible());
+                detail2.setPayDeadline(detail.getPayDeadline());
+                detail2.setCouponList(detail.getCouponList());
+                detail2.setPayments(detail.getPayments());
+                detail2.setProductName(detail.getProductName());
+                detail2.setTradeId(detail.getTradeId());
+                detail2.setPayPrice(detail.getPayPrice());
+                if (id == R.id.rg_zfbid) {
+                    detail2.setPaymentId(Constants.ZFBPAY + "");
+                    mPresenter.getPaySign(detail2);
+                } else if (id == R.id.rg_wxid) {
+                    detail2.setPaymentId(Constants.WXPAY + "");
+                    mPresenter.getPaySign(detail2);
+                } else if (id == R.id.rg_llid) {
+                    detail2.setPaymentId(Constants.LLPAY + "");
+                    mPresenter.getPaySign(detail2);
+                } else {
+                    showMsg("抱歉没有支付方式可以支付");
+                }
+                //mPresenter.getPaymentInfo("90","20170225132939065004");
 
                 break;
             case R.id.iv_back:
@@ -315,13 +318,16 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
                 } else if (detail.getPayments().get(i).getPaymentId() == Constants.WXPAY) {
                     button.setText(getString(R.string.wxzf));
                     button.setId(R.id.rg_wxid);
+                } else if (detail.getPayments().get(i).getPaymentId() == Constants.LLPAY) {
+                    button.setText(getString(R.string.llzf));
+                    button.setId(R.id.rg_llid);
                 }
 
                 rg_select.addView(button);
-                if (i != detail.getPayments().size() - 1) {
-                    View view = LayoutInflater.from(mContext).inflate(R.layout.line_e, null);
-                    rg_select.addView(view);
-                }
+//                if (i != detail.getPayments().size() - 1) {
+//                    View view = LayoutInflater.from(mContext).inflate(R.layout.line_e, null);
+//                    rg_select.addView(view);
+//                }
 
             }
         }
@@ -347,8 +353,6 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
             dailog.dismiss();
         }
     }
-
-
 
 
 }

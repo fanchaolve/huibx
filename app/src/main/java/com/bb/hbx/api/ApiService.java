@@ -456,11 +456,8 @@ public interface ApiService {
     Call<Result_Api<IniviteFriendsBean>> getInviteFriend(@Field("userId") String userId);
 
     //连连支付
-    @FormUrlEncoded
-    @POST("api.do?method=getPaymentInfo&type=post")
-    Call<Result_Api<PayOrder>> getPaymentInfo(@Field("paymentId") String paymentId,
-                                              @Field("userId") String userId,
-                                              @Field("orderNo") String orderNo);
+    @POST("api.do?method=getPaySign&type=post")
+    Call<Result_Api<PayOrder>> getPaymentInfo(@Body PayDetail detail);
 
     //修改手机号
     @FormUrlEncoded

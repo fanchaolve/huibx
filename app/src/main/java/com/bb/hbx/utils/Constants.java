@@ -61,6 +61,7 @@ public final class Constants {
     public static final int  ZFBPAY = 10;
 
     public static final int WXPAY = 20;
+    public static final int LLPAY = 30;
 
     public static final int GETSURED = 1;
 

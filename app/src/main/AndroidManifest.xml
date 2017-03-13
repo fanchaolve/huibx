@@ -214,6 +214,14 @@
         <activity android:name=".activitiy.SettingsActivity" />
         <activity android:name=".activitiy.FeedBackActivity"></activity>
 
+
+        <activity
+            android:name=".activitiy.SuccessOrderActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <!-- 支付宝支付-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -238,7 +246,7 @@
             android:name="com.yintong.secure.activity.BaseActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" >
         </activity>
 
