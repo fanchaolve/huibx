@@ -13,5 +13,6 @@ public class WeichatPay implements Pay {
     @Override
     public void pay(Object o) {
 
+
     }
 }

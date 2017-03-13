@@ -13,20 +13,12 @@
         app:navigationIcon="@drawable/fanhui"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-
-
-
-
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAppearance="@style/TextAppear.Theme.A1_Size17" />
-
-
-
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

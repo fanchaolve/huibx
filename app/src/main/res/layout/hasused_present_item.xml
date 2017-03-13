@@ -1,87 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/relativeLayout"
-    android:layout_marginTop="18dp"
     android:layout_marginLeft="18dp"
-    android:layout_marginRight="18dp">
+    android:layout_marginRight="18dp"
+    android:layout_marginTop="18dp">
 
     <RelativeLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/zengxian_shang">
+
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="200dp"
             android:layout_height="22dp"
-            android:text="无忧自驾意外保障"
-            android:maxLines="1"
-            android:textColor="@color/A3"
-            android:textSize="18sp"
+            android:layout_marginLeft="26dp"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="26dp"/>
+            android:maxLines="1"
+            android:text="无忧自驾意外保障"
+            android:textColor="@color/A3"
+            android:textSize="18sp" />
+
         <ImageView
             android:id="@+id/logo_iv"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:src="@drawable/holder"
-            android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="26dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="26dp"/>
-        <TextView
-            android:id="@+id/orderNumber_tv"
-            android:layout_width="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/holder" />
+
+        <LinearLayout
+            android:id="@+id/ll_protectOrder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="保单号: 123123123123123123"
-            android:textSize="11sp"
-            android:textColor="@color/A4"
             android:layout_below="@id/title_tv"
-            android:layout_marginTop="21dp"
-            android:layout_marginLeft="26dp"/>
-        <TextView
-            android:id="@+id/insured_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="被保险人: 罗伟"
-            android:textSize="11sp"
-            android:textColor="@color/A4"
-            android:layout_below="@id/orderNumber_tv"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="26dp"/>
-        <TextView
-            android:id="@+id/holder_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="投保人: 罗伟"
-            android:textSize="11sp"
-            android:textColor="@color/A4"
-            android:layout_below="@id/insured_tv"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="26dp"/>
-        <TextView
-            android:id="@+id/time_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="保险期间: 2016-12-10至2017-01-08"
-            android:textSize="11sp"
-            android:textColor="@color/A4"
-            android:layout_below="@id/holder_tv"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="26dp"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginTop="21dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保单号: "
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/orderNumber_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123123123123123123"
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_insured"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_protectOrder"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="被保险人: "
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/insured_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="罗伟"
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_insured"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="投保人: "
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/holder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="罗伟"
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_holder"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保险期间: "
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-12-10至2017-01-08"
+                android:textColor="@color/A4"
+                android:textSize="11sp" />
+        </LinearLayout>
     </RelativeLayout>
+
     <TextView
         android:id="@+id/more_tv"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:text="为客户推荐相似产品"
         android:layout_below="@id/top_layout"
-        android:textSize="14sp"
-        android:textColor="@color/white"
+        android:background="@drawable/zengxian_xia"
         android:gravity="center"
-        android:background="@drawable/zengxian_xia"/>
+        android:text="为客户推荐相似产品"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
 </RelativeLayout>
