@@ -30,6 +30,7 @@ import com.bb.hbx.bean.OssBean;
 import com.bb.hbx.bean.Output_AreaBean;
 import com.bb.hbx.bean.PayDetail;
 import com.bb.hbx.bean.PaySign;
+import com.bb.hbx.bean.PresentInsuBean;
 import com.bb.hbx.bean.ProdectDetalRequest;
 import com.bb.hbx.bean.ProductBean;
 import com.bb.hbx.bean.ProductItem;
@@ -49,6 +50,8 @@ import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.bean.UserRegist;
 import com.bb.hbx.bean.VersionInfo;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -476,6 +479,6 @@ public interface ApiService {
     //赠险产品
     @FormUrlEncoded
     @POST("api.do?method=presentProduct&type=post")
-    Call<Result_Api<String>> getPresentProduct(@Field("userId") String userId,@Field("sts") String sts);
+    Call<Result_Api<List<PresentInsuBean>>> getPresentProduct(@Field("userId") String userId, @Field("sts") String sts);
 
 }

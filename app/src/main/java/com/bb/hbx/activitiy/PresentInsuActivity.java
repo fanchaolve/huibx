@@ -7,18 +7,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.adapter.MyPresentInsuAdapter;
-import com.bb.hbx.api.ApiService;
-import com.bb.hbx.api.PostCallback;
-import com.bb.hbx.api.Result_Api;
-import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.fragment.PresentInsuContentFragment;
@@ -27,7 +21,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import retrofit2.Call;
 
 public class PresentInsuActivity extends BaseActivity implements View.OnClickListener {
 
@@ -72,7 +65,6 @@ public class PresentInsuActivity extends BaseActivity implements View.OnClickLis
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }
-//        getPresentProductInfo();
         adapter = new MyPresentInsuAdapter(getSupportFragmentManager(), fragmentList, title);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
@@ -89,27 +81,6 @@ public class PresentInsuActivity extends BaseActivity implements View.OnClickLis
             default:
                 break;
         }
-    }
-
-    /**
-     * 请求服务器获得赠险产品信息
-     */
-    public void getPresentProductInfo(String sts) {
-        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = service.getPresentProduct(MyApplication.user.getUserId(),sts);
-        call.enqueue(new PostCallback() {
-            @Override
-            public void successCallback(Result_Api api) {
-                if (api.getOutput() != null) {
-                    Log.i("ZXY","PresentInsuActivity.successCallback.api:" + api.getOutput());
-                }
-            }
-
-            @Override
-            public void failCallback() {
-
-            }
-        });
     }
 
     public static void setIndicator(Context context, TabLayout tabs, int leftDip, int rightDip) {

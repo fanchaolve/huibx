@@ -1,111 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="294dp"
-    android:id="@+id/relativeLayout"
-    android:layout_marginTop="18dp"
     android:layout_marginLeft="18dp"
     android:layout_marginRight="18dp"
+    android:layout_marginTop="18dp"
     android:background="@drawable/zengxian_chanpin">
 
     <ImageView
         android:id="@+id/title_iv"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:src="@drawable/holder"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/holder" />
+
     <ImageView
         android:id="@+id/logo_iv"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:src="@drawable/holder"
-        android:scaleType="centerCrop"
-        android:layout_below="@id/title_iv"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="13dp"/>
+        android:layout_below="@id/title_iv"
+        android:layout_marginTop="13dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/holder" />
+
     <TextView
         android:id="@+id/count_tv"
         android:layout_width="84dp"
         android:layout_height="20dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/zengxian_xianlaing"
+        android:gravity="center"
         android:text="限5000000份"
         android:textColor="@color/white"
-        android:textSize="11sp"
-        android:gravity="center"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/zengxian_xianlaing"/>
+        android:textSize="11sp" />
+
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="无忧自驾意外综合保障"
-        android:textSize="14sp"
-        android:textColor="@color/white"
         android:layout_alignBottom="@id/title_iv"
         android:layout_marginBottom="13dp"
-        android:layout_marginLeft="18dp"/>
-    <TextView
-        android:id="@+id/old_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="年龄: 18-60周岁"
-        android:textSize="11sp"
-        android:textColor="@color/A5"
-        android:layout_below="@id/title_iv"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="18dp"/>
-    <TextView
-        android:id="@+id/time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="保障期限: 90天"
-        android:textColor="@color/A5"
-        android:textSize="11sp"
-        android:layout_alignBottom="@id/old_tv"
-        android:layout_toRightOf="@id/old_tv"
-        android:layout_marginLeft="22dp"/>
-    <TextView
-        android:id="@+id/price_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="保额: 20万元"
-        android:textColor="@color/A5"
-        android:textSize="11sp"
-        android:layout_below="@id/old_tv"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="8dp"/>
-    <TextView
-        android:id="@+id/deadLine_tv"
+        android:text="无忧自驾意外综合保障"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_oldandtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="距离过期还有28天8个小时"
-        android:textColor="@color/A2"
-        android:textSize="11sp"
-        android:layout_below="@id/price_tv"
+        android:layout_below="@id/title_iv"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年龄: "
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/minAge_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18周岁"
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/maxAge_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60周岁"
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保障期限: "
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="90天"
+                android:textColor="@color/A5"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_oldandtime"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保额: "
+            android:textColor="@color/A5"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20万元"
+            android:textColor="@color/A5"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_deadLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_money"
+        android:layout_marginLeft="18dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="18dp"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="距离过期还有"
+            android:textColor="@color/A2"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/deadLine_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="28天8个小时"
+            android:textColor="@color/A2"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/present_tv"
         android:layout_width="142dp"
         android:layout_height="40dp"
-        android:text="赠送客户"
-        android:textSize="14sp"
-        android:textColor="@color/white"
+        android:layout_below="@id/ll_deadLine"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/shape_btn_a1"
         android:gravity="center"
-        android:layout_below="@id/deadLine_tv"
-        android:layout_marginTop="36dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginBottom="10dp"/>
+        android:text="赠送客户"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
     <TextView
         android:id="@+id/buy_tv"
         android:layout_width="142dp"
         android:layout_height="40dp"
-        android:text="立即投保"
-        android:textSize="14sp"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_btn_a2"
-        android:gravity="center"
         android:layout_alignBottom="@id/present_tv"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"/>
+        android:layout_marginRight="18dp"
+        android:background="@drawable/shape_btn_a2"
+        android:gravity="center"
+        android:text="立即投保"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 </RelativeLayout>

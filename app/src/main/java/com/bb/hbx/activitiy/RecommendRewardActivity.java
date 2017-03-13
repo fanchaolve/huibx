@@ -104,7 +104,7 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {
-                if (api.getOutput() instanceof IniviteFriendsBean) {
+                if (api.getOutput() != null && api.getOutput() instanceof IniviteFriendsBean) {
                     IniviteFriendsBean bean = (IniviteFriendsBean) api.getOutput();
                     if (bean != null) {
                         setView(bean);

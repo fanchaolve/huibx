@@ -14,7 +14,8 @@ import java.util.Stack;
 
 public class AppManager {
 
-    private static Stack<Activity> activityStack;
+    private static Stack<Activity>
+            activityStack;
 
     private static AppManager instance;
 

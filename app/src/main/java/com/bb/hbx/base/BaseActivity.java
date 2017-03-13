@@ -28,7 +28,8 @@ import butterknife.Unbinder;
  * Created by Administrator on 2016/12/5.
  */
 
-public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity
+public abstract class
+BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity
         implements BaseView {
 
 
@@ -131,6 +132,7 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
 
         }
     }
+
 
     /**
      * 布局加载
