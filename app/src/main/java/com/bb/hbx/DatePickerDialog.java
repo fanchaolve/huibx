@@ -481,7 +481,7 @@ public class DatePickerDialog extends BaseDialog implements
         }
     }
 
-    private class CalendarTextAdapter extends AbstractWheelTextAdapter {
+    public class CalendarTextAdapter extends AbstractWheelTextAdapter {
         ArrayList<String> list;
 
         protected CalendarTextAdapter(Context context, ArrayList<String> list,

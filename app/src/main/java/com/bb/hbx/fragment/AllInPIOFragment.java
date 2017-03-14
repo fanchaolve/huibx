@@ -33,7 +33,7 @@ import retrofit2.Response;
  * Created by Administrator on 2016/12/26.
  */
 
-public class AllInPIOFragment extends BaseFragment{
+public class AllInPIOFragment extends BaseFragment {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
@@ -41,17 +41,16 @@ public class AllInPIOFragment extends BaseFragment{
     RecyclerView recyclerView;
 
     GridLayoutManager manager;
-    List<GetPolicies.PolicyListBean> totalList=new ArrayList<>();
+    List<GetPolicies.PolicyListBean> totalList = new ArrayList<>();
     Context mContext;
 
-    int pageIndex=1;
+    int pageIndex = 1;
     MyAllInPIOAdapter myAllInPIOAdapter;
     private static AllInPIOFragment fragment;
-    public static AllInPIOFragment getInstance()
-    {
-        if (fragment==null)
-        {
-            fragment=new AllInPIOFragment();
+
+    public static AllInPIOFragment getInstance() {
+        if (fragment == null) {
+            fragment = new AllInPIOFragment();
         }
         return fragment;
     }
@@ -59,7 +58,7 @@ public class AllInPIOFragment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
@@ -73,7 +72,7 @@ public class AllInPIOFragment extends BaseFragment{
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                pageIndex=1;
+                pageIndex = 1;
                 showPoliciesList(pageIndex);
             }
 
@@ -87,7 +86,7 @@ public class AllInPIOFragment extends BaseFragment{
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-        manager = new GridLayoutManager(mContext, 1){
+        manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -96,8 +95,7 @@ public class AllInPIOFragment extends BaseFragment{
         recyclerView.setLayoutManager(manager);
         myAllInPIOAdapter = new MyAllInPIOAdapter(totalList, mContext);
         recyclerView.setAdapter(myAllInPIOAdapter);
-        if (totalList!=null&&totalList.size()>0)
-        {
+        if (totalList != null && totalList.size() > 0) {
             totalList.clear();
         }
         showPoliciesList(pageIndex);
@@ -107,7 +105,7 @@ public class AllInPIOFragment extends BaseFragment{
                 //showTip("position:"+position);
                 Intent intent = new Intent(mContext, PerOrderDetailActivity.class);
                 String detailId = totalList.get(position).getDetailId();
-                intent.putExtra("detailId",detailId);
+                intent.putExtra("detailId", detailId);
                 startActivity(intent);
             }
         });
@@ -116,35 +114,31 @@ public class AllInPIOFragment extends BaseFragment{
 
     private void showPoliciesList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getPolicies(MyApplication.user.getUserId(),"0","2",pageIndex+"","10");
+        Call call = service.getPolicies(MyApplication.user.getUserId(), "0", "2", pageIndex + "", "10");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                if (body!=null)
-                {
+                if (body != null) {
                     GetPolicies bean = (GetPolicies) body.getOutput();
-                    if (bean!=null)
-                    {
+                    if (bean != null) {
                         //List<GetPolicies.PolicyListBean> policyList = bean.getPolicyList();
-                        if (pageIndex==1)
-                        {
+                        if (pageIndex == 1) {
                             totalList.clear();
                         }
-                        Toast.makeText(mContext,"size:"+totalList.size(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "size:" + totalList.size(), Toast.LENGTH_SHORT).show();
                         totalList.addAll(bean.getPolicyList());
                         myAllInPIOAdapter.notifyDataSetChanged();
                     }
                 }
-                if (scrollView.isRefreshing())
-                {
+                if (scrollView.isRefreshing()) {
                     scrollView.onRefreshComplete();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(mContext,"走了这shibai",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "走了这shibai", Toast.LENGTH_SHORT).show();
             }
         });
     }

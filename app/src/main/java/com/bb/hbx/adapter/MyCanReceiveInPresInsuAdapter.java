@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class MyCanReceiveInPresInsuAdapter extends RecyclerView.Adapter<MyCanReceiveInPresInsuAdapter.MyViewHolder>{
 
-    List<PresentInsuBean> list;
+    List<PresentInsuBean.PresentProductsRspBean> list;
     Context mContext;
     LayoutInflater inflater;
     //null object pattern avoid null point exception
@@ -42,7 +42,7 @@ public class MyCanReceiveInPresInsuAdapter extends RecyclerView.Adapter<MyCanRec
         }
     };
 
-    public MyCanReceiveInPresInsuAdapter(List<PresentInsuBean> list, Context mContext) {
+    public MyCanReceiveInPresInsuAdapter(List<PresentInsuBean.PresentProductsRspBean> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
         inflater=LayoutInflater.from(mContext);

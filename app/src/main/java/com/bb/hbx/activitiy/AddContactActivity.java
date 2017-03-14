@@ -79,6 +79,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     String birthday="";
     String [] itemBuf=new String[4];
     String [] infoBuf=new String[4];
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_add_contact;

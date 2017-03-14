@@ -3,15 +3,15 @@ package com.bb.hbx.bean;
 import java.util.List;
 
 /**
- * 作者：Created by Administrator on 2017/3/11 12:02
- * 邮箱：
- * 描述：封装请求到的赠险产品 可领取 的产品信息
+ * Created by Administrator on 2017/3/14.
+ * 已经使用过的赠险产品信息类
  */
-public class PresentInsuBean {
+
+public class HasUsedPreInsuBean {
 
     /**
      * pageSize : 1
-     * presentProductsRsp : [{"ageDesc":"","buyCount":10,"endTime":"","expTime":"3天6小时","guaranteePeriod":"1个月;5个月","insuredName":"","insurerLogo":"http://img.51hbx.com/resource/images/product/1484969135100.jpeg","maxAge":"8周岁","maxPremium":0,"minAge":"8天","minPremium":0,"policyNo":"","policyholderName":"","productDesc":"","productLogo":"http://img.51hbx.com/resource/images/product/1489147902228.jpeg","productName":"test产品名称","productTagUrls":"","startTime":"","sumInsured":0}]
+     * presentProductsRsp : [{"ageDesc":"","buyCount":0,"endTime":"2017-01-31 20:17:55","expTime":"","guaranteePeriod":"","insuredName":"","insurerLogo":"http://img.51hbx.com/resource/images/product/1486538972745.jpeg","maxAge":"","maxPremium":0,"minAge":"","minPremium":0,"policyNo":"","policyholderName":"唐僧","productDesc":"","productLogo":"","productName":"延乐保（境外版）-安联境外航延险计划zz","productTagUrls":"","startTime":"2017-01-12 20:17:52","sumInsured":0}]
      * totalCount : 1
      */
 
@@ -46,23 +46,23 @@ public class PresentInsuBean {
     public static class PresentProductsRspBean {
         /**
          * ageDesc :
-         * buyCount : 10
-         * endTime :
-         * expTime : 3天6小时
-         * guaranteePeriod : 1个月;5个月
+         * buyCount : 0
+         * endTime : 2017-01-31 20:17:55
+         * expTime :
+         * guaranteePeriod :
          * insuredName :
-         * insurerLogo : http://img.51hbx.com/resource/images/product/1484969135100.jpeg
-         * maxAge : 8周岁
+         * insurerLogo : http://img.51hbx.com/resource/images/product/1486538972745.jpeg
+         * maxAge :
          * maxPremium : 0
-         * minAge : 8天
+         * minAge :
          * minPremium : 0
          * policyNo :
-         * policyholderName :
+         * policyholderName : 唐僧
          * productDesc :
-         * productLogo : http://img.51hbx.com/resource/images/product/1489147902228.jpeg
-         * productName : test产品名称
+         * productLogo :
+         * productName : 延乐保（境外版）-安联境外航延险计划zz
          * productTagUrls :
-         * startTime :
+         * startTime : 2017-01-12 20:17:52
          * sumInsured : 0
          */
 
