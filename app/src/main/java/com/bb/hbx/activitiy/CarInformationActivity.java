@@ -109,7 +109,8 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
         switch (v.getId()) {
             case R.id.tv_search:
                 //AppManager.getInstance().showActivity(SelectCarActivity.class, null);
-                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, null);
+//                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, null);
+                AppManager.getInstance().showActivity(CarInformationFillInActivity.class, null);
                 break;
             case R.id.tv_city:
                 if (dialog == null) {
@@ -123,10 +124,7 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
                     mPresenter.getProvicesCarAreas("110");
                 }
                 dialog.show();
-
-
                 break;
-
 
         }
     }

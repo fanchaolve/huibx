@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.bb.hbx.R.id.toolbar;
 import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
 import static com.bb.hbx.utils.Constants.idTypes;
 
@@ -50,11 +51,18 @@ import static com.bb.hbx.utils.Constants.idTypes;
 
 public class UpdateInsurancePlanActivity extends BaseActivity implements
         View.OnClickListener {
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.toolbar:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -69,7 +77,7 @@ public class UpdateInsurancePlanActivity extends BaseActivity implements
 
     @Override
     public void initListener() {
-
+        toolbar.setOnClickListener(this);
     }
 
     @Override

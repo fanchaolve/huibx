@@ -167,6 +167,7 @@
     <string name="xcwsp">新车未上牌</string>
     <string name="lscxcl">历史查询车辆</string>
     <string name="search">查询</string>
+    <string name="submit">提交</string>
     <string name="updateperson">升级成签约代理人</string>
     <string name="selectcar2">请选择与您车辆最匹配的车型</string>
     <string name="nocar">不是以上车型</string>

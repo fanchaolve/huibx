@@ -87,7 +87,6 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
                 Result_Api result_api = (Result_Api) response.body();
                 List<PresentInsuBean> out_list= (List<PresentInsuBean>) result_api.getOutput();
                 if (out_list != null && !out_list.isEmpty()) {
-                    //List<PresentInsuBean.OutputBean> output = bean.getOutput();
                     list.clear();
                     list.addAll(out_list);
                     adapter.notifyDataSetChanged();
