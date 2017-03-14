@@ -30,6 +30,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 积分页面
+ */
 public class ScoreActivity extends BaseActivity implements View.OnClickListener{
 
     @BindView(R.id.scrollView)
@@ -105,7 +108,7 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener{
 
     private void showScoreDetail(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getAccountDetail(MyApplication.user.getUserId(),"10",pageIndex+"");
+        Call call=service.getAccountDetail(MyApplication.user.getUserId(),"10",pageIndex+"","0");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

@@ -100,7 +100,7 @@ public class MyAssertDetailActivity extends BaseActivity implements View.OnClick
 
     private void showAssertDetail(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getAccountDetail(MyApplication.user.getUserId(),"20",pageIndex+"");
+        Call call=service.getAccountDetail(MyApplication.user.getUserId(),"20",pageIndex+"","0");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

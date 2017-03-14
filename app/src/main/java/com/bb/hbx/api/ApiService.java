@@ -21,6 +21,7 @@ import com.bb.hbx.bean.GetTotalIncomeBean;
 import com.bb.hbx.bean.GetTotalIncomeDetail;
 import com.bb.hbx.bean.GetTradesBean;
 import com.bb.hbx.bean.GetUserCouponsListBean;
+import com.bb.hbx.bean.HasUsedPreInsuBean;
 import com.bb.hbx.bean.HomePageInfo;
 import com.bb.hbx.bean.Hotkey;
 import com.bb.hbx.bean.IniviteFriendsBean;
@@ -137,7 +138,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api.do?method=getAccountDetail&type=post")
     Call<Result_Api<GetAccountDetailBean>> getAccountDetail(@Field("userId") String userId, @Field("acctType") String acctType,
-                                                            @Field("pageIndex") String pageIndex);
+                                                            @Field("pageIndex") String pageIndex,@Field("tradeType") String tradeType);
 
     //积分签到--待测
     @FormUrlEncoded
@@ -476,9 +477,19 @@ public interface ApiService {
     @POST("api.do?method=verifyPwd&type=post")
     Call<Result_Api> checkVerifyPwd(@Field("userId") String userId,@Field("loginPwd") String loginPwd);
 
-    //赠险产品
+    //赠险产品(可领取)
     @FormUrlEncoded
     @POST("api.do?method=presentProduct&type=post")
-    Call<Result_Api<List<PresentInsuBean>>> getPresentProduct(@Field("userId") String userId, @Field("sts") String sts);
+    Call<Result_Api<PresentInsuBean>> getPresentProduct(@Field("userId") String userId,
+                                                              @Field("sts") String sts,
+                                                              @Field("pageIndex") String pageIndex,
+                                                              @Field("pageSize") String pageSize);
 
+    //赠险产品(已使用)
+    @FormUrlEncoded
+    @POST("api.do?method=presentProduct&type=post")
+    Call<Result_Api<HasUsedPreInsuBean>> getUsedPresentProduct(@Field("userId") String userId,
+                                                               @Field("sts") String sts,
+                                                               @Field("pageIndex") String pageIndex,
+                                                               @Field("pageSize") String pageSize);
 }

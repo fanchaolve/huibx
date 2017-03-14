@@ -98,7 +98,6 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
             }
         });
 
-
         adapter.setOnPresentClickListener(new OnItemClickListener() {
             @Override
             public void onMyItemClickListener(int position) {
