@@ -1,17 +1,12 @@
 package com.bb.hbx.activitiy;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.base.m.ProductDetailModle;
@@ -27,19 +21,11 @@ import com.bb.hbx.base.p.ProductDetailPresenter;
 import com.bb.hbx.base.v.ProductDetailContract;
 import com.bb.hbx.bean.Benefit;
 import com.bb.hbx.bean.Entry;
-import com.bb.hbx.bean.Insured;
 import com.bb.hbx.bean.InsuredInfolBean;
-import com.bb.hbx.bean.KeyBean;
-import com.bb.hbx.bean.PayDetail;
 import com.bb.hbx.bean.Plan;
-import com.bb.hbx.bean.PriceTag;
-import com.bb.hbx.bean.ProdectDetalRequest;
 import com.bb.hbx.bean.ProductParamDetail;
-import com.bb.hbx.observable.KeyBeanObservable;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.Constants;
-import com.bb.hbx.utils.GlideUtil;
-import com.bb.hbx.utils.StringUtils;
 import com.bb.hbx.utils.Utils;
 import com.bb.hbx.widget.CardLayout;
 import com.bb.hbx.widget.ClickAble;
@@ -48,21 +34,12 @@ import com.bb.hbx.widget.ItemLayout2;
 import com.bb.hbx.widget.PickerDialogOneWheel;
 import com.bb.hbx.widget.ShareDailog;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import butterknife.BindView;
 
-
 import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
-
 import static com.bb.hbx.utils.Constants.idTypes;
 
 
@@ -191,6 +168,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     private final static int REQUEST_GETTBR = 0x001;
 
 
+    //传递接口需要的参数
     private PickerDialogOneWheel.OnTextListener textListener = new PickerDialogOneWheel.OnTextListener() {
         @Override
         public void onClick(View v, String value, int index) {
@@ -199,6 +177,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 if ((int) (v.getTag()) == 0) {
                     mPresenter.setSelectPerids(index);
                 } else {
+                    //控制value的位置(tag)
                     mPresenter.setkeybeanOther((Integer) v.getTag(), value, index);
                 }
 
@@ -228,6 +207,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
     @Override
     public int getLayoutId() {
+        //沉浸状态栏
         initState();
         return R.layout.activity_productdetail;
     }
@@ -303,6 +283,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         clayout.setListener(new CardLayout.CardListener() {
             @Override
             public void onclick(int index) {
+                //第几个
                 mPresenter.TraversalPlans(index);
             }
         });
@@ -382,6 +363,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 shareDailog.show();
                 break;
             case R.id.tv_buy:
+                //调用接口
                 mPresenter.GetProdectDetalRequest();
                 break;
             case R.id.back_iv:
@@ -495,6 +477,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         il_up1.setText(value);
     }
 
+    //
     @Override
     public void setEntryView(final Entry entry, int index) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_insured_up2, null);

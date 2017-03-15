@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="调整投保方案"
             android:textAppearance="@style/TextAppear.Theme.A1_Size17" />
 
 
@@ -87,25 +88,265 @@
 
                 </com.bb.hbx.widget.ItemLayout3>
 
-              
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_dszzrx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_text3="@string/bjmp"
+                    app:center_visible="true"
+                    app:isline="true"
+                    app:left_name3="@string/dszzrx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_sjzrx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_text3="@string/bjmp"
+                    app:center_visible="true"
+                    app:isline="true"
+                    app:left_name3="@string/sjzrx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_ckzrx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_text3="@string/bjmp"
+                    app:center_visible="true"
+                    app:isline="true"
+                    app:left_name3="@string/ckzrx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_dqx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_text3="@string/bjmp"
+                    app:center_visible="true"
+                    app:isline="true"
+                    app:left_name3="@string/dqx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y20"
+                android:layout_marginLeft="@dimen/x36"
+                android:layout_marginTop="@dimen/y30"
+                android:text="@string/update_fjx"
+                android:textAppearance="@style/TextAppear.Theme.A4_Size12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_ssx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_visible="false"
+                    app:isline="true"
+                    app:left_name3="@string/ssx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="不投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_blx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_visible="false"
+                    app:isline="true"
+                    app:left_name3="@string/blx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="不投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_hhx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_visible="false"
+                    app:isline="true"
+                    app:left_name3="@string/hhx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="不投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_zrssx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_visible="false"
+                    app:isline="true"
+                    app:left_name3="@string/zrssx"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="不投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y20"
+                android:layout_marginLeft="@dimen/x36"
+                android:layout_marginTop="@dimen/y30"
+                android:text="@string/update_qtfjx"
+                android:textAppearance="@style/TextAppear.Theme.A4_Size12" />
+
+            <LinearLayout
+                android:id="@+id/lin_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.bb.hbx.widget.ItemLayout3
+                    android:id="@+id/il_addItem1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:center_text3="@string/bjmp"
+                    app:center_visible="false"
+                    app:isline="true"
+                    app:left_name3="第三者逃逸险"
+                    app:right_butIcon3="@drawable/xialaicon_xiangshang"
+                    app:right_icon3="@drawable/xialaicon"
+                    app:text3="不投保">
+
+                </com.bb.hbx.widget.ItemLayout3>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_recover"
+                    android:layout_width="@dimen/y318"
+                    android:layout_height="@dimen/y88"
+                    android:layout_marginLeft="@dimen/x36"
+                    android:layout_marginRight="@dimen/x36"
+                    android:layout_marginTop="@dimen/y62"
+                    android:layout_marginBottom="@dimen/y80"
+                    android:background="@drawable/shape_a1_white"
+                    android:gravity="center"
+                    android:text="@string/recover"
+                    android:textAppearance="@style/TextAppear.Theme.A1_Size18" />
+                <TextView
+                    android:id="@+id/tv_search"
+                    android:layout_width="@dimen/y318"
+                    android:layout_height="@dimen/y88"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/x36"
+                    android:layout_marginTop="@dimen/y62"
+                    android:layout_marginBottom="@dimen/y80"
+                    android:background="@drawable/shape_a1_white"
+                    android:gravity="center"
+                    android:text="@string/search"
+                    android:textAppearance="@style/TextAppear.Theme.A1_Size18" />
+            </RelativeLayout>
         </LinearLayout>
 
 
     </ScrollView>
 
-
-    <TextView
-        android:id="@+id/tv_search"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y88"
-        android:layout_marginLeft="@dimen/x36"
-        android:layout_marginRight="@dimen/x36"
-        android:layout_marginTop="@dimen/y62"
-        android:background="@drawable/shape_btn_a1"
-        android:gravity="center"
-        android:text="@string/search"
-        android:textAppearance="@style/TextAppear.Theme.white_Size18" />
 
 </LinearLayout>

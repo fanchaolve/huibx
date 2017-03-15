@@ -2,17 +2,8 @@ package com.bb.hbx.base.p;
 
 import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
-import com.bb.hbx.base.v.ActivitContract;
 import com.bb.hbx.base.v.CarInfomationContract;
-import com.bb.hbx.bean.ActivitInfo;
 import com.bb.hbx.bean.Output_AreaBean;
-import com.bb.hbx.emus.DataLoadDirection;
-import com.bb.hbx.widget.multitype.data.Item;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 
 /**
  * Created by fancl.

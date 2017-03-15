@@ -1,5 +1,7 @@
 package com.bb.hbx.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +27,8 @@ import com.bb.hbx.bean.ProductItem;
 import com.bb.hbx.bean.ProductListBean;
 import com.bb.hbx.bean.Special;
 import com.bb.hbx.cans.Can;
+import com.bb.hbx.interfaces.OnItemClickListener;
+import com.bb.hbx.interfaces.OnItemInsureTypeClickListener;
 import com.bb.hbx.provide.BKItemProvide;
 import com.bb.hbx.provide.BKchildItemProvide;
 import com.bb.hbx.provide.BannerProvide;
@@ -80,6 +84,12 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeModle> impleme
 
     private BannerProvide bannerProvide;
 
+    Context mContext;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
+    }
 
     @Override
     public int getLayoutId() {
@@ -149,10 +159,14 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeModle> impleme
                     false;
         }
         bannerProvide = new BannerProvide(isPlaywhile);
+        ModleItemProvide modleItemProvide = new ModleItemProvide();
+        BKItemProvide bkItemProvide = new BKItemProvide();
         adapter.register(BannerBean.class, bannerProvide);
-        adapter.register(ProductItem.class, new ModleItemProvide());
+        //adapter.register(ProductItem.class, new ModleItemProvide());
+        adapter.register(ProductItem.class, modleItemProvide);
         adapter.register(BobaoItem.class, new BobaoProvide());
-        adapter.register(BKItem.class, new BKItemProvide());
+        //adapter.register(BKItem.class, new BKItemProvide());
+        adapter.register(BKItem.class, bkItemProvide);
         adapter.register(ProductListBean.class, new BKchildItemProvide(getActivity()));
         adapter.register(Special.class, new JxItemProvide(getActivity()));
         rc_list.setAdapter(adapter);
@@ -179,7 +193,28 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeModle> impleme
             tv_messagecount.setVisibility(View.INVISIBLE);
         }
 
+        //点击产品首页不同保险分类,切换至商城fragment
+        modleItemProvide.setmItemInsureTypeClickListener(new OnItemInsureTypeClickListener() {
+            @Override
+            public void onMyItemInsureTypeClickListener(String typeId) {
+                Intent intent = new Intent();
+                intent.putExtra("flag",0);
+                intent.setAction("com.insuretype");
+                intent.putExtra("typeId",typeId);
+                mContext.sendBroadcast(intent);
+            }
+        });
 
+        bkItemProvide.setmItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onMyItemClickListener(int position) {
+                Intent intent = new Intent();
+                intent.putExtra("flag",1);
+                intent.setAction("com.insuretype");
+                intent.putExtra("position",position);
+                mContext.sendBroadcast(intent);
+            }
+        });
     }
 
     @Override

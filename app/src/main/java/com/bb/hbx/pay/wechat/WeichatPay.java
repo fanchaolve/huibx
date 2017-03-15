@@ -7,7 +7,7 @@ import com.bb.hbx.interfaces.Pay;
  * 微信pay
  */
 
-public class WeichatPay implements Pay {
+public class WeichatPay implements Pay{
 
 
     @Override

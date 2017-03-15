@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="7dp"
-    android:layout_marginTop="@dimen/y106"
+    android:layout_marginTop="@dimen/y86"
     android:layout_marginLeft="@dimen/x20"
     android:layout_marginRight="@dimen/x20"
     android:clickable="true"
@@ -13,7 +13,9 @@
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="1dp">
 
+<!--
 
+-->
 
 
         <LinearLayout
@@ -24,9 +26,9 @@
             android:layout_marginRight="@dimen/x36"
             android:orientation="vertical">
 
-
+<!--356-->
             <LinearLayout
-                android:layout_marginTop="@dimen/y356"
+                android:layout_marginTop="120dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -68,7 +70,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="@dimen/y20"
+                android:layout_marginTop="@dimen/y38"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -78,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="商业险"
-                    android:textAppearance="@style/TextAppear.Theme.A1_Size16"/>
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size12"/>
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -94,12 +96,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
 
-                android:layout_marginTop="@dimen/y42"
+                android:layout_marginTop="@dimen/y18"
                 android:background="@drawable/shape_gapline"
                 android:layerType="software" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/y20"
+                android:layout_marginTop="@dimen/y18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -109,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="商业险"
-                    android:textAppearance="@style/TextAppear.Theme.A1_Size16"/>
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size12"/>
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -125,12 +127,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
 
-                android:layout_marginTop="@dimen/y42"
+                android:layout_marginTop="@dimen/y18"
                 android:background="@drawable/shape_gapline"
                 android:layerType="software" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/y20"
+                android:layout_marginTop="@dimen/y18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -140,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="商业险"
-                    android:textAppearance="@style/TextAppear.Theme.A1_Size16"/>
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size12"/>
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -156,12 +158,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
 
-                android:layout_marginTop="@dimen/y42"
+                android:layout_marginTop="@dimen/y18"
                 android:background="@drawable/shape_gapline"
                 android:layerType="software" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/y20"
+                android:layout_marginTop="@dimen/y18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -171,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="商业险"
-                    android:textAppearance="@style/TextAppear.Theme.A1_Size16"/>
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size12"/>
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -183,13 +185,57 @@
 
 
             <View
-                android:id="@+id/v_xx"
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
 
-                android:layout_marginTop="@dimen/y42"
+                android:layout_marginTop="@dimen/y18"
                 android:background="@drawable/shape_gapline"
                 android:layerType="software" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥600"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/y20"
+                    android:textAppearance="@style/TextAppear.Theme.A2_Size21"/>
+
+                <TextView
+                    android:id="@+id/tv_changePlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="修改投保方案>"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/y20"
+                    android:layout_marginTop="@dimen/y5"
+                    android:textAppearance="@style/TextAppear.Theme.A1_Size12"/>
+
+            </LinearLayout>
+<!--
+    <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥600"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/y42"
+                android:textAppearance="@style/TextAppear.Theme.A2_Size21"/>
+
+            <TextView
+                android:id="@+id/tv_changePlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改投保方案"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/y22"
+                android:textAppearance="@style/TextAppear.Theme.A1_Size12"/>
+-->
 
         </LinearLayout>
 

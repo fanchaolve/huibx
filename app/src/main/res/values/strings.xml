@@ -166,6 +166,7 @@
     <string name="cphm2">请输入车牌号码</string>
     <string name="xcwsp">新车未上牌</string>
     <string name="lscxcl">历史查询车辆</string>
+    <string name="recover">恢复出厂设置</string>
     <string name="search">查询</string>
     <string name="submit">提交</string>
     <string name="updateperson">升级成签约代理人</string>
@@ -173,10 +174,19 @@
     <string name="nocar">不是以上车型</string>
     <string name="update_jqx">交强险调整</string>
     <string name="update_syx">商业险调整</string>
+    <string name="update_fjx">附加险调整</string>
+    <string name="update_qtfjx">其他附加险调整</string>
     <string name="bjmp">不计免赔</string>
     <string name="jqx2">交强险</string>
     <string name="jdcssx">机动车损失险</string>
     <string name="dszzrx">第三者责任险</string>
+    <string name="sjzrx">司机责任险</string>
+    <string name="ckzrx">乘客责任险</string>
+    <string name="dqx">盗抢险</string>
+    <string name="ssx">涉水险</string>
+    <string name="blx">玻璃险</string>
+    <string name="hhx">划痕险</string>
+    <string name="zrssx">自然损失险</string>
     <string name="llzf">连连支付</string>
 
     <!-- behavior -->

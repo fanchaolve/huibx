@@ -2,9 +2,11 @@ package com.bb.hbx.activitiy;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
+import com.bb.hbx.utils.AppManager;
 
 import butterknife.BindView;
 
@@ -14,9 +16,11 @@ import butterknife.BindView;
  */
 
 public class CarInformationFillInActivity extends BaseActivity implements View.OnClickListener {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    @BindView(R.id.tv_submit)
+    TextView tv_submit;
     @Override
     public int getLayoutId() {
         return R.layout.carinfomationfillin;
@@ -30,6 +34,7 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
     @Override
     public void initListener() {
         toolbar.setOnClickListener(this);
+        tv_submit.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +47,11 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
         switch (v.getId()) {
             case R.id.toolbar:
                 finish();
+                break;
+            case R.id.tv_submit:
+                AppManager.getInstance().showActivity(SelectCarActivity.class, null);
+                break;
+            default:
                 break;
         }
     }

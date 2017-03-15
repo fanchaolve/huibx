@@ -223,9 +223,12 @@ public class OrderdetailsCarActivity extends BaseActivity<OrderdetailCarPresente
         beanSYX.setInsureAmount("保额");
         extraInsureListBean.setExtraInsureAmount("保费");
         extraInsureListBean.setExtraInsureName("不计免赔");
+        List<TradeDetailType.ExtraInsureListBean> exlist=new ArrayList<>();
+        exlist.add(extraInsureListBean);
+        beanSYX.setExtraInsureList(exlist);
         /*itemsSYX.add(extraInsureListBean);
         itemsSYX.add(beanSYX);*/
-
+        itemsSYX.add(beanSYX);
         List<TradeDetailType.InsureListBean> listBeen = detail.getTypeList().get(1).getInsureList();
         itemsSYX.addAll(listBeen);
         adapterSYX.setItems(itemsSYX);

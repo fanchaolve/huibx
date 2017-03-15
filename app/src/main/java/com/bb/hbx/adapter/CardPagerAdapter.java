@@ -4,12 +4,10 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import com.bb.hbx.R;
 import com.bb.hbx.utils.ShadowTransformer;
@@ -17,10 +15,6 @@ import com.bb.hbx.widget.multitype.data.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.bb.hbx.R.id.cardView;
 
 
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
@@ -72,11 +66,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     @Override
     public int getRealCount() {
         return mData.size();
+        //return 10000;
     }
 
     @Override
     public int getCount() {
         return mData.size();
+        //return 10000;
     }
 
     @Override
@@ -91,8 +87,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         container.addView(view);
 
         CardView cardView = (CardView) view.findViewById(R.id.cardView);
-
-
+        TextView tv_changePlan= (TextView) view.findViewById(R.id.tv_changePlan);
+        tv_changePlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemChangePlanClickListener != null) mOnItemChangePlanClickListener.onClick(position);
+            }
+        });
 
 
         if (mBaseElevation == 0) {
@@ -105,7 +106,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
             }
         });
         cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
-        mViews.set(position % mData.size(), cardView);
+        mViews.set(position, cardView);
 
         //final Item item=mData.get(position);
 //        mIcon.setImageResource(item.getImg());
@@ -120,6 +121,11 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     }
 
     OnItemClickListener mOnItemClickListener;
+    OnItemClickListener mOnItemChangePlanClickListener;
+
+    public void setmOnItemChangePlanClickListener(OnItemClickListener mOnItemChangePlanClickListener) {
+        this.mOnItemChangePlanClickListener = mOnItemChangePlanClickListener;
+    }
 
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;

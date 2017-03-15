@@ -1,47 +1,17 @@
 package com.bb.hbx.activitiy;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.TextAppearanceSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.base.m.ProductDetailModle;
-import com.bb.hbx.base.p.ProductDetailPresenter;
-import com.bb.hbx.base.v.ProductDetailContract;
-import com.bb.hbx.bean.Benefit;
-import com.bb.hbx.bean.Entry;
-import com.bb.hbx.bean.InsuredInfolBean;
-import com.bb.hbx.bean.Plan;
-import com.bb.hbx.bean.ProductParamDetail;
-import com.bb.hbx.utils.AppManager;
-import com.bb.hbx.utils.Constants;
-import com.bb.hbx.utils.Utils;
-import com.bb.hbx.widget.CardLayout;
-import com.bb.hbx.widget.ClickAble;
-import com.bb.hbx.widget.ItemLayout;
 import com.bb.hbx.widget.ItemLayout2;
+import com.bb.hbx.widget.ItemLayout3;
 import com.bb.hbx.widget.PickerDialogOneWheel;
-import com.bb.hbx.widget.ShareDailog;
 
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
-
-import static com.bb.hbx.R.id.toolbar;
-import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
-import static com.bb.hbx.utils.Constants.idTypes;
 
 
 /**
@@ -51,20 +21,33 @@ import static com.bb.hbx.utils.Constants.idTypes;
 
 public class UpdateInsurancePlanActivity extends BaseActivity implements
         View.OnClickListener {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.il_jqx)
+    ItemLayout3 il_jqx;
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.toolbar:
-                finish();
-                break;
-            default:
-                break;
+    public static final String[] idTypes = {"投保", "不投保"};
+
+    private PickerDialogOneWheel.OnTextListener textListener = new PickerDialogOneWheel.OnTextListener() {
+        @Override
+        public void onClick(View v, String value, int index) {
+            if (v instanceof ItemLayout3) {
+                if ((int) (v.getTag()) == 12)
+                ((ItemLayout3) v).setText(value);
+            }
+
         }
-    }
 
+        @Override
+        public void dissmiss(View v) {
+            if (v instanceof ItemLayout2) {
+                ((ItemLayout2) v).setdownImageResource();
+            } else if (v instanceof ItemLayout3) {
+                ((ItemLayout3) v).setdownImageResource();
+            }
+        }
+    };
     @Override
     public int getLayoutId() {
         return R.layout.update_insuranceplan;
@@ -72,16 +55,46 @@ public class UpdateInsurancePlanActivity extends BaseActivity implements
 
     @Override
     public void initView() {
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
     public void initListener() {
-        toolbar.setOnClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //il_jqx.setOnClickListener(this);
     }
 
     @Override
     public void initdata() {
+        il_jqx.setTag(12);
+        il_jqx.setListener(new ItemLayout3.OnUpListener() {
+            @Override
+            public void onClick() {
+                if (idTypes != null && idTypes.length > 1) {
+                    PickerDialogOneWheel wheel_data = new PickerDialogOneWheel(mContext, Arrays.asList(idTypes), il_jqx);
+                    wheel_data.setListener(textListener);
+                    wheel_data.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
+                    wheel_data.show();
 
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        /*switch (v.getId()) {
+            case R.id.il_jqx:
+                break;
+            default:
+                break;
+        }*/
     }
 }

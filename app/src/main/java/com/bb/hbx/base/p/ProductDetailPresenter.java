@@ -1,7 +1,6 @@
 package com.bb.hbx.base.p;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.activitiy.ConfirmpaymentActivity;
@@ -16,7 +15,6 @@ import com.bb.hbx.bean.PayDetail;
 import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.PriceTag;
 import com.bb.hbx.bean.ProdectDetalRequest;
-import com.bb.hbx.bean.ProductDetail;
 import com.bb.hbx.bean.ProductParamDetail;
 import com.bb.hbx.observable.KeyBeanObservable;
 import com.bb.hbx.utils.AppManager;
@@ -27,11 +25,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-
-import static android.R.attr.value;
-import static com.bb.hbx.R.id.il_beinsurer2;
-import static com.bb.hbx.R.id.il_insurer1;
-import static com.bb.hbx.R.id.il_insurer4;
 import static com.bb.hbx.utils.Constants.beinsurer1_listkey;
 import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
 import static com.bb.hbx.utils.Constants.idType_keys;
@@ -240,7 +233,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
             mView.showMsg("没有获取服务器数据");
             return;
         }
-
+//
 //        if (mView.getTBRIDEtValue() == null || mView.getTBRIDEtValue().length() == 0) {
 //            mView.showMsg("投保人的证件号码不能为空");
 //            return;
@@ -296,6 +289,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //request.setApplicant(mView.getTBRNameEtValue());
         request.setApplicant("范超略");
         request.setClassType("2");
+        //调用接口
         applyTrade(request);
 
     }
@@ -367,6 +361,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         observable.set(tag, value);
     }
 
+    //遍历计价因子,,得出价格
     public double ischeckPrice() {
         if (detail != null && detail.getPriceList() != null && !detail.getPriceList().isEmpty()) {
             for (PriceTag tag : detail.getPriceList()) {
@@ -378,7 +373,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         return 0;
     }
 
-
+    //
     @Override
     public void update(Observable o, Object arg) {
         singlePrice = ischeckPrice();

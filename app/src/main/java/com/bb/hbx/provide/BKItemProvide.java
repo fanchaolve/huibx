@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.bean.BKItem;
-import com.bb.hbx.bean.ModleItem;
+import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.widget.multitype.ItemViewProvider;
 
 import butterknife.BindView;
@@ -22,6 +24,11 @@ import butterknife.ButterKnife;
 
 public class BKItemProvide extends ItemViewProvider<BKItem, BKItemProvide.ViewHolder> {
 
+    static OnItemClickListener mItemClickListener;
+
+    public void setmItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -41,7 +48,8 @@ public class BKItemProvide extends ItemViewProvider<BKItem, BKItemProvide.ViewHo
 
         @BindView(R.id.img_icon)
         ImageView img_icon;
-
+        @BindView(R.id.tv_more)
+        TextView tv_more;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +60,13 @@ public class BKItemProvide extends ItemViewProvider<BKItem, BKItemProvide.ViewHo
 
         void setData(@NonNull final BKItem modleItem) {
             img_icon.setImageResource(modleItem.getImg_Id());
+            tv_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getAppContext(),"position",Toast.LENGTH_SHORT).show();
+                    mItemClickListener.onMyItemClickListener(modleItem.getImg_Id());
+                }
+            });
         }
     }
 

@@ -64,7 +64,10 @@ public class ResetPswActivity extends BaseActivity implements View.OnClickListen
                             {
                                 setResult(Can.FINISH_GETPSW,intentFromGetPsw);
                                 showTip(body.getRespMsg());
-                                finish();
+                                if (body.isSuccess())
+                                {
+                                    finish();
+                                }
                             }
                         }
 

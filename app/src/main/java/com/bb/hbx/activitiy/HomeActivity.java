@@ -1,5 +1,9 @@
 package com.bb.hbx.activitiy;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -40,12 +44,12 @@ public class HomeActivity extends BaseActivity<HomeActPresenter, HomeActModle> i
     BottomBar bb;
 
     private HomeFragment homeFragment;
-    private MallFragment mallFragment;
+    private static MallFragment mallFragment;
     private FindFragment findFragment;
     private ClassFragment classFragment;
     private MineFragment mineFragment;
 
-
+    InsureTypeReceiver receiver;
     @Override
     public int getLayoutId() {
         //initState();
@@ -57,6 +61,16 @@ public class HomeActivity extends BaseActivity<HomeActPresenter, HomeActModle> i
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         MyApplication.widthPixels = dm.widthPixels;
+
+        initReceiver(this);
+    }
+
+    //注册广播接收者
+    private void initReceiver(Context mContext) {
+        receiver = new InsureTypeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.insuretype");
+        mContext.registerReceiver(receiver,filter);
     }
 
     @Override
@@ -90,6 +104,7 @@ public class HomeActivity extends BaseActivity<HomeActPresenter, HomeActModle> i
                         if (mallFragment == null) {
                             // 如果MessageFragment为空，则创建一个并添加到界面上
                             mallFragment = new MallFragment();
+                            //mallFragment = MallFragment.getInstance();
                             //exfs.add(mcsFragment);
                             transaction.add(R.id.tab_content, mallFragment, MallFragment.class.getName());
                         } else {
@@ -309,7 +324,62 @@ public class HomeActivity extends BaseActivity<HomeActPresenter, HomeActModle> i
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
 
+    class InsureTypeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int flag = intent.getIntExtra("flag", -1);
+            if (0==flag)
+            {
+                String typeId = intent.getStringExtra("typeId");
+                FragmentTransaction transaction = obtainFragmentTransaction();
+                hideFragments(transaction);
+                if (mallFragment == null) {
+                    // 如果MessageFragment为空，则创建一个并添加到界面上
+                    mallFragment = new MallFragment();
+                    //mallFragment = MallFragment.getInstance();
+                    //exfs.add(mcsFragment);
+                    transaction.add(R.id.tab_content, mallFragment, MallFragment.class.getName());
+                } else {
+                    // 如果MessageFragment不为空，则直接将它显示出来
+                    transaction.show(mallFragment);
+                }
+                transaction.commit();
+                Intent intent2 = new Intent();
+                intent2.setAction("com.currentfragment");
+                intent2.putExtra("typeId",typeId);
+                sendBroadcast(intent2);
+                bb.changeTab(1);
+            }
+            else
+            {
+                int position = intent.getIntExtra("position", -1);//区别是哪个更多
+                FragmentTransaction transaction = obtainFragmentTransaction();
+                hideFragments(transaction);
+                if (findFragment == null) {
+                    // 如果MessageFragment为空，则创建一个并添加到界面上
+                    findFragment = new FindFragment();
+                    //exfs.add(mineFragment);
+                    transaction.add(R.id.tab_content, findFragment, FindFragment.class.getName());
+                } else {
+                    // 如果MessageFragment不为空，则直接将它显示出来
+                    transaction.show(findFragment);
+                }
+                transaction.commit();
+                Intent intent2 = new Intent();
+                intent2.setAction("com.findreceiver");
+                intent2.putExtra("position",position);
+                sendBroadcast(intent2);
+                bb.changeTab(2);
+            }
+        }
+    }
 }
 
 

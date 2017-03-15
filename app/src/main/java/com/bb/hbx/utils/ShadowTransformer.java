@@ -2,13 +2,9 @@ package com.bb.hbx.utils;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 
-import com.bb.hbx.R;
 import com.bb.hbx.adapter.CardAdapter;
-
-import static com.bb.hbx.R.id.cardView;
 
 public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
 
@@ -65,7 +61,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         } else {
             // 设置缩放就设置当前选择的缩放为1+缩放值
             //CardView currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
-            for (int i = 0; i < mAdapter.getRealCount(); i++) {
+            for (int i = 0; i < mAdapter.getRealCount(); i++) {//----------------------------------mAdapter.getRealCount()
                 CardView cardView = mAdapter.getCardViewAt(i);
                 if (i == mViewPager.getCurrentItem()) {
                     if (cardView != null) {

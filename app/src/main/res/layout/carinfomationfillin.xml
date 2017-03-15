@@ -507,6 +507,7 @@
                 android:layout_marginLeft="@dimen/x36"
                 android:layout_marginRight="@dimen/x36"
                 android:layout_marginTop="@dimen/y62"
+                android:layout_marginBottom="@dimen/y100"
                 android:background="@drawable/shape_btn_a1"
                 android:gravity="center"
                 android:text="@string/submit"

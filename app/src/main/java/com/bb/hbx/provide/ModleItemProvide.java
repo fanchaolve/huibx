@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
-import com.bb.hbx.bean.ModleItem;
 import com.bb.hbx.bean.ProductItem;
+import com.bb.hbx.interfaces.OnItemInsureTypeClickListener;
 import com.bb.hbx.utils.GlideUtil;
 import com.bb.hbx.widget.multitype.ItemViewProvider;
 
@@ -24,6 +25,11 @@ import butterknife.ButterKnife;
 
 public class ModleItemProvide extends ItemViewProvider<ProductItem, ModleItemProvide.ViewHolder> {
 
+    static OnItemInsureTypeClickListener mItemInsureTypeClickListener;
+
+    public void setmItemInsureTypeClickListener(OnItemInsureTypeClickListener mItemInsureTypeClickListener) {
+        this.mItemInsureTypeClickListener = mItemInsureTypeClickListener;
+    }
 
     @NonNull
     @Override
@@ -58,6 +64,14 @@ public class ModleItemProvide extends ItemViewProvider<ProductItem, ModleItemPro
             title.setText(modleItem.getInsurerTypeName());
             GlideUtil.getInstance().loadImage(MyApplication.getAppContext(),
                     img, modleItem.getInsurerTypeLogo(), true);
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getAppContext(),"position", Toast.LENGTH_SHORT).show();
+                    mItemInsureTypeClickListener.onMyItemInsureTypeClickListener(modleItem.getInsurerTypeId());
+                }
+            });
+
         }
     }
 

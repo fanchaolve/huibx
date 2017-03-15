@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/A1"
-    android:orientation="vertical">
+    >
 
 
     <android.support.v7.widget.Toolbar
@@ -14,6 +14,7 @@
         android:layout_height="?actionBarSize"
         android:background="?attr/colorAccent"
         android:fitsSystemWindows="true"
+        app:navigationIcon="@drawable/jiantou_bai"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
@@ -23,32 +24,28 @@
             android:text="@string/insureplan"
             android:textAppearance="@style/TextAppear.Theme.white_Size18" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginRight="@dimen/x36"
-            android:src="@drawable/jiantou_bai" />
     </android.support.v7.widget.Toolbar>
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_tb"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/y44"
+        android:layout_height="450dp"
+        android:layout_marginTop="@dimen/y24"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:layout_weight="1"></android.support.v4.view.ViewPager>
+        android:paddingRight="60dp"></android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:id="@+id/lin_add"
+        android:layout_below="@id/vp_tb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/y37">
+        android:layout_marginTop="@dimen/y27"
+        android:orientation="horizontal"
+        android:gravity="center">
 
     </LinearLayout>
 
@@ -56,6 +53,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y88"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/y42"
         android:layout_marginLeft="@dimen/x36"
         android:layout_marginRight="@dimen/x36"
@@ -63,4 +61,4 @@
         android:text="@string/confim"
         android:textAppearance="@style/TextAppear.Theme.A1_Size18" />
 
-</LinearLayout>
+</RelativeLayout>
