@@ -51,7 +51,6 @@ public final class Constants {
     public static final int MORE = 1;//更多
 
     public static final String[] idTypes = {"身份证", "军官证", "护照", "驾驶证", "港澳台通行证", "回乡证"};
-    public static final String[] sexList = {"男","女"};
     public static final int[] idType_keys = {1, 2, 3, 4, 5, 6};//
 
     public static final String[] beinsurer1_listvalue = {"父母", "子女", "配偶", "其他关系"};//关系

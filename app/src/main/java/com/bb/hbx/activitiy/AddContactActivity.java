@@ -29,6 +29,7 @@ import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.widget.adress.AddressSelector;
 import com.bb.hbx.widget.adress.BottomDialog;
 import com.bb.hbx.widget.adress.OnAddressSelectedListener;
+import com.bb.hbx.widget.dialog.IdTypePickerDialog;
 import com.bb.hbx.widget.dialog.SexPickerDialog;
 
 
@@ -37,8 +38,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddContactActivity extends BaseActivity implements View.OnClickListener,OnAddressSelectedListener,
-                                                            AddressSelector.OnDialogCloseListener,LoginContract.View{
+import static com.yintong.secure.c.ae.j.br;
+
+/**
+ * 添加客户界面
+ */
+public class AddContactActivity extends BaseActivity implements View.OnClickListener, OnAddressSelectedListener,
+        AddressSelector.OnDialogCloseListener, LoginContract.View {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -51,6 +57,9 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @BindView(R.id.sex_layout)
     RelativeLayout sex_layout;
+
+    @BindView(R.id.idType_layout)
+    RelativeLayout idType_layout;
 
     @BindView(R.id.fromContacts_tv)
     TextView fromContacts_tv;
@@ -94,10 +103,11 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     private String countyCode;
     private String streetCode;
     private String mSex;
+    private String mIdType;
 
-    String birthday="";
-    String [] itemBuf=new String[4];
-    String [] infoBuf=new String[4];
+    String birthday = "";
+    String[] itemBuf = new String[4];
+    String[] infoBuf = new String[4];
 
     @Override
     public int getLayoutId() {
@@ -109,12 +119,10 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String phone = intent.getStringExtra("phone");
-        if (!TextUtils.isEmpty(name))
-        {
+        if (!TextUtils.isEmpty(name)) {
             name_et.setText(name);
         }
-        if (!TextUtils.isEmpty(phone))
-        {
+        if (!TextUtils.isEmpty(phone)) {
             phone_et.setText(phone);
         }
     }
@@ -124,6 +132,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
         back_layout.setOnClickListener(this);
         birth_layout.setOnClickListener(this);
         sex_layout.setOnClickListener(this);
+        idType_layout.setOnClickListener(this);
         fromContacts_tv.setOnClickListener(this);
         area_layout.setOnClickListener(this);
         verify_tv.setOnClickListener(this);
@@ -141,16 +150,15 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
             case R.id.fromContacts_tv:
                 //showTip("从联系人导入");
                 Uri uri = ContactsContract.Contacts.CONTENT_URI;
-                Intent intent = new Intent(Intent.ACTION_PICK,uri);
-                startActivityForResult(intent,0);
+                Intent intent = new Intent(Intent.ACTION_PICK, uri);
+                startActivityForResult(intent, 0);
                 break;
             case R.id.sex_layout:
                 SexPickerDialog sexDialog = new SexPickerDialog(mContext);
@@ -160,7 +168,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onClick(String sex) {
                         sex_et.setText(sex);
-                        mSex = sex;
+//                        mSex = sex;
                     }
 
                     @Override
@@ -177,12 +185,29 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onClick(String year, String month, String day) {
                         birth_et.setText(year + "-" + month + "-" + day);
-                        birthday=year+month+day;
+                        birthday = year + month + day;
                     }
 
                     @Override
                     public void ondissmiss() {
                         //il_up3.setdownImageResource();
+                    }
+                });
+                break;
+            case R.id.idType_layout:
+                IdTypePickerDialog idTypeDialog = new IdTypePickerDialog(mContext);
+                idTypeDialog.setDialogMode(IdTypePickerDialog.DIALOG_MODE_BOTTOM);
+                idTypeDialog.show();
+                idTypeDialog.setOnIdTypePickListener(new IdTypePickerDialog.OnIdTypePickListener() {
+                    @Override
+                    public void onClick(String idType) {
+                        idType_et.setText(idType);
+//                        mIdType = idType;
+                    }
+
+                    @Override
+                    public void ondissmiss() {
+
                     }
                 });
                 break;
@@ -201,33 +226,55 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.verify_tv:
-                String name = name_et.getText().toString();
-                String sex = sex_et.getText().toString();
-                String gender="男".equals(sex)?"1":"2";
-                String birthday = birth_et.getText().toString();
+                String name = name_et.getText().toString().trim();
+                String sex = sex_et.getText().toString().trim();
+                String gender = "男".equals(sex) ? "1" : "2";
+                String birthday = birth_et.getText().toString().trim();
                 String phone = phone_et.getText().toString().trim();
-                String idType = idType_et.getText().toString();
-                String idNumber = idNumber_et.getText().toString();
-                String address = area_et.getText().toString();
-                String street = address_et.getText().toString();
-                String email = email_et.getText().toString();
-                String descr = more_et.getText().toString();
-                itemBuf[0]=name;
-                itemBuf[1]=phone;
-                //itemBuf[2]=idType;
-                itemBuf[2]="1";
-                itemBuf[3]=idNumber;
-                infoBuf[0]="姓名";
-                infoBuf[1]="手机号";
-                infoBuf[2]="证件类型";
-                infoBuf[3]="证件号码";
+                String idType = idType_et.getText().toString().trim();
+                String idNumber = idNumber_et.getText().toString().trim();
+                String address = area_et.getText().toString().trim();
+                String street = address_et.getText().toString().trim();
+                String email = email_et.getText().toString().trim();
+                String descr = more_et.getText().toString().trim();
+                itemBuf[0] = name;
+                itemBuf[1] = phone;
+                //1"身份证", 2"军官证", 3"护照", 4"驾驶证", 5"港澳台通行证", 6"回乡证"
+                switch (idType) {
+                    case "身份证":
+                        itemBuf[2] = "1";
+                        break;
+                    case "军官证":
+                        itemBuf[2] = "2";
+                        break;
+                    case "护照":
+                        itemBuf[2] = "3";
+                        break;
+                    case "驾驶证":
+                        itemBuf[2] = "4";
+                        break;
+                    case "港澳台通行证":
+                        itemBuf[2] = "5";
+                        break;
+                    case "回乡证":
+                        itemBuf[2] = "6";
+                        break;
+                    default:
+                        break;
+                }
+//                itemBuf[2] = idType;
+//                itemBuf[2] = "1";
+                itemBuf[3] = idNumber;
+                infoBuf[0] = "姓名";
+                infoBuf[1] = "手机号";
+                infoBuf[2] = "证件类型";
+                infoBuf[3] = "证件号码";
                 SingleCustomBean singleCustomBean = new SingleCustomBean(MyApplication.user.getUserId(), name, gender, birthday, phone, "1", idNumber, address, street, email, descr);
                 //!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(phone)/*&&!TextUtils.isEmpty(idType)*/&&!TextUtils.isEmpty(idNumber)
-                if (isverTel()&&isverCode()&&isverpassword()&&isCheckbx())
-                {
+                if (isverTel() && isverCode() && isverpassword() && isCheckbx()) {
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
                     //Call call=service.addInsured(MyApplication.user.getUserId(),name,phone,"1",idNumber);
-                    Call call=service.addInsured(singleCustomBean);
+                    Call call = service.addInsured(singleCustomBean);
                     call.enqueue(new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
@@ -241,13 +288,10 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                             showTip("新增联系人失败");
                         }
                     });
-                }
-                else
-                {
+                } else {
                     for (int i = 0; i < itemBuf.length; i++) {
-                        if (TextUtils.isEmpty(itemBuf[i]))
-                        {
-                            showTip(infoBuf[i]+"不能为空!");
+                        if (TextUtils.isEmpty(itemBuf[i])) {
+                            showTip(infoBuf[i] + "不能为空!");
                             return;
                         }
                     }
@@ -260,15 +304,14 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 0:
-                if(data==null)
-                {
+                if (data == null) {
                     return;
                 }
                 //处理返回的data,获取选择的联系人信息
-                Uri uri=data.getData();
-                String[] contacts= GetPhoneContactsUtil.getPhoneContacts(this,uri);
+                Uri uri = data.getData();
+                String[] contacts = GetPhoneContactsUtil.getPhoneContacts(this, uri);
                 name_et.setText(contacts[0]);
                 phone_et.setText(contacts[1]);
                 break;
@@ -278,7 +321,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void dialogclose() {
-        if(dialogAddress!=null){
+        if (dialogAddress != null) {
             dialogAddress.dismiss();
         }
     }
@@ -314,7 +357,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     //判断姓名
     @Override
     public boolean isverTel() {
-        if (!TextUtils.isEmpty(name_et.getText()) ) {
+        if (!TextUtils.isEmpty(name_et.getText().toString().trim())) {
             return true;
         }
         return false;
@@ -323,13 +366,16 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     //判断证件类型
     @Override
     public boolean isverCode() {
-        return true;
+        if (!TextUtils.isEmpty(idType_et.getText().toString().trim())) {
+            return true;
+        }
+        return false;
     }
 
     //判断证件号码
     @Override
     public boolean isverpassword() {
-        if (!TextUtils.isEmpty(idNumber_et.getText())) {
+        if (!TextUtils.isEmpty(idNumber_et.getText().toString().trim())) {
             return true;
         }
         return false;
@@ -338,7 +384,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     //判断手机号码
     @Override
     public boolean isCheckbx() {
-        if (!TextUtils.isEmpty(phone_et.getText())) {
+        if (!TextUtils.isEmpty(phone_et.getText().toString().trim())) {
             return true;
         }
         return false;

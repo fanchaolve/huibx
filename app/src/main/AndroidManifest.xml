@@ -139,7 +139,9 @@
         <activity android:name=".activitiy.CarOrderDetailActivity" />
         <activity android:name=".activitiy.CustomerManagerActivity" />
         <activity android:name=".activitiy.PresentInsuActivity" />
-        <activity android:name=".activitiy.AddContactActivity" />
+        <activity
+            android:name=".activitiy.AddContactActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activitiy.MyCustomActivity" />
         <activity android:name=".activitiy.CustomServiceActivity" />
         <activity android:name=".activitiy.CustomServiceDetailActivity" />
