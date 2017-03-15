@@ -137,8 +137,10 @@ public interface ApiService {
     //查询资金(积分)变动明细()--已测
     @FormUrlEncoded
     @POST("api.do?method=getAccountDetail&type=post")
-    Call<Result_Api<GetAccountDetailBean>> getAccountDetail(@Field("userId") String userId, @Field("acctType") String acctType,
-                                                            @Field("pageIndex") String pageIndex,@Field("tradeType") String tradeType);
+    Call<Result_Api<GetAccountDetailBean>> getAccountDetail(@Field("userId") String userId,
+                                                            @Field("acctType") String acctType,
+                                                            @Field("pageIndex") String pageIndex,
+                                                            @Field("tradeType") String tradeType);
 
     //积分签到--待测
     @FormUrlEncoded
