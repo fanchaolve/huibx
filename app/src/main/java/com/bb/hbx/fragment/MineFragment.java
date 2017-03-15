@@ -23,6 +23,7 @@ import com.bb.hbx.activitiy.CustomServiceActivity;
 import com.bb.hbx.activitiy.CustomerManagerActivity;
 import com.bb.hbx.activitiy.InfoActivity;
 import com.bb.hbx.activitiy.MyAssertActivity;
+import com.bb.hbx.activitiy.MyAssertDetailActivity;
 import com.bb.hbx.activitiy.MyOrderActivity;
 import com.bb.hbx.activitiy.PerInsuOrderActivity;
 import com.bb.hbx.activitiy.PersonInfoSettingActivity;
@@ -57,62 +58,90 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.setting_iv)
     ImageView setting_iv;
+
     @BindView(R.id.message_iv)
     ImageView message_iv;
+
     @BindView(R.id.userIcon_civ)
     CircleImageView userIcon_civ;
+
     @BindView(R.id.scrollView)
     ScrollView scrollView;
+
     @BindView(R.id.myOrder_layout)
     RelativeLayout myOrder_layout;
+
     @BindView(R.id.pInsurance_layout)
     RelativeLayout pInsurance_layout;
+
     @BindView(R.id.cInsurance_layout)
     RelativeLayout cInsurance_layout;
+
     @BindView(R.id.myAsset_tv)
     TextView myAsset_tv;
+
     @BindView(R.id.score_layout)
     RelativeLayout score_layout;
+
     @BindView(R.id.canCash_tv)
     TextView canCash_tv;
+
     @BindView(R.id.leftMoney_tv)
     TextView leftMoney_tv;
+
     @BindView(R.id.score_tv)
     TextView score_tv;
+
     @BindView(R.id.redPacket_tv)
     TextView redPacket_tv;
+
     @BindView(R.id.identify_layout)
     FrameLayout identify_layout;
+
     @BindView(R.id.canCash_layout)
     RelativeLayout canCash_layout;
+
     @BindView(R.id.redPacket_layout)
     RelativeLayout redPacket_layout;
+
     @BindView(R.id.notLogin_layout)
     RelativeLayout notLogin_layout;
+
     @BindView(R.id.userName)
     TextView userName;
+
     @BindView(R.id.identify_tv)
     TextView identify_tv;
+
     /*@BindView(R.id.hasLogin_tv)
     TextView hasLogin_tv;*/
     @BindView(R.id.pCount_tv)
     TextView pCount_tv;
+
     @BindView(R.id.cCount_tv)
     TextView cCount_tv;
 
     @BindView(R.id.purchase_layout)
     RelativeLayout purchase_layout;
+
     @BindView(R.id.customers_layout)
     RelativeLayout customers_layout;
+
     @BindView(R.id.collect_layout)
     RelativeLayout collect_layout;
+
     @BindView(R.id.invite_layout)
     RelativeLayout invite_layout;
+
     @BindView(R.id.service_layout)
     RelativeLayout service_layout;
 
     @BindView(R.id.topbar_layout)
     RelativeLayout topbar_layout;
+
+    @BindView(R.id.leftMoney_layout)
+    RelativeLayout leftMoney_layout;
+
     Context mContext;
 
     boolean isOnce = true;
@@ -137,13 +166,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public int getLayoutId() {
-
         return R.layout.fragment_host;
     }
 
     @Override
     public void initView() {
-
         setting_iv.setOnClickListener(this);
         message_iv.setOnClickListener(this);
         userIcon_civ.setOnClickListener(this);
@@ -155,6 +182,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         score_layout.setOnClickListener(this);
         redPacket_layout.setOnClickListener(this);
         notLogin_layout.setOnClickListener(this);
+        leftMoney_layout.setOnClickListener(this);
 
         purchase_layout.setOnClickListener(this);
         customers_layout.setOnClickListener(this);
@@ -166,9 +194,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         hasLoginShow();
         //updateMyAccount();
     }
-
-
-
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
@@ -226,7 +251,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.canCash_layout:
-
+                startActivity(new Intent(mContext,MyAssertActivity.class));
+                break;
+            case R.id.leftMoney_layout:
+                startActivity(new Intent(mContext, MyAssertDetailActivity.class));
                 break;
             case R.id.score_layout:
                 intent.putExtra("accountScoreInt", accountScoreInt);

@@ -115,6 +115,7 @@
     <string name="zjhm">证件号码 : </string>
     <string name="sendmessage">发送给客户</string>
     <string name="confimpay">确认支付</string>
+    <string name="collection">收藏</string>
     <string name="confimpay1">请在%1$s时%2$s分%3$s秒内完成支付,逾期将自动取消订单</string>
     <string name="orderprice">订单总价 : </string>
     <string name="hbdk">红包抵扣</string>
