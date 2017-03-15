@@ -29,6 +29,7 @@ import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.widget.adress.AddressSelector;
 import com.bb.hbx.widget.adress.BottomDialog;
 import com.bb.hbx.widget.adress.OnAddressSelectedListener;
+import com.bb.hbx.widget.dialog.SexPickerDialog;
 
 
 import butterknife.BindView;
@@ -41,32 +42,49 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
+
     @BindView(R.id.birth_layout)
     RelativeLayout birth_layout;
+
     @BindView(R.id.area_layout)
     RelativeLayout area_layout;
+
+    @BindView(R.id.sex_layout)
+    RelativeLayout sex_layout;
+
     @BindView(R.id.fromContacts_tv)
     TextView fromContacts_tv;
+
     @BindView(R.id.name_et)
     EditText name_et;
+
     @BindView(R.id.sex_et)
     EditText sex_et;
+
     @BindView(R.id.birth_et)
     EditText birth_et;
+
     @BindView(R.id.phone_et)
     EditText phone_et;
+
     @BindView(R.id.idType_et)
     EditText idType_et;
+
     @BindView(R.id.idNumber_et)
     EditText idNumber_et;
+
     @BindView(R.id.area_et)
     EditText area_et;
+
     @BindView(R.id.address_et)
     EditText address_et;
+
     @BindView(R.id.email_et)
     EditText email_et;
+
     @BindView(R.id.more_et)
     EditText more_et;
+
     @BindView(R.id.verify_tv)
     TextView verify_tv;
 
@@ -75,6 +93,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     private String cityCode;
     private String countyCode;
     private String streetCode;
+    private String mSex;
 
     String birthday="";
     String [] itemBuf=new String[4];
@@ -104,6 +123,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     public void initListener() {
         back_layout.setOnClickListener(this);
         birth_layout.setOnClickListener(this);
+        sex_layout.setOnClickListener(this);
         fromContacts_tv.setOnClickListener(this);
         area_layout.setOnClickListener(this);
         verify_tv.setOnClickListener(this);
@@ -111,6 +131,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
         //idType_et.addTextChangedListener(new LoginTextWatcher(verify_tv, this));
         idNumber_et.addTextChangedListener(new LoginTextWatcher(verify_tv, this));
         phone_et.addTextChangedListener(new LoginTextWatcher(verify_tv, this));
+
     }
 
     @Override
@@ -130,6 +151,23 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 Uri uri = ContactsContract.Contacts.CONTENT_URI;
                 Intent intent = new Intent(Intent.ACTION_PICK,uri);
                 startActivityForResult(intent,0);
+                break;
+            case R.id.sex_layout:
+                SexPickerDialog sexDialog = new SexPickerDialog(mContext);
+                sexDialog.setDialogMode(SexPickerDialog.DIALOG_MODE_BOTTOM);
+                sexDialog.show();
+                sexDialog.setOnSexPickListener(new SexPickerDialog.OnSexPickListener() {
+                    @Override
+                    public void onClick(String sex) {
+                        sex_et.setText(sex);
+                        mSex = sex;
+                    }
+
+                    @Override
+                    public void ondissmiss() {
+
+                    }
+                });
                 break;
             case R.id.birth_layout:
                 DatePickerDialog dialog = new DatePickerDialog(mContext);

@@ -98,6 +98,28 @@
                     android:background="@color/colorDivider" />
             </RelativeLayout>
 
+            <!--<com.bb.hbx.widget.ItemLayout
+                android:id="@+id/il_sex"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="#fff"
+                app:hint="@string/certificatetype"
+                app:isCheck="true"
+                app:isEdit="false"
+                app:isright_icon="true"
+                app:left_name="@string/certificatetype"
+                app:right_butIcon="@drawable/xialaicon_xiangshang"
+                app:right_icon="@drawable/nextstep"
+                app:text="@string/idcard">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorDivider" />
+            </com.bb.hbx.widget.ItemLayout>-->
+
             <RelativeLayout
                 android:id="@+id/sex_layout"
                 android:layout_width="match_parent"

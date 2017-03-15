@@ -110,7 +110,10 @@ public abstract class BaseDialog extends Dialog {
     //设置对话框宽、高属性
     private void setDialogSize() {
         WindowManager.LayoutParams wlp = mWindow.getAttributes();
-        wlp.width = dialogWidth();
+        WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        wlp.width = wm.getDefaultDisplay().getWidth();
+//        wlp.width = dialogWidth();
         wlp.height = dialogHeight();
         mWindow.setAttributes(wlp);
     }
