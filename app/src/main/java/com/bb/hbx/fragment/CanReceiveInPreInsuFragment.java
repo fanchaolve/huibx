@@ -93,7 +93,7 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                pageIndex ++;
+                pageIndex++;
                 loadData(pageIndex);
             }
         });
@@ -114,11 +114,12 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
 
     /**
      * 从网络加载数据
+     *
      * @param pageIndex
      */
     private void loadData(final int pageIndex) {
         final ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = apiService.getPresentProduct(MyApplication.user.getUserId(), "1",pageIndex + "","10");
+        Call call = apiService.getPresentProduct(MyApplication.user.getUserId(), "1", pageIndex + "", "10");
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {
@@ -133,11 +134,14 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
                         adapter.notifyDataSetChanged();
                     }
                 }
+                if (scrollView.isRefreshing()) {
+                    scrollView.onRefreshComplete();
+                }
             }
 
             @Override
             public void failCallback() {
-                Toast.makeText(MyApplication.getAppContext(),"网络请求失败，请重新尝试！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getAppContext(), "网络请求失败，请重新尝试！", Toast.LENGTH_SHORT).show();
             }
         });
     }

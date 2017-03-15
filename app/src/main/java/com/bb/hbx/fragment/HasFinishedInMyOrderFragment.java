@@ -29,25 +29,24 @@ import retrofit2.Response;
  * Created by Administrator on 2017/1/23.
  */
 
-public class HasFinishedInMyOrderFragment extends BaseFragment{
+public class HasFinishedInMyOrderFragment extends BaseFragment {
 
     Context mContext;
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    String path="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png";
-    List<GetTradesBean.TradeListBean> list=new ArrayList<>();
+    String path = "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png";
+    List<GetTradesBean.TradeListBean> list = new ArrayList<>();
     GridLayoutManager manager;
     MyHasFinishedInMyOrderAdapter adapter;
 
-    int pageIndex=1;
+    int pageIndex = 1;
     private static HasFinishedInMyOrderFragment fragment;
-    public static HasFinishedInMyOrderFragment getInstance()
-    {
-        if (fragment==null)
-        {
-            fragment=new HasFinishedInMyOrderFragment();
+
+    public static HasFinishedInMyOrderFragment getInstance() {
+        if (fragment == null) {
+            fragment = new HasFinishedInMyOrderFragment();
         }
         return fragment;
     }
@@ -55,7 +54,7 @@ public class HasFinishedInMyOrderFragment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
@@ -69,7 +68,7 @@ public class HasFinishedInMyOrderFragment extends BaseFragment{
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                pageIndex=1;
+                pageIndex = 1;
                 showTradesList(pageIndex);
             }
 
@@ -83,7 +82,7 @@ public class HasFinishedInMyOrderFragment extends BaseFragment{
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-        manager = new GridLayoutManager(mContext, 1){
+        manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -92,8 +91,7 @@ public class HasFinishedInMyOrderFragment extends BaseFragment{
         recyclerView.setLayoutManager(manager);
         adapter = new MyHasFinishedInMyOrderAdapter(mContext, list);
         recyclerView.setAdapter(adapter);
-        if (list!=null&&list.size()>0)
-        {
+        if (list != null && list.size() > 0) {
             list.clear();
         }
         showTradesList(pageIndex);
@@ -101,27 +99,23 @@ public class HasFinishedInMyOrderFragment extends BaseFragment{
 
     private void showTradesList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getTrades(MyApplication.user.getUserId(),"20",pageIndex+"","10");
+        Call call = service.getTrades(MyApplication.user.getUserId(), "20", pageIndex + "", "10");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                if (body!=null)
-                {
+                if (body != null) {
                     GetTradesBean bean = (GetTradesBean) body.getOutput();
-                    if (bean!=null)
-                    {
+                    if (bean != null) {
                         //List<GetTradesBean.TradeListBean> tradeList = bean.getTradeList();
-                        if (pageIndex==1)
-                        {
+                        if (pageIndex == 1) {
                             list.clear();
                         }
                         list.addAll(bean.getTradeList());
                         adapter.notifyDataSetChanged();
                     }
                 }
-                if (scrollView.isRefreshing())
-                {
+                if (scrollView.isRefreshing()) {
                     scrollView.onRefreshComplete();
                 }
             }
