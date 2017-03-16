@@ -1,8 +1,5 @@
 package com.bb.hbx.bean;
 
-import android.util.Log;
-
-import java.security.Key;
 import java.util.ArrayList;
 
 /**

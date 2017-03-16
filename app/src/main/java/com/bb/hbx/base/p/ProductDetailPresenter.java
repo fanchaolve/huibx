@@ -142,7 +142,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                         }
                     } else {
                         perid = "";
-                        perids = new String[]{perid};
+                        perids = new String[]{perid};//
                         mView.setil_up1ckickenable(false);
                         mView.setil_up1ckInvisible();
                     }
@@ -151,7 +151,9 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                     } else {
                         mView.setil_up1Textvalue(perids[0]);
                     }
-                    selectPerids = perids[0];
+                    //selectPerids = perids[0];
+                    //perids[0]=perids[0].substring(0, perids[0].indexOf("_"));//-----------------我新加
+                    selectPerids = perids[0].substring(0, perids[0].indexOf("_"));//--------------我新加
 
                     List<Entry> entries = StringUtils.getJsonOpt(detail.getPriceElements());
                     int i = 0;
@@ -162,7 +164,8 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                     }
 
                     detail.setEntries(entries);
-                    observable.add(perids[0]);
+                    //observable.add(perids[0]);
+                    observable.add(perids[0].substring(0, perids[0].indexOf("_")));//--------------我新加
 
 
                 } else if (api.getOutput() instanceof PayDetail) {
@@ -223,10 +226,11 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         observable.setCount(count);
     }
 
+    //点击 我要投保(即购买) 后的具体实现(调用接口)
     @Override
     public void GetProdectDetalRequest() {
         if (singlePrice <= 0) {
-            mView.showMsg("没有获取到价格,请选择该选的内容");
+            mView.showMsg("没有获取到价格,请选择该选的内容"+observable.toString().trim());
             return;
         }
         if (detail == null) {
@@ -289,7 +293,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //request.setApplicant(mView.getTBRNameEtValue());
         request.setApplicant("范超略");
         request.setClassType("2");
-        //调用接口
+        //调用 提交订单 接口
         applyTrade(request);
 
     }
@@ -309,6 +313,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                             break;
                         }
                         Benefit benefit = benefits.get(i);
+                        //动态生成介于 查看保障详情 之上,计划 之下的条目
                         mView.addLinView(benefit);
                     }
                 }
@@ -319,7 +324,9 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
     @Override
     public void setSelectPerids(int index) {
         selectPerids = perids[index];
-        observable.set(observable.size() - 1, perids[index]);
+        selectPerids = perids[index].substring(0, perids[0].indexOf("_"));
+        //observable.set(observable.size() - 1, perids[index]);
+        observable.set(observable.size() - 1, selectPerids);
     }
 
     @Override
@@ -337,6 +344,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         beinsureridType = idType_keys[index];
     }
 
+    //这里对1天_1_1进行截取,,获得1天,,并反映在弹出框中
     @Override
     public String[] substringperids() {
         String[] ps = null;
@@ -345,7 +353,6 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
             for (int i = 0; i < ps.length; i++) {
                 if (perids[i].indexOf("_") > 1) {
                     ps[i] = perids[i].substring(0, perids[i].indexOf("_"));
-
                 } else {
                     ps[i] = perids[i];
                 }

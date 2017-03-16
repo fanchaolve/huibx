@@ -370,7 +370,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 shareDailog.show();
                 break;
             case R.id.tv_buy:
-                //调用接口
+                //调用 提交订单 接口
                 mPresenter.GetProdectDetalRequest();
                 break;
             case R.id.back_iv:
@@ -506,7 +506,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         il_up1.setText(value);
     }
 
-    //
+    //查看保障详情部分,,,,,在此生成 保障时间 下的一系列保障条目
     @Override
     public void setEntryView(final Entry entry, int index) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_insured_up2, null);
@@ -561,6 +561,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         lin_additem.removeAllViews();
     }
 
+    //动态生成介于 查看保障详情 之上,计划 之下的条目
     @Override
     public void addLinView(Benefit benefit) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.cardlayout_item, null, false);

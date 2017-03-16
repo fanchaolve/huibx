@@ -6,20 +6,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bb.hbx.BaseDialog;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.CheckIdentifyInForgerActivity;
 import com.bb.hbx.base.v.ConfimpaymentContract;
-import com.bb.hbx.bean.LishiSearchBean;
 import com.bb.hbx.utils.AppManager;
 
 import butterknife.BindView;
@@ -51,6 +46,9 @@ public class PasswordDailog extends BaseDialog implements
 
     @BindView(R.id.tv_forgetpsd)
     TextView tv_forgetpsd;
+
+    @BindView(R.id.tv_verify)
+    TextView tv_verify;
 
     private ConfimpaymentContract.View view;
 
@@ -106,7 +104,7 @@ public class PasswordDailog extends BaseDialog implements
         setGravity(Gravity.CENTER);
         iv_back.setOnClickListener(this);
         tv_forgetpsd.setOnClickListener(this);
-        et_psd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*et_psd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -122,6 +120,21 @@ public class PasswordDailog extends BaseDialog implements
                     }
                 }
                 return true;
+            }
+        });*/
+        tv_verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(et_psd.getText())) {
+                    password = et_psd.getText().toString().trim();
+                    if (view != null) {
+                        view.getverifyPayPwd(password);
+                    }
+
+                    if (listener != null) {
+                        listener.getPassword(password);
+                    }
+                }
             }
         });
     }

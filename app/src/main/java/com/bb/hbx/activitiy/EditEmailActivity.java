@@ -18,7 +18,6 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.db.DatabaseImpl;
-import com.bb.hbx.utils.MyUsersSqlite;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -79,7 +78,8 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String userId=null;
-                            Cursor cursor = MyUsersSqlite.db.rawQuery("select * from userstb where currentUser = ?", new String[]{"currentUser"});
+                            final SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+                            Cursor cursor = db.rawQuery("select * from userstb where currentUser = ?", new String[]{"currentUser"});
                             if (cursor!=null)
                             {
                                 if (cursor.moveToNext())
@@ -99,10 +99,10 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                                         {
                                             if (body.isSuccess())
                                             {
-                                                SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+                                                //SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
                                                 db.execSQL("update userstb set email=? where currentUser=currentUser ",
                                                         new String[]{email});
-                                                db.close();
+                                                //db.close();
                                                 intentFromPersonInfo.putExtra("email",email);
                                                 setResult(Can.RESULT_EMAIL,intentFromPersonInfo);
                                                 finish();
@@ -117,6 +117,8 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                                     }
                                 });
                             }
+                            cursor.close();
+                            db.close();
                         }
                     });
                     dialog.setNegativeButton("取消", null);
