@@ -495,9 +495,17 @@ public interface ApiService {
                                                                @Field("pageIndex") String pageIndex,
                                                                @Field("pageSize") String pageSize);
 
-    //收藏
+    //获取收藏列表
     @FormUrlEncoded
     @POST("api.do?method=userFavoritesDetail&type=post")
     Call<Result_Api<String>> getUserFavoritesDetail(@Field("userId") String userId,
                                                     @Field("objType") String objType);
+
+    //收藏或取消收藏商品
+    @FormUrlEncoded
+    @POST("api.do?method=userFavorites&type=post")
+    Call<Result_Api> collectProduct(@Field("userId") String userId,
+                                            @Field("objType") String objType,
+                                            @Field("objId") String objId,
+                                            @Field("objStatus") String objStatus);
 }

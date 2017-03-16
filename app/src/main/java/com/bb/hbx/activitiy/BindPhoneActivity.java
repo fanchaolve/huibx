@@ -1,6 +1,7 @@
 package com.bb.hbx.activitiy;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.bean.MessageCodeBean;
+import com.bb.hbx.db.DatabaseImpl;
 import com.bb.hbx.utils.CheckPhoneNumUtils;
 import com.bb.hbx.widget.CountDownTextView;
 
@@ -113,6 +115,10 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void successCallback(Result_Api api) {
                     if (api.isSuccess()) {
+                        SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+                        db.execSQL("update userstb set phone=? where currentUser=currentUser ",
+                                new String[]{newPhoneNum});
+                        db.close();
                         Toast.makeText(getApplicationContext(),"绑定新手机成功！",Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(),"绑定新手机失败!",Toast.LENGTH_SHORT).show();

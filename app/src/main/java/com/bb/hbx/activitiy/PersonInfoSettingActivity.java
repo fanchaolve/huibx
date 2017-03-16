@@ -191,6 +191,8 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 String gender = cursor.getString(cursor.getColumnIndex("gender"));
                 email = cursor.getString(cursor.getColumnIndex("email"));
                 String phone = cursor.getString(cursor.getColumnIndex("phone"));
+                //使用正则匹配将电话号码的4-7位替换成*
+                String displayPhoneNum = phone.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
                 name_tv.setText(name);
                 if (TextUtils.isEmpty(email))
                 {
@@ -206,7 +208,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 }
                 else
                 {
-                    phone_tv.setText(phone);
+                    phone_tv.setText(displayPhoneNum);
                 }
                 if (gender.equals("0"))
                 {

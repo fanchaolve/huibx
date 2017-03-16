@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/x26"
+    android:paddingTop="@dimen/y42">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/y26"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_pic"
+                android:layout_width="@dimen/x240"
+                android:layout_height="@dimen/y180"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/holder" />
+
+            <TextView
+                android:id="@+id/tv_insurancecompany"
+                android:layout_width="@dimen/x170"
+                android:layout_height="@dimen/y36"
+                android:layout_alignBottom="@+id/img_pic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/y18"
+                android:background="@drawable/shape_i3"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppear.Theme.A3_Size11"
+                tools:text="太平洋保险" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x32"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="@dimen/x280"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppear.Theme.A3_Size16"
+                    tools:text="少儿重大险" />
+
+
+                <TextView
+                    android:id="@+id/tv_grade1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/x6"
+                    android:background="@drawable/shape_co11"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="2dp"
+                    android:text="爆款"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size11" />
+
+                <TextView
+                    android:id="@+id/tv_grade2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/x12"
+                    android:layout_marginRight="@dimen/x26"
+                    android:background="@drawable/shape_co11"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="2dp"
+                    android:text="新品"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size11" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_detail1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y15"
+                android:text="投保年龄:28天-17周岁"
+                android:textAppearance="@style/TextAppear.Theme.A4_Size11" />
+
+            <TextView
+                android:id="@+id/tv_detail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y15"
+                android:text="意外医疗:1万元"
+                android:textAppearance="@style/TextAppear.Theme.A4_Size11" />
+
+            <TextView
+                android:id="@+id/tv_detail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y15"
+                android:text="住院津贴:50元一天"
+                android:textAppearance="@style/TextAppear.Theme.A4_Size11" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppear.Theme.A1_Size16"
+                    tools:text="￥1000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=" 起"
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+
+                <TextView
+                    android:id="@+id/tv_pro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x26"
+                    android:background="@drawable/tuiguangfeibiaoqian"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="20%推广费"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size11" />
+
+                <TextView
+                    android:id="@+id/tv_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x26"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size12"
+                    tools:text="销量 12万份" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_xx"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/y25"
+        android:background="@drawable/shape_gapline"
+        android:layerType="software" />
+
+</LinearLayout>
+

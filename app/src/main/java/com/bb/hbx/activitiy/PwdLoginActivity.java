@@ -241,7 +241,7 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
                                 MyApplication.user.setIsBClient(isBClient.equals("true")?true:false);
 
                                 //AppManager.getInstance().showActivity(HomeActivity.class, null);
-                                AppManager.getInstance().finishActivity(LoginActivity.class);
+                                AppManager.getInstance().finishParticularActivity(LoginActivity.class);
                                 setResult(Can.FINISH_LOGIN,intentFromLogin);
                                 finish();
                             }

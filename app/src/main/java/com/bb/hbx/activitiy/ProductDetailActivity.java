@@ -13,8 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
+import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.PostCallback;
+import com.bb.hbx.api.Result_Api;
+import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.base.m.ProductDetailModle;
 import com.bb.hbx.base.p.ProductDetailPresenter;
@@ -38,6 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
 
 import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
 import static com.bb.hbx.utils.Constants.idTypes;
@@ -370,12 +377,34 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 finish();
                 break;
             case R.id.collect_iv://收藏
-                
+                collectProduct(productId);
                 break;
 
         }
     }
 
+    /**
+     * 收藏商品的网络请求
+     */
+    private void collectProduct(String productId) {
+        ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call = apiService.collectProduct(MyApplication.user.getUserId(),"10",productId,"add");
+        call.enqueue(new PostCallback() {
+            @Override
+            public void successCallback(Result_Api api) {
+                if (api != null) {
+                    if (api.isSuccess()) {
+                        Toast.makeText(mContext,"收藏商品成功！",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void failCallback() {
+                Toast.makeText(mContext,"收藏商品失败！",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public void setProductDetail(ProductParamDetail detail) {
