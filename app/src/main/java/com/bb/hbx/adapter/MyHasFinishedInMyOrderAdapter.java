@@ -23,27 +23,27 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/1/23.
  */
 
-public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFinishedInMyOrderAdapter.MyViewHolder>{
+public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFinishedInMyOrderAdapter.MyViewHolder> {
 
     Context mContext;
     List<GetTradesBean.TradeListBean> list;
     LayoutInflater inflater;
-    int payAmountInt=0;
-    int classType=1;//1表示车险,2表示个险
+    int payAmountInt = 0;
+    int classType = 1;//1表示车险,2表示个险
     long logJqxStartTime;
-    String jqxStartTimeBuff="";
+    String jqxStartTimeBuff = "";
     long logJqxEndTime;
-    String jqxEndTimeBuff="";
+    String jqxEndTimeBuff = "";
 
     public MyHasFinishedInMyOrderAdapter(Context mContext, List<GetTradesBean.TradeListBean> list) {
         this.mContext = mContext;
         this.list = list;
-        inflater=LayoutInflater.from(mContext);
+        inflater = LayoutInflater.from(mContext);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=inflater.inflate(R.layout.hasfinished_myorder_item,parent,false);
+        View view = inflater.inflate(R.layout.hasfinished_myorder_item, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -61,9 +61,8 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
         holder.time_tv.setText(time);
         holder.itemO_tv.setText(list.get(position).getProductName());
         holder.orderNumber_tv.setText(list.get(position).getTradeId());
-        if (list.get(position).getInsuredList()!=null&&list.get(position).getInsuredList().size()>0)
-        {
-            holder.itemTw_tv.setText("被保人: "+list.get(position).getInsuredList().get(0).getInsuredName());//被保人
+        if (list.get(position).getInsuredList() != null && list.get(position).getInsuredList().size() > 0) {
+            holder.itemTw_tv.setText("被保人: " + list.get(position).getInsuredList().get(0).getInsuredName());//被保人
         }
         String startTime = list.get(position).getStartTime();
         String endTime = list.get(position).getEndTime();
@@ -71,39 +70,33 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
         String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
         long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
         String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
-        if (2==classType)//2表示个险
+        if (2 == classType)//2表示个险
         {
-            holder.itemTh_tv.setText("投保人: "+list.get(position).getPolicyHolderName());
-            holder.itemF_tv.setText("保险期间: "+startTimeBuff+"至"+endTimeBuff);
-        }
-        else
-        {
+            holder.itemTh_tv.setText("投保人: " + list.get(position).getPolicyHolderName());
+            holder.itemF_tv.setText("保险期间: " + startTimeBuff + "至" + endTimeBuff);
+        } else {
             //holder.itemTh_tv.setText(list.get(position).getPolicyHolderName());
             String jqxStartTime = list.get(position).getJqxStartTime();
             String jqxEndTime = list.get(position).getJqxEndTime();
-            if (TextUtils.isEmpty(jqxStartTime))
-            {
+            if (TextUtils.isEmpty(jqxStartTime)) {
                 holder.itemTh_tv.setVisibility(View.GONE);
-            }
-            else
-            {
+            } else {
                 holder.itemTh_tv.setVisibility(View.VISIBLE);
                 logJqxStartTime = TimeUtils.getStringToDateNoSpace(jqxStartTime);
                 jqxStartTimeBuff = TimeUtils.getDateNoHourToString(logJqxStartTime);
                 logJqxEndTime = TimeUtils.getStringToDateNoSpace(jqxEndTime);
                 jqxEndTimeBuff = TimeUtils.getDateNoHourToString(logJqxEndTime);
-                holder.itemTh_tv.setText("交强险起期: "+jqxStartTimeBuff+"至"+jqxEndTimeBuff);
+                holder.itemTh_tv.setText("交强险起期: " + jqxStartTimeBuff + "至" + jqxEndTimeBuff);
             }
-            holder.itemF_tv.setText("商业险起期: "+startTimeBuff+"至"+endTimeBuff);
+            holder.itemF_tv.setText("商业险起期: " + startTimeBuff + "至" + endTimeBuff);
         }
         String payAmount = list.get(position).getPayAmount();
-        if (!TextUtils.isEmpty(payAmount))
-        {
+        if (!TextUtils.isEmpty(payAmount)) {
             payAmountInt = Integer.parseInt(payAmount);
         }
-        holder.price_tv.setText(TextUtils.isEmpty(payAmount)?"0.00":(payAmountInt/100)+"."+(payAmountInt/10%10)+(payAmountInt%10));
+        holder.price_tv.setText(TextUtils.isEmpty(payAmount) ? "0.00" : (payAmountInt / 100) + "." + (payAmountInt / 10 % 10) + (payAmountInt % 10));
         int commisionValue1 = list.get(position).getCommisionValue1();
-        holder.income_tv.setText((commisionValue1/100)+"."+(commisionValue1/10%10)+(commisionValue1%10));
+        holder.income_tv.setText((commisionValue1 / 100) + "." + (commisionValue1 / 10 % 10) + (commisionValue1 % 10));
         Glide.with(mContext).load(list.get(position).getInsurerLogo()).placeholder(R.drawable.shangcheng).into(holder.logo_iv);
     }
 
@@ -112,7 +105,7 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
         return list.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.state_tv)
         TextView state_tv;
@@ -134,9 +127,10 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
         TextView income_tv;
         @BindView(R.id.logo_iv)
         ImageView logo_iv;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

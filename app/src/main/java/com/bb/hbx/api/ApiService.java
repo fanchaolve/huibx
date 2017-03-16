@@ -494,4 +494,10 @@ public interface ApiService {
                                                                @Field("sts") String sts,
                                                                @Field("pageIndex") String pageIndex,
                                                                @Field("pageSize") String pageSize);
+
+    //收藏
+    @FormUrlEncoded
+    @POST("api.do?method=userFavoritesDetail&type=post")
+    Call<Result_Api<String>> getUserFavoritesDetail(@Field("userId") String userId,
+                                                    @Field("objType") String objType);
 }

@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,6 +23,8 @@ import com.bb.hbx.activitiy.CustomerManagerActivity;
 import com.bb.hbx.activitiy.InfoActivity;
 import com.bb.hbx.activitiy.MyAssertActivity;
 import com.bb.hbx.activitiy.MyAssertDetailActivity;
+import com.bb.hbx.activitiy.MyBankCardActivity;
+import com.bb.hbx.activitiy.MyCollectionActivity;
 import com.bb.hbx.activitiy.MyOrderActivity;
 import com.bb.hbx.activitiy.PerInsuOrderActivity;
 import com.bb.hbx.activitiy.PersonInfoSettingActivity;
@@ -47,8 +48,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.bb.hbx.R.id.topbar_layout;
 
 /**
  * Created by Administrator on 2016/12/20.
@@ -284,8 +283,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.collect_layout:
-                /*intent.setClass(mContext, MyBankCardActivity.class);
-                startActivity(intent);*/
+                intent.setClass(mContext, MyCollectionActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.invite_layout:
