@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
@@ -77,16 +78,7 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                     dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String userId=null;
-                            final SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
-                            Cursor cursor = db.rawQuery("select * from userstb where currentUser = ?", new String[]{"currentUser"});
-                            if (cursor!=null)
-                            {
-                                if (cursor.moveToNext())
-                                {
-                                    userId = cursor.getString(cursor.getColumnIndex("userId"));
-                                }
-                            }
+                            String userId=MyApplication.user.getUserId();
                             if (!TextUtils.isEmpty(userId))
                             {
                                 ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
@@ -99,10 +91,10 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                                         {
                                             if (body.isSuccess())
                                             {
-                                                //SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+                                                SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
                                                 db.execSQL("update userstb set email=? where currentUser=currentUser ",
                                                         new String[]{email});
-                                                //db.close();
+                                                db.close();
                                                 intentFromPersonInfo.putExtra("email",email);
                                                 setResult(Can.RESULT_EMAIL,intentFromPersonInfo);
                                                 finish();
@@ -117,8 +109,6 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                                     }
                                 });
                             }
-                            cursor.close();
-                            db.close();
                         }
                     });
                     dialog.setNegativeButton("取消", null);

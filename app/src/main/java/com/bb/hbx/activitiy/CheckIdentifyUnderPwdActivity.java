@@ -85,6 +85,7 @@ public class CheckIdentifyUnderPwdActivity extends BaseActivity implements View.
                     Intent intent = new Intent(CheckIdentifyUnderPwdActivity.this, BindPhoneActivity.class);
                     intent.putExtra("pwd",pwd);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "密码错误,请重新输入！", Toast.LENGTH_SHORT).show();
                 }

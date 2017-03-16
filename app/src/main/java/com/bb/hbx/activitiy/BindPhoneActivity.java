@@ -86,7 +86,6 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.verify_tv:
                 pushAndCheckVerify();
-                showTip("确定");
                 break;
             default:
                 break;
@@ -120,6 +119,7 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
                                 new String[]{newPhoneNum});
                         db.close();
                         Toast.makeText(getApplicationContext(),"绑定新手机成功！",Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(),"绑定新手机失败!",Toast.LENGTH_SHORT).show();
                     }
@@ -150,7 +150,7 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void failCallback() {
-
+                Toast.makeText(getApplicationContext(),"验证码验证失败，请重新校验！",Toast.LENGTH_SHORT).show();
             }
         });
     }

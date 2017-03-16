@@ -91,6 +91,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                         intent.putExtra("oldSmsCode", oldSmsCode);
                         intent.setClass(MyApplication.getAppContext(), BindPhoneActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "验证码错误！", Toast.LENGTH_SHORT).show();
                     }
