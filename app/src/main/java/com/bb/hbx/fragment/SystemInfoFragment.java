@@ -23,6 +23,7 @@ import com.bb.hbx.bean.Message;
 import com.bb.hbx.bean.MsgInfo;
 import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
+import com.bb.hbx.utils.RealmUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
@@ -51,12 +52,11 @@ public class SystemInfoFragment extends BaseFragment {
     MySystemInfoAdapter adapter;
     SystemInfoReceiver systemInfoReceiver;
     int pageIndex = 1;
-    int unReadCount;
+    int unReadCount = 0;
     int totalCount;
     int realsystemInfoCount;
     int haveReadCount;
-    private MyDBManagerSystemInfo myDBManagerSystemInfo;
-    private int unReadSysMsgNum = 0;
+//    private int unReadSysMsgNum = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -71,8 +71,6 @@ public class SystemInfoFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
-
         initReceiver();
 
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -106,7 +104,7 @@ public class SystemInfoFragment extends BaseFragment {
                 return false;
             }
         };
-        adapter = new MySystemInfoAdapter(mContext, totalList, myDBManagerSystemInfo);
+        adapter = new MySystemInfoAdapter(mContext, totalList);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
@@ -117,13 +115,14 @@ public class SystemInfoFragment extends BaseFragment {
                 if (((Integer) position) == view.getTag()) {
 
                     Message mess = totalList.get(position);
-                    if (!isReadMsg(mess.getMsgId())) {
-                        if (unReadSysMsgNum > 0) {
-                            unReadSysMsgNum--;
+                    if (RealmUtils.queryMessageById(mess.getMsgId()) == null) {
+                        Log.d("ddd","----------------------------");
+                        if (unReadCount > 0) {
+                            unReadCount--;
                         }
-                        mess.setSts(2);
-                        myDBManagerSystemInfo.insertOrReplaceObject(mess);
-                        InfoActivity.resetLabSystem(unReadSysMsgNum);
+                        InfoActivity.resetLabSystem(unReadCount);
+//                        mess.setSts(2);
+                        RealmUtils.add(mess);
                         view.setBackgroundResource(R.drawable.shape_circle_white);
                         totalList.get(position).setSts(2);
                         adapter.notifyItemChanged(position);
@@ -143,13 +142,15 @@ public class SystemInfoFragment extends BaseFragment {
                 MsgInfo bean = (MsgInfo) body.getOutput();
                 if (bean != null) {
                     totalCount = bean.getTotalCount();
-                    haveReadCount = myDBManagerSystemInfo.queryAll();
                     //List<Message> msgList = bean.getMsgList();
+                    haveReadCount = RealmUtils.queryAllMessages().size();
+
                     if (pageIndex == 1) {
                         totalList.clear();
                     }
+
                     unReadCount = totalCount - haveReadCount;
-                    InfoActivity.resetLabSystem(unReadSysMsgNum);
+                    InfoActivity.resetLabSystem(unReadCount);
                     totalList.addAll(bean.getMsgList());
                     adapter.notifyDataSetChanged();
                 }
@@ -165,98 +166,25 @@ public class SystemInfoFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 请求系统消息
-     */
-//    private void loadSysMsgData(final int pageIndex) {
-//        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-//        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "1", "0", pageIndex + "");
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onResponse(Call call, Response response) {
-//                Result_Api body = (Result_Api) response.body();
-//                MsgInfo bean = (MsgInfo) body.getOutput();
-//                if (bean != null) {
-//                    List<Message> msgList = bean.getMsgList();
-//                    for (int i = 0; i < msgList.size() - 1; i++) {
-//                        Message msg = msgList.get(i);
-//                        List<Message> list = myDBManagerSystemInfo.queryOne(msg.getMsgId());
-//                        if (list != null) {
-//                            if (list.isEmpty()) {
-//                                msg.setSts(1);        //未读
-//                                myDBManagerSystemInfo.insertObject(msg);
-//                                unReadSysMsgNum ++;
-//                            } else {
-//                                if (list.get(0).getSts() == 1) {
-//                                    unReadSysMsgNum ++;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if (pageIndex == 1) {
-//                        totalList.clear();
-//                    }
-//                    Log.d("hhh","----------db-----------" + myDBManagerSystemInfo.queryAllObject().size());
-//                    totalList.addAll(myDBManagerSystemInfo.queryAllObject());
-//                    adapter.notifyDataSetChanged();
-//                    InfoActivity.resetLabSystem(unReadSysMsgNum);
-//                }
-//                if (scrollView.isRefreshing()) {
-//                    scrollView.onRefreshComplete();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call call, Throwable t) {
-//
-//            }
-//        });
-//    }
-
-    /**
-     * 判断一个消息是否是已读消息
-     * @param msgId
-     * @return true已读
-     */
-    private boolean isReadMsg(String msgId) {
-        List<Message> list = myDBManagerSystemInfo.queryOne(msgId);
-        if (list != null) {
-            if (list.isEmpty()) {
-//                Log.d("ddd","-----------list1-----------" + list.toString());
-                return false;
-            } else {
-                Message msg = myDBManagerSystemInfo.queryOne(msgId).get(0);
-//                Log.d("ddd","-----------list2-----------" + list.toString());
-//                Log.d("ddd","-----------isRead-----------" + (msg.getSts() == 2));
-
-                return msg.getSts() == 2;
-            }
-        } else {
-//            Log.d("ddd","-----------list-----------" + list.toString());
-            return false;
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mContext.unregisterReceiver(systemInfoReceiver);
-        myDBManagerSystemInfo.closeDaoSession();
     }
 
     class SystemInfoReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i = 0; i < totalList.size(); i++) {
-                //totalList.get(i).setSts(2);
+//                totalList.get(i).setSts(2);
                 Message mess = totalList.get(i);
                 mess.setSts(2);
-                myDBManagerSystemInfo.insertObject(mess);
+//                myDBManagerSystemInfo.insertObject(mess);
+                RealmUtils.add(mess);
             }
             adapter.notifyDataSetChanged();
-            unReadSysMsgNum = 0;
-            InfoActivity.resetLabSystem(unReadSysMsgNum);
+            unReadCount = 0;
+            InfoActivity.resetLabSystem(unReadCount);
         }
     }
 }

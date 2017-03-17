@@ -172,15 +172,21 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void initView() {
         initListener();
+
+        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
+        hasLoginShow();
+        //updateMyAccount();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (!ShareSPUtils.sp.getBoolean("hasLogined", false)) {
             canCash_tv.setText("0.00");
             leftMoney_tv.setText("0.00");
             score_tv.setText("0");
             redPacket_tv.setText("0");
         }
-        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
-        hasLoginShow();
-        //updateMyAccount();
     }
 
     /**

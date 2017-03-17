@@ -61,7 +61,7 @@
     <string name="detail_withdraw">可提现%1$s元\t\t本月还可以免费提现%2$s次</string>
     <string name="detail_withdraw2">您本月若超出提现次数,继续提现需要扣除%1$s元/次手续费</string>
     <string name="withdraw_btn">立即提现</string>
-    <string name="snack_exit_once_more">再按一次退出项目</string>
+    <string name="snack_exit_once_more">再按一次退出应用</string>
 
     <string name="share">分享</string>
     <string name="ibuy">我要投保</string>

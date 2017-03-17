@@ -26,6 +26,7 @@ import com.bb.hbx.bean.MsgInfo;
 import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
 import com.bb.hbx.interfaces.OnItemClickListener;
+import com.bb.hbx.utils.RealmUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
@@ -102,7 +103,8 @@ public class MyInfoFragment extends BaseFragment {
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
+//        RealmUtils.deleteAll();
+//        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
         manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
@@ -119,14 +121,17 @@ public class MyInfoFragment extends BaseFragment {
             public void onMyItemChangeStateClickListener(int position, View view) {
                 if (((Integer) position) == view.getTag()) {
                     //view.setVisibility(View.GONE);
-                    if (unReadCount > 0) {
-                        unReadCount--;
+                    if (totalList.get(position).getSts() == 1 ) {
+                        if (unReadCount > 0) {
+                            unReadCount--;
+                        }
+                        InfoActivity.resetLabMine(unReadCount);
+                        view.setBackgroundResource(R.drawable.shape_circle_white);
+                        totalList.get(position).setSts(2);
+                        adapter.notifyItemChanged(position);
                     }
-                    InfoActivity.resetLabMine(unReadCount);
-                    view.setBackgroundResource(R.drawable.shape_circle_white);
-                    totalList.get(position).setSts(2);
-                    adapter.notifyItemChanged(position);
                     uploadServices(totalList.get(position).getMsgId());
+
                 }
             }
         });
@@ -207,6 +212,7 @@ public class MyInfoFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         mContext.unregisterReceiver(myInfoReceiver);
+//        myDBManagerSystemInfo.closeDaoSession();
     }
 
     class MyInfoReceiver extends BroadcastReceiver {
@@ -236,21 +242,15 @@ public class MyInfoFragment extends BaseFragment {
                 MsgInfo bean = (MsgInfo) body.getOutput();
                 if (bean != null) {
                     List<Message> msgList = bean.getMsgList();
-                    for (int i = 0; i < msgList.size() - 1; i++) {
+//                    Log.d("ddd","=======================" + msgList.size());
+
+                    for (int i = 0; i < msgList.size(); i++) {
                         Message msg = msgList.get(i);
-                        List<Message> list = myDBManagerSystemInfo.queryOne(msg.getMsgId());
-                        if (list != null) {
-                            if (list.isEmpty()) {
-                                msg.setSts(1);        //未读
-                                myDBManagerSystemInfo.insertOrReplaceObject(msg);
-                                unReadSysMsgNum ++;
-                            } else {
-                                if (list.get(0).getSts() == 1) {
-                                    unReadSysMsgNum ++;
-                                }
-                            }
+                        if (RealmUtils.queryMessageById(msg.getMsgId()) == null) {
+                            unReadSysMsgNum++;
                         }
                     }
+//                    Log.d("kkk","---------------------------------" + unReadSysMsgNum);
                     InfoActivity.resetLabSystem(unReadSysMsgNum);
                 }
             }

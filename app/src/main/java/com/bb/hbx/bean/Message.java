@@ -1,16 +1,19 @@
 package com.bb.hbx.bean;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Keep;
-import org.greenrobot.greendao.annotation.Generated;
+//import org.greenrobot.greendao.annotation.Entity;
+//import org.greenrobot.greendao.annotation.Id;
+//import org.greenrobot.greendao.annotation.Keep;
+//import org.greenrobot.greendao.annotation.Generated;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Administrator on 2017/1/23.
  */
 
-@Entity
-public class Message {
+//@Entity
+public class Message extends RealmObject {
 
 
     /**
@@ -23,36 +26,37 @@ public class Message {
      * sts : 1
      */
 
-    @Id(autoincrement = true)
+//    @Id(autoincrement = true)
     long id;
     private String msgContent;
+    @PrimaryKey
     private String msgId;
     private String msgLink;
     private String msgTime;
     private String msgTitle;
     private String msgType;
     private int sts;            //1:未读   2:已读
-//    private boolean isRead;
+    private boolean isRead;         //已读 未读
 
-    @Keep
-    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts,boolean isRead) {
-        this.id = id;
-        this.msgContent = msgContent;
-        this.msgId = msgId;
-        this.msgLink = msgLink;
-        this.msgTime = msgTime;
-        this.msgTitle = msgTitle;
-        this.msgType = msgType;
-        this.sts = sts;
+    //    @Keep
+//    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts, boolean isRead) {
+//        this.id = id;
+//        this.msgContent = msgContent;
+//        this.msgId = msgId;
+//        this.msgLink = msgLink;
+//        this.msgTime = msgTime;
+//        this.msgTitle = msgTitle;
+//        this.msgType = msgType;
+////        this.sts = sts;
 //        this.isRead = isRead;
-    }
+//    }
 
-//    @Generated(hash = 637306882)
+    //    @Generated(hash = 637306882)
     public Message() {
     }
 
-    @Generated(hash = 1171299826)
-    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts) {
+    //    @Generated(hash = 1171299826)
+    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts, boolean isRead) {
         this.id = id;
         this.msgContent = msgContent;
         this.msgId = msgId;
@@ -61,6 +65,7 @@ public class Message {
         this.msgTitle = msgTitle;
         this.msgType = msgType;
         this.sts = sts;
+        this.isRead = isRead;
     }
 
     public long getId() {
@@ -127,19 +132,11 @@ public class Message {
         this.sts = sts;
     }
 
-//    public boolean getRead() {
-//        return isRead;
-//    }
-//
-//    public void isRead(boolean isRead) {
-//        this.isRead = isRead;
-//    }
-//
-//    public boolean getIsRead() {
-//        return this.isRead;
-//    }
-//
-//    public void setIsRead(boolean isRead) {
-//        this.isRead = isRead;
-//    }
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
 }

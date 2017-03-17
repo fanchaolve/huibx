@@ -77,7 +77,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.personInfo_layout:
-                showTip("个人资料");
+//                showTip("个人资料");
+                if (ShareSPUtils.sp.getBoolean("hasLogined", false)) {
+                    startActivity(new Intent(mContext,PersonInfoSettingActivity.class));
+                } else {
+                    showTip("请先登录！");
+                }
                 break;
             case R.id.income_layout:
                 showTip("推广费显示");

@@ -187,7 +187,10 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener{
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
-
+                        Result_Api result_api = (Result_Api) response.body();
+                        if (result_api.isSuccess()) {
+                            showTip("恭喜你，签到成功！");
+                        }
                     }
 
                     @Override

@@ -7,6 +7,9 @@ import android.util.DisplayMetrics;
 import com.bb.hbx.bean.User;
 import com.bb.hbx.bean.VersionInfo;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 /**
  * Created by Administrator on 2016/12/6.
@@ -53,6 +56,13 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         INSTANCE = this;
+        //初始化realm数据库
+        Realm.init(this);
+        RealmConfiguration config = new  RealmConfiguration.Builder()
+                .name("systemmsg.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
         //       locationService = new LocationService(context);
 //        CrashHandler crashHandler = CrashHandler.getInstance();
 //        crashHandler.init(context);

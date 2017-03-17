@@ -11,6 +11,7 @@ import com.bb.hbx.R;
 import com.bb.hbx.bean.Message;
 import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
+import com.bb.hbx.utils.RealmUtils;
 import com.bb.hbx.utils.TimeUtils;
 
 import java.util.ArrayList;
@@ -27,14 +28,15 @@ public class MySystemInfoAdapter extends RecyclerView.Adapter<MySystemInfoAdapte
 
     Context mContext;
     List<Message> list;
-    MyDBManagerSystemInfo myDBManagerSystemInfo;
+//    MyDBManagerSystemInfo myDBManagerSystemInfo;
     LayoutInflater inflater;
     OnItemChangeStateClickListener onMyItemClickListener;
     ArrayList<Message> dbList;
-    public MySystemInfoAdapter(Context mContext, List<Message> list,MyDBManagerSystemInfo myDBManagerSystemInfo) {
+
+    public MySystemInfoAdapter(Context mContext, List<Message> list) {
         this.mContext = mContext;
         this.list = list;
-        this.myDBManagerSystemInfo=myDBManagerSystemInfo;
+//        this.myDBManagerSystemInfo=myDBManagerSystemInfo;
         inflater=LayoutInflater.from(mContext);
     }
 
@@ -50,10 +52,11 @@ public class MySystemInfoAdapter extends RecyclerView.Adapter<MySystemInfoAdapte
 
     @Override
     public void onBindViewHolder(MyViewHodler holder, final int position) {
-        dbList = myDBManagerSystemInfo.queryOne(list.get(position).getMsgId());
-        if (dbList.size()>0)
+//        dbList = myDBManagerSystemInfo.queryOne(list.get(position).getMsgId());
+        Message message = RealmUtils.queryMessageById(list.get(position).getMsgId());
+        if (message != null)
         {
-            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);  //未读
+            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);  //已读
         }
         else
         {
