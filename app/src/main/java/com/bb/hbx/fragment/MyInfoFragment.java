@@ -23,6 +23,7 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.Message;
 import com.bb.hbx.bean.MsgInfo;
+import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -40,7 +41,7 @@ import retrofit2.Response;
  * Created by Administrator on 2017/2/17.
  */
 
-public class MyInfoFragment extends BaseFragment{
+public class MyInfoFragment extends BaseFragment {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
@@ -48,17 +49,20 @@ public class MyInfoFragment extends BaseFragment{
     RecyclerView recyclerView;
 
     Context mContext;
-    List<Message> totalList=new ArrayList<>();
+    List<Message> totalList = new ArrayList<>();
     GridLayoutManager manager;
     MyInfoAdapter adapter;
     MyInfoReceiver myInfoReceiver;
-    int pageIndex=1;
+    int pageIndex = 1;
 
     int unReadCount;
+    private MyDBManagerSystemInfo myDBManagerSystemInfo;
+    int unReadSysMsgNum = 0;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
@@ -69,14 +73,14 @@ public class MyInfoFragment extends BaseFragment{
 
     @Override
     public void initView() {
-        scrollView.scrollTo(0,0);
+        scrollView.scrollTo(0, 0);
         initReceiver();
 
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                pageIndex=1;
+                pageIndex = 1;
                 showMsgList(pageIndex);
             }
 
@@ -93,12 +97,13 @@ public class MyInfoFragment extends BaseFragment{
         myInfoReceiver = new MyInfoReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.myinfo");
-        mContext.registerReceiver(myInfoReceiver,filter);
+        mContext.registerReceiver(myInfoReceiver, filter);
     }
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-        manager = new GridLayoutManager(mContext, 1){
+        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
+        manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -112,11 +117,9 @@ public class MyInfoFragment extends BaseFragment{
         adapter.setOnMyItemClickListener(new OnItemChangeStateClickListener() {
             @Override
             public void onMyItemChangeStateClickListener(int position, View view) {
-                if (((Integer)position)==view.getTag())
-                {
+                if (((Integer) position) == view.getTag()) {
                     //view.setVisibility(View.GONE);
-                    if (unReadCount>0)
-                    {
+                    if (unReadCount > 0) {
                         unReadCount--;
                     }
                     InfoActivity.resetLabMine(unReadCount);
@@ -140,19 +143,21 @@ public class MyInfoFragment extends BaseFragment{
                         totalList.remove(position);
                         adapter.notifyDataSetChanged();
                         for (int i = 0; i < totalList.size(); i++) {
-                            Log.e("===AA==="+totalList.size(),"========="+totalList.get(i).getSts());
+                            Log.e("===AA===" + totalList.size(), "=========" + totalList.get(i).getSts());
                         }
                     }
                 });
-                dialog.setNegativeButton("取消",null);
+                dialog.setNegativeButton("取消", null);
                 dialog.show();
             }
         });
+
+        loadSysMsgData();
     }
 
     private void uploadServices(String msgId) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.readMsg(MyApplication.user.getUserId(),"2",msgId);
+        Call call = service.readMsg(MyApplication.user.getUserId(), "2", msgId);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -168,30 +173,25 @@ public class MyInfoFragment extends BaseFragment{
 
     private void showMsgList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getMsgsUser(MyApplication.user.getUserId(),"2","0",pageIndex+"");
+        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "2", "0","1");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
                 MsgInfo bean = (MsgInfo) body.getOutput();
-                if (bean!=null)
-                {
+                if (bean != null) {
                     //List<Message> msgList = bean.getMsgList();
-                    if (pageIndex==1)
-                    {
+                    if (pageIndex == 1) {
                         unReadCount = bean.getUnReadCount();
                         totalList.clear();
-                    }
-                    else
-                    {
-                        unReadCount+=bean.getUnReadCount();
+                    } else {
+                        unReadCount += bean.getUnReadCount();
                     }
                     InfoActivity.resetLabMine(unReadCount);
                     totalList.addAll(bean.getMsgList());
                     adapter.notifyDataSetChanged();
                 }
-                if (scrollView.isRefreshing())
-                {
+                if (scrollView.isRefreshing()) {
                     scrollView.onRefreshComplete();
                 }
             }
@@ -209,7 +209,7 @@ public class MyInfoFragment extends BaseFragment{
         mContext.unregisterReceiver(myInfoReceiver);
     }
 
-    class MyInfoReceiver extends BroadcastReceiver{
+    class MyInfoReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -221,5 +221,44 @@ public class MyInfoFragment extends BaseFragment{
             InfoActivity.resetLabMine(unReadCount);
             uploadServices("0");
         }
+    }
+
+    /**
+     * 请求系统消息
+     */
+    private void loadSysMsgData() {
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "1", "0", pageIndex + "");
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Result_Api body = (Result_Api) response.body();
+                MsgInfo bean = (MsgInfo) body.getOutput();
+                if (bean != null) {
+                    List<Message> msgList = bean.getMsgList();
+                    for (int i = 0; i < msgList.size() - 1; i++) {
+                        Message msg = msgList.get(i);
+                        List<Message> list = myDBManagerSystemInfo.queryOne(msg.getMsgId());
+                        if (list != null) {
+                            if (list.isEmpty()) {
+                                msg.setSts(1);        //未读
+                                myDBManagerSystemInfo.insertOrReplaceObject(msg);
+                                unReadSysMsgNum ++;
+                            } else {
+                                if (list.get(0).getSts() == 1) {
+                                    unReadSysMsgNum ++;
+                                }
+                            }
+                        }
+                    }
+                    InfoActivity.resetLabSystem(unReadSysMsgNum);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 }

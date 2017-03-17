@@ -53,21 +53,21 @@ public class MySystemInfoAdapter extends RecyclerView.Adapter<MySystemInfoAdapte
         dbList = myDBManagerSystemInfo.queryOne(list.get(position).getMsgId());
         if (dbList.size()>0)
         {
-            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);
+            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);  //未读
         }
         else
         {
             holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_a1);
         }
-        /*int sts = list.get(position).getSts();
-        if (2==sts)
-        {
-            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);
-        }
-        else
-        {
-            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_a1);
-        }*/
+//        int sts = list.get(position).getSts();
+//        if (2==sts)
+//        {
+//            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);
+//        }
+//        else
+//        {
+//            holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_a1);
+//        }
         holder.title_tv.setText(list.get(position).getMsgTitle());
         holder.content_tv.setText(list.get(position).getMsgContent());
         long stringToDateNoSpace = TimeUtils.getStringToDateNoSpace(list.get(position).getMsgTime());

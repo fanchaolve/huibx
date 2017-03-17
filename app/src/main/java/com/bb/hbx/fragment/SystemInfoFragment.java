@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -37,7 +38,7 @@ import retrofit2.Response;
  * Created by Administrator on 2017/2/17.
  */
 
-public class SystemInfoFragment extends BaseFragment{
+public class SystemInfoFragment extends BaseFragment {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
@@ -45,20 +46,22 @@ public class SystemInfoFragment extends BaseFragment{
     RecyclerView recyclerView;
 
     Context mContext;
-    List<Message> totalList=new ArrayList<>();
+    List<Message> totalList = new ArrayList<>();
     GridLayoutManager manager;
     MySystemInfoAdapter adapter;
     SystemInfoReceiver systemInfoReceiver;
-    int pageIndex=1;
+    int pageIndex = 1;
     int unReadCount;
     int totalCount;
     int realsystemInfoCount;
     int haveReadCount;
-    MyDBManagerSystemInfo myDBManagerSystemInfo;
+    private MyDBManagerSystemInfo myDBManagerSystemInfo;
+    private int unReadSysMsgNum = 0;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
@@ -76,7 +79,7 @@ public class SystemInfoFragment extends BaseFragment{
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                pageIndex=1;
+                pageIndex = 1;
                 showMsgList(pageIndex);
             }
 
@@ -92,18 +95,18 @@ public class SystemInfoFragment extends BaseFragment{
         systemInfoReceiver = new SystemInfoReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.myinfo");
-        mContext.registerReceiver(systemInfoReceiver,filter);
+        mContext.registerReceiver(systemInfoReceiver, filter);
     }
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-        manager = new GridLayoutManager(mContext, 1){
+        manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         };
-        adapter = new MySystemInfoAdapter(mContext, totalList,myDBManagerSystemInfo);
+        adapter = new MySystemInfoAdapter(mContext, totalList, myDBManagerSystemInfo);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
@@ -111,22 +114,20 @@ public class SystemInfoFragment extends BaseFragment{
         adapter.setOnMyItemClickListener(new OnItemChangeStateClickListener() {
             @Override
             public void onMyItemChangeStateClickListener(int position, View view) {
-                if (((Integer)position)==view.getTag())
-                {
-                    //作为已读消息插入数据库
+                if (((Integer) position) == view.getTag()) {
+
                     Message mess = totalList.get(position);
-                    mess.setSts(2);
-                    myDBManagerSystemInfo.insertObject(mess);
-                    //view.setVisibility(View.GONE);
-                    if (unReadCount>0)
-                    {
-                        unReadCount--;
+                    if (!isReadMsg(mess.getMsgId())) {
+                        if (unReadSysMsgNum > 0) {
+                            unReadSysMsgNum--;
+                        }
+                        mess.setSts(2);
+                        myDBManagerSystemInfo.insertOrReplaceObject(mess);
+                        InfoActivity.resetLabSystem(unReadSysMsgNum);
+                        view.setBackgroundResource(R.drawable.shape_circle_white);
+                        totalList.get(position).setSts(2);
+                        adapter.notifyItemChanged(position);
                     }
-                    InfoActivity.resetLabSystem(unReadCount);
-                    view.setBackgroundResource(R.drawable.shape_circle_white);
-                    totalList.get(position).setSts(2);
-                    adapter.notifyItemChanged(position);
-                    //Toast.makeText(mContext,"position:"+position,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -134,28 +135,25 @@ public class SystemInfoFragment extends BaseFragment{
 
     private void showMsgList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getMsgsUser(MyApplication.user.getUserId(),"1","0",pageIndex+"");
+        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "1", "0", pageIndex + "");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
                 MsgInfo bean = (MsgInfo) body.getOutput();
-                if (bean!=null)
-                {
+                if (bean != null) {
                     totalCount = bean.getTotalCount();
                     haveReadCount = myDBManagerSystemInfo.queryAll();
                     //List<Message> msgList = bean.getMsgList();
-                    if (pageIndex==1)
-                    {
+                    if (pageIndex == 1) {
                         totalList.clear();
                     }
-                    unReadCount = totalCount-haveReadCount;
-                    InfoActivity.resetLabSystem(unReadCount);
+                    unReadCount = totalCount - haveReadCount;
+                    InfoActivity.resetLabSystem(unReadSysMsgNum);
                     totalList.addAll(bean.getMsgList());
                     adapter.notifyDataSetChanged();
                 }
-                if (scrollView.isRefreshing())
-                {
+                if (scrollView.isRefreshing()) {
                     scrollView.onRefreshComplete();
                 }
             }
@@ -166,6 +164,79 @@ public class SystemInfoFragment extends BaseFragment{
             }
         });
     }
+
+    /**
+     * 请求系统消息
+     */
+//    private void loadSysMsgData(final int pageIndex) {
+//        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+//        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "1", "0", pageIndex + "");
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                Result_Api body = (Result_Api) response.body();
+//                MsgInfo bean = (MsgInfo) body.getOutput();
+//                if (bean != null) {
+//                    List<Message> msgList = bean.getMsgList();
+//                    for (int i = 0; i < msgList.size() - 1; i++) {
+//                        Message msg = msgList.get(i);
+//                        List<Message> list = myDBManagerSystemInfo.queryOne(msg.getMsgId());
+//                        if (list != null) {
+//                            if (list.isEmpty()) {
+//                                msg.setSts(1);        //未读
+//                                myDBManagerSystemInfo.insertObject(msg);
+//                                unReadSysMsgNum ++;
+//                            } else {
+//                                if (list.get(0).getSts() == 1) {
+//                                    unReadSysMsgNum ++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                    if (pageIndex == 1) {
+//                        totalList.clear();
+//                    }
+//                    Log.d("hhh","----------db-----------" + myDBManagerSystemInfo.queryAllObject().size());
+//                    totalList.addAll(myDBManagerSystemInfo.queryAllObject());
+//                    adapter.notifyDataSetChanged();
+//                    InfoActivity.resetLabSystem(unReadSysMsgNum);
+//                }
+//                if (scrollView.isRefreshing()) {
+//                    scrollView.onRefreshComplete();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//
+//            }
+//        });
+//    }
+
+    /**
+     * 判断一个消息是否是已读消息
+     * @param msgId
+     * @return true已读
+     */
+    private boolean isReadMsg(String msgId) {
+        List<Message> list = myDBManagerSystemInfo.queryOne(msgId);
+        if (list != null) {
+            if (list.isEmpty()) {
+//                Log.d("ddd","-----------list1-----------" + list.toString());
+                return false;
+            } else {
+                Message msg = myDBManagerSystemInfo.queryOne(msgId).get(0);
+//                Log.d("ddd","-----------list2-----------" + list.toString());
+//                Log.d("ddd","-----------isRead-----------" + (msg.getSts() == 2));
+
+                return msg.getSts() == 2;
+            }
+        } else {
+//            Log.d("ddd","-----------list-----------" + list.toString());
+            return false;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -173,7 +244,7 @@ public class SystemInfoFragment extends BaseFragment{
         myDBManagerSystemInfo.closeDaoSession();
     }
 
-    class SystemInfoReceiver extends BroadcastReceiver{
+    class SystemInfoReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -184,8 +255,8 @@ public class SystemInfoFragment extends BaseFragment{
                 myDBManagerSystemInfo.insertObject(mess);
             }
             adapter.notifyDataSetChanged();
-            unReadCount = 0;
-            InfoActivity.resetLabSystem(unReadCount);
+            unReadSysMsgNum = 0;
+            InfoActivity.resetLabSystem(unReadSysMsgNum);
         }
     }
 }

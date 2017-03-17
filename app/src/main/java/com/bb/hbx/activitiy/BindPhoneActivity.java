@@ -18,6 +18,7 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.bean.MessageCodeBean;
 import com.bb.hbx.db.DatabaseImpl;
+import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.CheckPhoneNumUtils;
 import com.bb.hbx.widget.CountDownTextView;
 
@@ -120,6 +121,7 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
                         db.close();
                         Toast.makeText(getApplicationContext(),"绑定新手机成功！",Toast.LENGTH_SHORT).show();
                         finish();
+                        AppManager.getInstance().finishParticularActivity(CountSecurityActivity.class);
                     } else {
                         Toast.makeText(getApplicationContext(),"绑定新手机失败!",Toast.LENGTH_SHORT).show();
                     }

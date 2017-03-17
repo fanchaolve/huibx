@@ -31,9 +31,27 @@ public class Message {
     private String msgTime;
     private String msgTitle;
     private String msgType;
-    private int sts;
+    private int sts;            //1:未读   2:已读
+//    private boolean isRead;
 
     @Keep
+    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts,boolean isRead) {
+        this.id = id;
+        this.msgContent = msgContent;
+        this.msgId = msgId;
+        this.msgLink = msgLink;
+        this.msgTime = msgTime;
+        this.msgTitle = msgTitle;
+        this.msgType = msgType;
+        this.sts = sts;
+//        this.isRead = isRead;
+    }
+
+//    @Generated(hash = 637306882)
+    public Message() {
+    }
+
+    @Generated(hash = 1171299826)
     public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts) {
         this.id = id;
         this.msgContent = msgContent;
@@ -43,10 +61,6 @@ public class Message {
         this.msgTitle = msgTitle;
         this.msgType = msgType;
         this.sts = sts;
-    }
-
-    @Generated(hash = 637306882)
-    public Message() {
     }
 
     public long getId() {
@@ -112,4 +126,20 @@ public class Message {
     public void setSts(int sts) {
         this.sts = sts;
     }
+
+//    public boolean getRead() {
+//        return isRead;
+//    }
+//
+//    public void isRead(boolean isRead) {
+//        this.isRead = isRead;
+//    }
+//
+//    public boolean getIsRead() {
+//        return this.isRead;
+//    }
+//
+//    public void setIsRead(boolean isRead) {
+//        this.isRead = isRead;
+//    }
 }

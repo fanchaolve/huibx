@@ -30,6 +30,12 @@ public class MyDBManagerSystemInfo {
     //插入单个
     public void insertObject(Message bean)
     {
+        dao.insert(bean);
+    }
+
+    //插入或替换单个
+    public void insertOrReplaceObject(Message bean)
+    {
         dao.insertOrReplace(bean);
     }
 
@@ -46,6 +52,14 @@ public class MyDBManagerSystemInfo {
         {
             return list.size();
         }
+    }
+
+    //查询所有,返回所有bean的集合
+    public List<Message> queryAllObject()
+    {
+        Query<Message> build = dao.queryBuilder().orderAsc(MessageDao.Properties.Id).build();
+        List<Message> list = build.list();
+        return list;
     }
 
     //指定查询
