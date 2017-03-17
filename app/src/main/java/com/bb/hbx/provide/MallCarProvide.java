@@ -21,8 +21,6 @@ import com.bb.hbx.widget.multitype.ItemViewProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.bb.hbx.R.id.tv_price;
-
 /**
  * Created by Administrator on 2016/12/21.
  */
@@ -87,6 +85,9 @@ public class MallCarProvide extends ItemViewProvider<Product, MallCarProvide.Vie
             tv_insurancecompany.setText(squareBean.getInsurerName());
             //tv_price.setText(context.getString(R.string.howPrice, squareBean.getMinPremium()));
 
+            tv_detail1.setText(squareBean.getAreaDesc());
+            tv_detail2.setText(squareBean.getBusinessDesc());
+            tv_pro.setText("推广费"+squareBean.getCommisionValue1()+"%");
             tv_sales.setText(context.getString(R.string.xlmatch, squareBean.getTotalAmount()));
             if (MyApplication.user.getIsBClient()) {
                 tv_pro.setVisibility(View.VISIBLE);
@@ -102,7 +103,7 @@ public class MallCarProvide extends ItemViewProvider<Product, MallCarProvide.Vie
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("product", squareBean);
+                    bundle.putParcelable("product", squareBean);
                     AppManager.getInstance().showActivity(CarInformationActivity.class, bundle);
                 }
             });

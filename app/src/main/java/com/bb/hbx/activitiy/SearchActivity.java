@@ -9,15 +9,24 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bb.hbx.R;
+import com.bb.hbx.adapter.MySearchAdapter;
+import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.Result_Api;
+import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.base.m.SearchHistoryModel;
 import com.bb.hbx.base.p.SearchHistoryPresenter;
 import com.bb.hbx.base.v.SearchHistoryContract;
 import com.bb.hbx.bean.HotSearchBean;
 import com.bb.hbx.bean.LishiSearchBean;
+import com.bb.hbx.bean.Product;
+import com.bb.hbx.bean.ProductBean;
+import com.bb.hbx.bean.RequestProduct;
 import com.bb.hbx.bean.SearchTitleBean;
 import com.bb.hbx.bean.SearchTitleBean2;
 import com.bb.hbx.provide.HotSearchProvide;
@@ -27,10 +36,18 @@ import com.bb.hbx.provide.SearchTitleProvide2;
 import com.bb.hbx.widget.LoginTelEdit;
 import com.bb.hbx.widget.multitype.MultiTypeAdapter;
 import com.bb.hbx.widget.multitype.data.Item;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 
 
 /**
@@ -46,9 +63,15 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
     @BindView(R.id.tv_back)
     TextView tv_back;
 
+    @BindView(R.id.scrollView)
+    PullToRefreshScrollView scrollView;
     @BindView(R.id.rl_view)
     RecyclerView rl_view;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
+    @BindView(R.id.iv_search)
+    ImageView iv_search;
     @BindView(R.id.le_search)
     LoginTelEdit le_search;
 
@@ -58,6 +81,12 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
     private SearchTitleProvide2 searchTitleProvide2;
     private LishiSearchProvide lishiSearchProvide;
 
+    HotSearchProvide hotSearchProvide;
+
+    int pageIndex=1;
+    ArrayList<Product> totalList=new ArrayList<>();
+    MySearchAdapter searchAdapter;
+    String keyBuff="";
     @Override
     public int getLayoutId() {
         return R.layout.activity_search;
@@ -89,14 +118,39 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
 
         lishiSearchProvide = new LishiSearchProvide(adapter);
         searchTitleProvide2 = new SearchTitleProvide2();
+        hotSearchProvide = new HotSearchProvide();
         adapter.register(SearchTitleBean.class, new SearchTitleProvide());
-        adapter.register(HotSearchBean.class, new HotSearchProvide());
+        adapter.register(HotSearchBean.class, hotSearchProvide);
         adapter.register(SearchTitleBean2.class, searchTitleProvide2);
         adapter.register(LishiSearchBean.class, lishiSearchProvide);
         rl_view.setAdapter(adapter);
         rl_view.addItemDecoration(new SpaceItemDecoration());
 
+        GridLayoutManager manager = new GridLayoutManager(this, 1){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(manager);
+        searchAdapter = new MySearchAdapter(totalList, this);
+        recyclerView.setAdapter(searchAdapter);
 
+        scrollView.setMode(PullToRefreshBase.Mode.BOTH);
+        scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                pageIndex=1;
+                //showTradesList(pageIndex);
+                displayList(keyBuff,pageIndex);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                pageIndex++;
+                displayList(keyBuff,pageIndex);
+            }
+        });
     }
 
     @Override
@@ -118,10 +172,23 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
             }
         });
 
+        iv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(le_search.getText())) {
+                    mPresenter.addHistoryBean(new LishiSearchBean(le_search.getText().toString().trim()));
+                    showTip("添加成功....");
+                    pageIndex=1;
+                    keyBuff=le_search.getText().toString();
+                    displayList(le_search.getText().toString(),pageIndex);
+                }
+            }
+        });
+
         lishiSearchProvide.setListener(new LishiSearchProvide.LishiSearchListener() {
             @Override
             public void selectItem(LishiSearchBean bean) {
-
+                le_search.setText(bean.getName());
             }
 
             @Override
@@ -130,11 +197,59 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
             }
         });
 
+        hotSearchProvide.setListener(new HotSearchProvide.HotSearchListener() {
+            @Override
+            public void selectItem(HotSearchBean bean) {
+                le_search.setText(bean.getKeyName());
+            }
+        });
 
         searchTitleProvide2.setListener(new SearchTitleProvide2.DeleteAllSearchListener() {
             @Override
             public void deleteAll() {
                 mPresenter.deleteAll();
+            }
+        });
+    }
+
+    private void displayList(String key,int index) {
+        RequestProduct rp = new RequestProduct();
+        rp.setPageIndex(index);
+        rp.setPageSize(PAGE_SIZE);
+        //rp.setProductType(Integer.valueOf(mView.getTypeModel().getTypeId()));
+        rp.setKey(key);
+        rp.setBenefitNum(3);
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call=service.getProducts(rp);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Result_Api body = (Result_Api) response.body();
+                if (body.isSuccess())
+                {
+                    rl_view.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    ProductBean bean = (ProductBean) body.getOutput();
+                    if (bean!=null)
+                    {
+                        //List<Product> productList = bean.getProductList();
+                        if (pageIndex==1)
+                        {
+                            totalList.clear();
+                        }
+                        totalList.addAll(bean.getProductList());
+                        searchAdapter.notifyDataSetChanged();
+                    }
+                    if (scrollView.isRefreshing())
+                    {
+                        scrollView.onRefreshComplete();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
             }
         });
     }

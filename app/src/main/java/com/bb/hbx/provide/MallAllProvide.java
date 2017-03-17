@@ -21,8 +21,6 @@ import com.bb.hbx.widget.multitype.ItemViewProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.bb.hbx.R.id.tv_added;
-
 /**
  * Created by Administrator on 2016/12/21.
  */
@@ -72,6 +70,8 @@ public class MallAllProvide extends ItemViewProvider<Product, MallAllProvide.Vie
 
         @BindView(R.id.tv_detail2)
         TextView tv_detail2;
+        @BindView(R.id.tv_detail3)
+        TextView tv_detail3;
 
         @BindView(R.id.tv_price)
         TextView tv_price;
@@ -92,10 +92,30 @@ public class MallAllProvide extends ItemViewProvider<Product, MallAllProvide.Vie
 
 
             tv_name.setText(squareBean.getProductName());
+            tv_detail1.setVisibility(View.GONE);
+            tv_detail2.setVisibility(View.GONE);
+            tv_detail3.setVisibility(View.GONE);
+            if (squareBean.getBenefitList()!=null&&squareBean.getBenefitList().size()>0)
+            {
+                tv_detail1.setVisibility(View.VISIBLE);
+                tv_detail1.setText(squareBean.getBenefitList().get(0).getBenefitName()+":"+squareBean.getBenefitList().get(0).getInsuredAmount());
+                if (squareBean.getBenefitList().size()>1)
+                {
+                    tv_detail2.setVisibility(View.VISIBLE);
+                    tv_detail2.setText(squareBean.getBenefitList().get(1).getBenefitName()+":"+squareBean.getBenefitList().get(1).getInsuredAmount());
+                }
+                if (squareBean.getBenefitList().size()>2)
+                {
+                    tv_detail3.setVisibility(View.VISIBLE);
+                    tv_detail3.setText(squareBean.getBenefitList().get(2).getBenefitName()+":"+squareBean.getBenefitList().get(2).getInsuredAmount());
+                }
+
+            }
             tv_insurancecompany.setText(squareBean.getInsurerName());
             tv_price.setText(context.getString(R.string.howPrice, squareBean.getMinPremium()));
 
             tv_sales.setText(context.getString(R.string.xlmatch, squareBean.getTotalAmount()));
+            tv_pro.setText("推广费"+squareBean.getCommisionValue1()+"%");
             if (MyApplication.user.getIsBClient()) {
                 tv_pro.setVisibility(View.VISIBLE);
                 tv_sales.setVisibility(View.GONE);

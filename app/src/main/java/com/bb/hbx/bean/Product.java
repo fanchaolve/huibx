@@ -1,5 +1,8 @@
 package com.bb.hbx.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.bb.hbx.widget.multitype.data.Item;
 
 import java.io.Serializable;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by Administrator on 2017/1/16.
  */
 
-public class Product implements Item,Serializable{
+public class Product implements Item,/*Serializable*/Parcelable {
 
 
     /**
@@ -46,6 +49,8 @@ public class Product implements Item,Serializable{
     private String guarantee;
     private String insurerId;
     private String insurerLogo;
+    private String areaDesc;
+    private String businessDesc;
     private String insurerName;
     private String minPremium;
     private String monthAmount;
@@ -60,6 +65,44 @@ public class Product implements Item,Serializable{
     private String specialPrice;
     private String suitable;
     private String totalAmount;
+
+    protected Product(Parcel in) {
+        ageDesc = in.readString();
+        classId = in.readString();
+        commisionType = in.readString();
+        commisionValue1 = in.readString();
+        guarantee = in.readString();
+        insurerId = in.readString();
+        insurerLogo = in.readString();
+        areaDesc = in.readString();
+        businessDesc = in.readString();
+        insurerName = in.readString();
+        minPremium = in.readString();
+        monthAmount = in.readString();
+        perferWords = in.readString();
+        productId = in.readString();
+        productIntro = in.readString();
+        productLogo = in.readString();
+        productName = in.readString();
+        productPrice = in.readString();
+        productProp = in.readString();
+        productTagUrls = in.readString();
+        specialPrice = in.readString();
+        suitable = in.readString();
+        totalAmount = in.readString();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getAgeDesc() {
         return ageDesc;
@@ -123,6 +166,22 @@ public class Product implements Item,Serializable{
 
     public void setInsurerLogo(String insurerLogo) {
         this.insurerLogo = insurerLogo;
+    }
+
+    public String getAreaDesc() {
+        return areaDesc;
+    }
+
+    public void setAreaDesc(String areaDesc) {
+        this.areaDesc = areaDesc;
+    }
+
+    public String getBusinessDesc() {
+        return businessDesc;
+    }
+
+    public void setBusinessDesc(String businessDesc) {
+        this.businessDesc = businessDesc;
     }
 
     public String getInsurerName() {
@@ -235,5 +294,37 @@ public class Product implements Item,Serializable{
 
     public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ageDesc);
+        dest.writeString(classId);
+        dest.writeString(commisionType);
+        dest.writeString(commisionValue1);
+        dest.writeString(guarantee);
+        dest.writeString(insurerId);
+        dest.writeString(insurerLogo);
+        dest.writeString(areaDesc);
+        dest.writeString(businessDesc);
+        dest.writeString(insurerName);
+        dest.writeString(minPremium);
+        dest.writeString(monthAmount);
+        dest.writeString(perferWords);
+        dest.writeString(productId);
+        dest.writeString(productIntro);
+        dest.writeString(productLogo);
+        dest.writeString(productName);
+        dest.writeString(productPrice);
+        dest.writeString(productProp);
+        dest.writeString(productTagUrls);
+        dest.writeString(specialPrice);
+        dest.writeString(suitable);
+        dest.writeString(totalAmount);
     }
 }

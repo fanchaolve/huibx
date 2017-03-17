@@ -151,9 +151,9 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                     } else {
                         mView.setil_up1Textvalue(perids[0]);
                     }
-                    //selectPerids = perids[0];
+                    selectPerids = perids[0];
                     //perids[0]=perids[0].substring(0, perids[0].indexOf("_"));//-----------------我新加
-                    selectPerids = perids[0].substring(0, perids[0].indexOf("_"));//--------------我新加
+                    //selectPerids = perids[0].substring(0, perids[0].indexOf("_"));//--------------我新加
 
                     List<Entry> entries = StringUtils.getJsonOpt(detail.getPriceElements());
                     int i = 0;
@@ -165,7 +165,14 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 
                     detail.setEntries(entries);
                     //observable.add(perids[0]);
-                    observable.add(perids[0].substring(0, perids[0].indexOf("_")));//--------------我新加
+                    if (perids[0].indexOf("_")>0)
+                    {
+                        observable.add(perids[0].substring(0, perids[0].indexOf("_")));//--------------我新加
+                    }
+                    else
+                    {
+                        observable.add(perids[0]);
+                    }
 
 
                 } else if (api.getOutput() instanceof PayDetail) {
@@ -279,7 +286,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //------------------------------------------------------------
 
         //insured.setIdNo(mView.getBBRIDEtValue());
-        insured.setIdNo("330621201203134673");
+        insured.setIdNo("330324199411075758");
         insured.setIdType(beinsureridType);
         //insured.setInsuredName(mView.getBBRNameEtValue());
         insured.setInsuredName("范冰冰");
@@ -288,7 +295,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //request.setMobile(mView.getTBRMobileEtValue());
         request.setMobile("13656714459");
         //request.setIdNo(mView.getTBRIDEtValue());
-        request.setIdNo("330621198903134673");
+        request.setIdNo("330324199411075758");
         request.setIdType(insureridType);
         //request.setApplicant(mView.getTBRNameEtValue());
         request.setApplicant("范超略");
@@ -324,9 +331,17 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
     @Override
     public void setSelectPerids(int index) {
         selectPerids = perids[index];
-        selectPerids = perids[index].substring(0, perids[0].indexOf("_"));
+        //selectPerids = perids[index].substring(0, perids[0].indexOf("_"));
         //observable.set(observable.size() - 1, perids[index]);
-        observable.set(observable.size() - 1, selectPerids);
+        //observable.set(observable.size() - 1, perids[index].substring(0, perids[0].indexOf("_")));
+        if (perids[0].indexOf("_")>0)
+        {
+            observable.set(observable.size() - 1, perids[index].substring(0, perids[0].indexOf("_")));
+        }
+        else
+        {
+            observable.set(observable.size() - 1, perids[index]);
+        }
     }
 
     @Override

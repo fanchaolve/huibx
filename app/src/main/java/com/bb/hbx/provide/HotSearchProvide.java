@@ -21,6 +21,21 @@ import butterknife.ButterKnife;
 
 public class HotSearchProvide extends ItemViewProvider<HotSearchBean, HotSearchProvide.ViewHolder> {
 
+    public interface HotSearchListener {
+
+        void selectItem(HotSearchBean bean);
+
+    }
+
+    private HotSearchListener listener;
+
+    public HotSearchListener getListener() {
+        return listener;
+    }
+
+    public void setListener(HotSearchListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -49,7 +64,12 @@ public class HotSearchProvide extends ItemViewProvider<HotSearchBean, HotSearchP
         void setData(@NonNull final HotSearchBean bean) {
 
             tv_title.setText(bean.getKeyName());
-
+            tv_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.selectItem(bean);
+                }
+            });
         }
 
     }
