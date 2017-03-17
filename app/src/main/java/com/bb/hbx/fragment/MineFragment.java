@@ -41,6 +41,7 @@ import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.GetMyPageInfoBean;
 import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.db.DatabaseImpl;
+import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.ShareSPUtils;
 
 import butterknife.BindView;
@@ -170,6 +171,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initView() {
+        initListener();
+        if (!ShareSPUtils.sp.getBoolean("hasLogined", false)) {
+            canCash_tv.setText("0.00");
+            leftMoney_tv.setText("0.00");
+            score_tv.setText("0");
+            redPacket_tv.setText("0");
+        }
+        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
+        hasLoginShow();
+        //updateMyAccount();
+    }
+
+    /**
+     * 初始化监听
+     */
+    private void initListener() {
         setting_iv.setOnClickListener(this);
         message_iv.setOnClickListener(this);
         userIcon_civ.setOnClickListener(this);
@@ -188,10 +205,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         collect_layout.setOnClickListener(this);
         invite_layout.setOnClickListener(this);
         service_layout.setOnClickListener(this);
-
-        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
-        hasLoginShow();
-        //updateMyAccount();
     }
 
     @Override
@@ -250,19 +263,35 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.canCash_layout:
-                startActivity(new Intent(mContext,MyAssertActivity.class));
+                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                    startActivity(new Intent(mContext,MyAssertActivity.class));
+                } else {
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                }
                 break;
             case R.id.leftMoney_layout:
-                startActivity(new Intent(mContext, MyAssertDetailActivity.class));
+                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                    startActivity(new Intent(mContext, MyAssertDetailActivity.class));
+                } else {
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                }
                 break;
             case R.id.score_layout:
-                intent.putExtra("accountScoreInt", accountScoreInt);
-                intent.setClass(mContext, ScoreActivity.class);
-                startActivity(intent);
+                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                    intent.putExtra("accountScoreInt", accountScoreInt);
+                    intent.setClass(mContext, ScoreActivity.class);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                }
                 break;
             case R.id.redPacket_layout:
-                intent.setClass(mContext, RedPacketActivity.class);
-                startActivity(intent);
+                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                    intent.setClass(mContext, RedPacketActivity.class);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                }
                 break;
             case R.id.notLogin_layout:
                 intent.setClass(mContext, LoginActivity.class);

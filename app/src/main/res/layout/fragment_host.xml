@@ -1,83 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/topbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:background="@color/A1">
+        android:background="@color/A1"
+        android:fitsSystemWindows="true">
+
         <ImageView
             android:id="@+id/setting_iv"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/setting"
-            android:scaleType="centerCrop"
             android:layout_centerVertical="true"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/setting" />
+
         <ImageView
             android:id="@+id/message_iv"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/message"
-            android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/message" />
     </RelativeLayout>
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:scrollbars="none"
-        android:layout_below="@id/topbar_layout">
+        android:layout_below="@id/topbar_layout"
+        android:scrollbars="none">
+
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:background="@drawable/wodebeijingchahua"
                 android:paddingTop="20dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userIcon_civ"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/userIcon_civ"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
+
                 <FrameLayout
                     android:id="@+id/identify_layout"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_below="@id/userIcon_civ"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp">
+
                     <RelativeLayout
+                        android:id="@+id/notLogin_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/notLogin_layout"
-                        android:visibility="visible"
-                        android:layout_gravity="center_horizontal">
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="visible">
+
                         <TextView
+                            android:id="@+id/userName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="未登录"
-                            android:textSize="16sp"
                             android:textColor="@color/white"
-                            android:id="@+id/userName"/>
+                            android:textSize="16sp" />
                     </RelativeLayout>
                     <!-- <TextView
                         android:layout_width="wrap_content"
@@ -91,125 +99,140 @@
                         android:visibility="visible"/>-->
 
                 </FrameLayout>
+
                 <RelativeLayout
                     android:id="@+id/ifIdentify_layout"
                     android:layout_width="59dp"
                     android:layout_height="18dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_below="@id/identify_layout"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/identify_layout">
+                    android:layout_marginTop="6dp">
+
                     <TextView
                         android:id="@+id/identify_tv"
                         android:layout_width="59dp"
                         android:layout_height="18dp"
-                        android:text="未认证"
-                        android:textSize="11sp"
-                        android:textColor="@color/A2"
-                        android:gravity="center"
                         android:background="@drawable/identify_shape"
-                        android:visibility="gone"/>
+                        android:gravity="center"
+                        android:text="未认证"
+                        android:textColor="@color/A2"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
-                    android:orientation="horizontal"
                     android:layout_below="@id/ifIdentify_layout"
-                    android:layout_marginTop="31dp">
+                    android:layout_marginTop="31dp"
+                    android:orientation="horizontal">
+
                     <RelativeLayout
                         android:id="@+id/myOrder_layout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
                             android:id="@+id/myOrder_iv"
                             android:layout_width="18dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/wodedingdan"
-                            android:layout_centerHorizontal="true"/>
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/wodedingdan" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/myOrder"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"
-                            android:layout_centerHorizontal="true"
                             android:layout_below="@id/myOrder_iv"
-                            android:layout_marginTop="8dp"/>
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/myOrder"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/lineline"/>
+                        android:src="@drawable/lineline" />
+
                     <RelativeLayout
                         android:id="@+id/pInsurance_layout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
+                            android:id="@+id/pInsurance_civ"
                             android:layout_width="18dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/gexian"
+                            android:layout_centerHorizontal="true"
                             android:scaleType="centerCrop"
-                            android:id="@+id/pInsurance_civ"
-                            android:layout_centerHorizontal="true"/>
+                            android:src="@drawable/gexian" />
+
                         <TextView
+                            android:id="@+id/pInsurance_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/perInsure"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"
-                            android:id="@+id/pInsurance_tv"
                             android:layout_below="@id/pInsurance_civ"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
-                            android:layout_centerHorizontal="true"/>
+                            android:text="@string/perInsure"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
                         <TextView
+                            android:id="@+id/pCount_tv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/pInsurance_tv"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
                             android:text="0份保单"
                             android:textColor="@color/colorTextSub"
-                            android:textSize="11sp"
-                            android:id="@+id/pCount_tv"
-                            android:layout_below="@id/pInsurance_tv"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="2dp"/>
+                            android:textSize="11sp" />
                     </RelativeLayout>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/line"/>
+                        android:src="@drawable/line" />
+
                     <RelativeLayout
                         android:id="@+id/cInsurance_layout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
+                            android:id="@+id/cInsurance_civ"
                             android:layout_width="18dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/chexian"
+                            android:layout_centerHorizontal="true"
                             android:scaleType="centerCrop"
-                            android:id="@+id/cInsurance_civ"
-                            android:layout_centerHorizontal="true"/>
+                            android:src="@drawable/chexian" />
+
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/carInsure"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"
-                            android:gravity="center_horizontal"
                             android:id="@+id/cInsurance_tv"
-                            android:layout_below="@id/cInsurance_civ"
-                            android:layout_marginTop="8dp"/>
-                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/cInsurance_civ"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/carInsure"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/cCount_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cInsurance_tv"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
                             android:text="0份保单"
                             android:textColor="@color/colorTextSub"
-                            android:textSize="11sp"
-                            android:id="@+id/cCount_tv"
-                            android:layout_below="@id/cInsurance_tv"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="2dp"/>
+                            android:textSize="11sp" />
                     </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -217,337 +240,381 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
                 android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp">
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="13dp">
+
                 <TextView
                     android:id="@+id/myAsset_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/myAsset"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"/>
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/nextStep_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
-                    android:scaleType="centerCrop"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/nextstep" />
             </RelativeLayout>
+
             <TextView
-                android:layout_marginTop="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/colorDivider"
-                android:layout_marginLeft="18dp"/>
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/colorDivider" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="17dp">
+                android:layout_marginTop="17dp"
+                android:orientation="horizontal">
+
                 <RelativeLayout
                     android:id="@+id/canCash_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
+                        android:id="@+id/canCash_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100.00"
-                        android:textSize="16sp"
-                        android:textColor="@color/A3"
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/canCash_tv"/>
+                        android:text="100.00"
+                        android:textColor="@color/A3"
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/canCash_tv"
-                        android:text="@string/canCash"
-                        android:textSize="11sp"
-                        android:textColor="@color/A3"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="@string/canCash"
+                        android:textColor="@color/A3"
+                        android:textSize="11sp" />
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
+
                 <RelativeLayout
                     android:id="@+id/leftMoney_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
+                        android:id="@+id/leftMoney_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:text="200.00"
-                        android:textSize="16sp"
                         android:textColor="@color/A3"
-                        android:id="@+id/leftMoney_tv"
-                        android:layout_centerHorizontal="true"/>
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/leftMoney_tv"
-                        android:text="收入"
-                        android:textSize="11sp"
-                        android:textColor="@color/A3"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="收入"
+                        android:textColor="@color/A3"
+                        android:textSize="11sp" />
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
+
                 <RelativeLayout
                     android:id="@+id/score_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
+                        android:id="@+id/score_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:text="280"
-                        android:textSize="16sp"
                         android:textColor="@color/A3"
-                        android:id="@+id/score_tv"
-                        android:layout_centerHorizontal="true"/>
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/score_tv"
-                        android:text="@string/score"
-                        android:textSize="11sp"
-                        android:textColor="@color/A3"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="@string/score"
+                        android:textColor="@color/A3"
+                        android:textSize="11sp" />
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="1dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorDivider"/>
+                    android:background="@color/colorDivider" />
+
                 <RelativeLayout
                     android:id="@+id/redPacket_layout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
+                        android:id="@+id/redPacket_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:text="3"
-                        android:textSize="16sp"
                         android:textColor="@color/A3"
-                        android:id="@+id/redPacket_tv"
-                        android:layout_centerHorizontal="true"/>
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/redPacket_tv"
-                        android:text="@string/redPacket"
-                        android:textSize="11sp"
-                        android:textColor="@color/A3"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:text="@string/redPacket"
+                        android:textColor="@color/A3"
+                        android:textSize="11sp" />
                 </RelativeLayout>
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/colorDivider"/>
+                android:background="@color/colorDivider" />
+
             <RelativeLayout
                 android:id="@+id/purchase_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
+
                 <ImageView
+                    android:id="@+id/purchase_civ"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/zengxian"
-                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:id="@+id/purchase_civ"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/zengxian" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="赠险产品"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="53dp"
-                    android:layout_centerVertical="true"/>
+                    android:text="赠险产品"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/nextstep" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/colorDivider"
-                    android:layout_alignParentBottom="true"/>
+                    android:background="@color/colorDivider" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/customers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
+
                 <ImageView
+                    android:id="@+id/custom_civ"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/kehu"
-                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:id="@+id/custom_civ"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/kehu" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的客户"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="53dp"
-                    android:layout_centerVertical="true"/>
+                    android:text="我的客户"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/nextstep" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/colorDivider"
-                    android:layout_alignParentBottom="true"/>
+                    android:background="@color/colorDivider" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/collect_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
+
                 <ImageView
+                    android:id="@+id/collection_civ"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/shoucang"
-                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:id="@+id/collection_civ"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/shoucang" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的收藏"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="53dp"
-                    android:layout_centerVertical="true"/>
+                    android:text="我的收藏"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/nextstep" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/colorDivider"
-                    android:layout_alignParentBottom="true"/>
+                    android:background="@color/colorDivider" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/invite_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
+
                 <ImageView
+                    android:id="@+id/invite_civ"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/yaoqinghaoyou"
-                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:id="@+id/invite_civ"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yaoqinghaoyou" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="邀请好友"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="53dp"
-                    android:layout_centerVertical="true"/>
+                    android:text="邀请好友"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:id="@+id/nextStepFriend_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/nextstep" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="增员开单,你来收益"
-                    android:textSize="13sp"
-                    android:textColor="@color/A4"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@id/nextStepFriend_iv"
-                    android:layout_marginRight="9dp"/>
+                    android:text="增员开单,你来收益"
+                    android:textColor="@color/A4"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/colorDivider"
-                    android:layout_alignParentBottom="true"/>
+                    android:background="@color/colorDivider" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/service_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
+
                 <ImageView
+                    android:id="@+id/service_civ"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/kefuzhognxin"
-                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:id="@+id/service_civ"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/kefuzhognxin" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="客服中心"
-                    android:textSize="14sp"
-                    android:textColor="@color/A3"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="53dp"
-                    android:layout_centerVertical="true"/>
+                    android:text="客服中心"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:id="@+id/nextStepKeFu_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextstep"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/nextstep" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="为您服务"
-                    android:textSize="13sp"
-                    android:textColor="@color/A4"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@id/nextStepKeFu_iv"
-                    android:layout_marginRight="9dp"/>
+                    android:text="为您服务"
+                    android:textColor="@color/A4"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/colorDivider"
-                    android:layout_alignParentBottom="true"/>
+                    android:background="@color/colorDivider" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

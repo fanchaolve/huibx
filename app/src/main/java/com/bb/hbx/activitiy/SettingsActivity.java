@@ -105,7 +105,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (TextUtils.isEmpty(MyApplication.user.getUserId())) {
-                            Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "您还未登录！", Toast.LENGTH_SHORT).show();
+
                             return;
                         }
                         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
@@ -126,6 +127,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                                         MyApplication.user.setSessionId("");
                                         MyApplication.user.setIsBClient(false);
                                         ShareSPUtils.writeShareSp(false, "", "", "默认用户名", "", null);
+
+                                        finish();
                                         //ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*hasLogin_tv,*/mContext);
                                         /*identify_tv.setVisibility(View.GONE);
                                         identify_layout.removeView(hasLogin_tv);
