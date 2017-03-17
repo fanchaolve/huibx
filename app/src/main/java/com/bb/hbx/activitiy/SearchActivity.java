@@ -40,7 +40,7 @@ import butterknife.BindView;
 public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchHistoryModel> implements View.OnClickListener
         , SearchHistoryContract.View {
 
-
+//
     private final String TAG = SearchActivity.class.getSimpleName();
 
     @BindView(R.id.tv_back)
