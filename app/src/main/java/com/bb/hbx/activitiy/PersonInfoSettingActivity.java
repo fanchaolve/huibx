@@ -92,65 +92,65 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
         Can.userIcon= ShareSPUtils.sp.getString("userIcon", null);
         userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));
         MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
-        /*STSGetter getter=new STSGetter();
-        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
-
-        // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
-        // 异步上传时可以设置进度回调
-        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
-            @Override
-            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
-            }
-        });
-
-        if (callbackAddress != null) {
-            // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
-            put.setCallbackParam(new HashMap<String, String>() {
-                {
-                    put("callbackUrl", callbackAddress);
-                    //callbackBody可以自定义传入的信息
-                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
-
-                }
-            });
-        }
-
-        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-            @Override
-            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                Log.d("PutObject", "UploadSuccess");
-                Log.d("ETag", result.getETag());
-                Log.d("RequestId", result.getRequestId());
-                String string = result.getServerCallbackReturnBody().toString();
-                Log.d("callbackAddress",string);
-                try {
-                    JSONObject jsonObject = new JSONObject(string);
-                    JSONObject output = jsonObject.getJSONObject("output");
-                    String userLogo = output.getString("userLogo");
-                    showTip("userLogo"+userLogo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-                // 请求异常
-                if (clientExcepion != null) {
-                    // 本地异常如网络异常等
-                    clientExcepion.printStackTrace();
-                }
-                if (serviceException != null) {
-                    // 服务异常
-                    Log.e("ErrorCode", serviceException.getErrorCode());
-                    Log.e("RequestId", serviceException.getRequestId());
-                    Log.e("HostId", serviceException.getHostId());
-                    Log.e("RawMessage", serviceException.getRawMessage());
-                }
-            }
-        });*/
+//        /*STSGetter getter=new STSGetter();
+//        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+//
+//        // 构造上传请求
+//        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+//        // 异步上传时可以设置进度回调
+//        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+//            @Override
+//            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+//            }
+//        });
+//
+//        if (callbackAddress != null) {
+//            // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+//            put.setCallbackParam(new HashMap<String, String>() {
+//                {
+//                    put("callbackUrl", callbackAddress);
+//                    //callbackBody可以自定义传入的信息
+//                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+//
+//                }
+//            });
+//        }
+//
+//        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+//            @Override
+//            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+//                Log.d("PutObject", "UploadSuccess");
+//                Log.d("ETag", result.getETag());
+//                Log.d("RequestId", result.getRequestId());
+//                String string = result.getServerCallbackReturnBody().toString();
+//                Log.d("callbackAddress",string);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(string);
+//                    JSONObject output = jsonObject.getJSONObject("output");
+//                    String userLogo = output.getString("userLogo");
+//                    showTip("userLogo"+userLogo);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+//                // 请求异常
+//                if (clientExcepion != null) {
+//                    // 本地异常如网络异常等
+//                    clientExcepion.printStackTrace();
+//                }
+//                if (serviceException != null) {
+//                    // 服务异常
+//                    Log.e("ErrorCode", serviceException.getErrorCode());
+//                    Log.e("RequestId", serviceException.getRequestId());
+//                    Log.e("HostId", serviceException.getHostId());
+//                    Log.e("RawMessage", serviceException.getRawMessage());
+//                }
+//            }
+//        });*/
 
     }
 

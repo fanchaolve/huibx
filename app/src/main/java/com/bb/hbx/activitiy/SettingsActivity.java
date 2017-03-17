@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SettingsActivity extends BaseActivity implements View.OnClickListener{
+public class SettingsActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -72,8 +72,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
@@ -91,24 +90,24 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.feedback_layout:
                 //showTip("意见反馈");
-                intent.setClass(this,FeedBackActivity.class);
+                intent.setClass(this, FeedBackActivity.class);
                 startActivity(intent);
                 break;
             case R.id.aboutUs_layout:
                 showTip("关于汇保险");
                 break;
             case R.id.exits_layout:
+                if (TextUtils.isEmpty(MyApplication.user.getUserId())) {
+                    Toast.makeText(mContext, "您还未登录！", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
                 //showTip("退出登录");
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("确认退出登录?");
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (TextUtils.isEmpty(MyApplication.user.getUserId())) {
-                            Toast.makeText(mContext, "您还未登录！", Toast.LENGTH_SHORT).show();
-
-                            return;
-                        }
                         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
                         Call call = service.logout(MyApplication.user.getUserId());
                         call.enqueue(new Callback() {
