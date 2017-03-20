@@ -34,6 +34,7 @@ import retrofit2.Call;
 public class RecommendRewardActivity extends BaseActivity implements View.OnClickListener {
 
     private InviteFriendsListviewAdapter mAdapter;
+    private List<UserAccountDetailRecordBean> listViewList = new ArrayList<UserAccountDetailRecordBean>();
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -113,6 +114,7 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
                     if (bean != null) {
                         setView(bean);
                     }
+
                 }
             }
 
@@ -145,7 +147,10 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
         } else {
             //先将前三名显示出来，再将后面的存入新的集合传给listview显示
             setTopThreeView(list);
-            List<UserAccountDetailRecordBean> listViewList = new ArrayList<UserAccountDetailRecordBean>();
+            if (listViewList != null) {
+                listViewList.clear();
+            }
+
             for (int i = 0; i < list.size(); i++) {
                 if (i > 2) {
                     listViewList.add(list.get(i));
@@ -154,6 +159,7 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
             mAdapter = new InviteFriendsListviewAdapter(mContext, listViewList);
             lv_invitefriends.setAdapter(mAdapter);
             setListViewHeightByChildren(lv_invitefriends);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

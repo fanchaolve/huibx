@@ -15,6 +15,8 @@ import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
+import com.bb.hbx.bean.CollectionBean;
+import com.bb.hbx.bean.CollectionBean.FavoritesProductsRecordBean;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -25,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Call;
 
+import static com.bb.hbx.R.id.list;
 import static com.bb.hbx.R.id.refresh;
 
 /**
@@ -32,7 +35,7 @@ import static com.bb.hbx.R.id.refresh;
  * 个人收藏界面
  */
 
-public class MyCollectionActivity extends BaseActivity implements View.OnClickListener{
+public class MyCollectionActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -43,7 +46,7 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
 
-    private List<String> list = new ArrayList<>();
+    private List<FavoritesProductsRecordBean> list = new ArrayList<>();
     private GridLayoutManager manager;
     private MyCollectionAdapter adapter;
 
@@ -54,14 +57,14 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initView() {
-        manager = new GridLayoutManager(this,1) {
+        manager = new GridLayoutManager(this, 1) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         };
         recyclerView.setLayoutManager(manager);
-        adapter = new MyCollectionAdapter(this,list);
+        adapter = new MyCollectionAdapter(this, list);
         recyclerView.setAdapter(adapter);
     }
 
@@ -75,18 +78,18 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
         if (!list.isEmpty()) {
             list.clear();
         }
-        list.add("0");
+
         loadData();
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
         scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
+                loadData();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
+                loadData();
             }
         });
         adapter.setOnMyItemClickListener(new OnItemClickListener() {
@@ -111,11 +114,21 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
      */
     private void loadData() {
         ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = apiService.getUserFavoritesDetail(MyApplication.user.getUserId(),"10");
+        Call call = apiService.getUserFavoritesDetail(MyApplication.user.getUserId(), "10", "0");
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {
-
+                if (api.getOutput() != null && api.getOutput() instanceof CollectionBean) {
+                    CollectionBean collectionBean = (CollectionBean) api.getOutput();
+                    List<FavoritesProductsRecordBean> beanList = collectionBean.getFavoritesProductsRecord();
+                    if (beanList != null && beanList.size() > 0) {
+                        if (list.size() > 0) {
+                            list.clear();
+                        }
+                        list.addAll(beanList);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override

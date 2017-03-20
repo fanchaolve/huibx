@@ -8,6 +8,7 @@ import com.bb.hbx.bean.AreasListBean;
 import com.bb.hbx.bean.BannerBean;
 import com.bb.hbx.bean.BindingBankCard;
 import com.bb.hbx.bean.BobaoItem;
+import com.bb.hbx.bean.CollectionBean;
 import com.bb.hbx.bean.Consignees;
 import com.bb.hbx.bean.DeleteConsignee;
 import com.bb.hbx.bean.FilterBean;
@@ -309,8 +310,11 @@ public interface ApiService {
     //获取我的红包记录列表--已测
     @FormUrlEncoded
     @POST("api.do?method=getUserCouponsList&type=post")
-    Call<Result_Api<GetUserCouponsListBean>> getUserCouponsList(@Field("userId") String userId, @Field("sts") String sts, @Field("couponType") String couponType,
-                                                                @Field("pageIndex") String pageIndex, @Field("pageSize") String pageSize);
+    Call<Result_Api<GetUserCouponsListBean>> getUserCouponsList(@Field("userId") String userId,
+                                                                @Field("sts") String sts,
+                                                                @Field("couponType") String couponType,
+                                                                @Field("pageIndex") String pageIndex,
+                                                                @Field("pageSize") String pageSize);
 
     //判断用户是否能升B--待测
     @FormUrlEncoded
@@ -498,8 +502,9 @@ public interface ApiService {
     //获取收藏列表
     @FormUrlEncoded
     @POST("api.do?method=userFavoritesDetail&type=post")
-    Call<Result_Api<String>> getUserFavoritesDetail(@Field("userId") String userId,
-                                                    @Field("objType") String objType);
+    Call<Result_Api<CollectionBean>> getUserFavoritesDetail(@Field("userId") String userId,
+                                                            @Field("objType") String objType,
+                                                            @Field("benefitNum") String benefitNum);
 
     //收藏或取消收藏商品
     @FormUrlEncoded

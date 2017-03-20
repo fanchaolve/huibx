@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -112,7 +113,7 @@ public class UnUsedInRedPaFragment extends BaseFragment {
 
     private void showCouponsList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getUserCouponsList(MyApplication.user.getUserId(),"1","0",pageIndex+"","10");
+        Call call=service.getUserCouponsList(MyApplication.user.getUserId(),"1","2",pageIndex+"","10");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

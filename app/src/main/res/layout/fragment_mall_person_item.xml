@@ -115,7 +115,7 @@
                 android:textAppearance="@style/TextAppear.Theme.A4_Size11" />
 
             <TextView
-                android:id="@+id/tv_detail2"
+                android:id="@+id/tv_detail3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/y15"

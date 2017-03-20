@@ -3,6 +3,7 @@ package com.bb.hbx.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 //http://blog.csdn.net/SoftQQhe/article/details/5511515
+
 /**
  * Created by Administrator on 2016/12/27.
  */
 
-public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAdapter.MyViewHolder>{
+public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAdapter.MyViewHolder> {
 
     Context mContext;
     //ArrayList<String> list;
@@ -34,7 +36,7 @@ public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAd
     public MyUnUsedInRedPAdapter(Context mContext, List<GetUserCouponsListBean.CouponListBean> list) {
         this.mContext = mContext;
         this.list = list;
-        inflater=LayoutInflater.from(mContext);
+        inflater = LayoutInflater.from(mContext);
     }
 
     public void setOnMyItemClickListener(OnItemClickListener onMyItemClickListener) {
@@ -43,40 +45,42 @@ public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAd
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=inflater.inflate(R.layout.unused_redp_item,parent,false);
+        View view = inflater.inflate(R.layout.unused_redp_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         //Glide.with(mContext).load(list.get(position)).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(holder.pic_iv);
-        String offUpto = list.get(position).getOffUpto();
-        int offUptoBuff = TextUtils.isEmpty(offUpto)?0:Integer.parseInt(offUpto);
-        holder.info_tv.setText("满"+((offUptoBuff / 100) + "." + (offUptoBuff / 10 % 10) + (offUptoBuff % 10))+"元可用");
-        holder.price_tv.setText("¥"+list.get(position).getCouponValue());
-        holder.title_tv.setText(list.get(position).getCouponName());
-        holder.time_tv.setText("有效期:"+list.get(position).getEffTime()+"-"+list.get(position).getExpTime());
-        holder.condtion_tv.setText(list.get(position).getCouponDesc());
-        //holder.deadLine_iv.setTag(position);
-        String expTime = list.get(position).getExpTime();
-        String effTime = list.get(position).getEffTime();
-        long exp = TimeUtils.getStringToDate(expTime);
-        long eff = TimeUtils.getStringToDate(effTime);
-        long time=exp-eff;
-        if (time>86400000)//判断剩余一天图标是否显示
-        {
-            holder.deadLine_iv.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.deadLine_iv.setVisibility(View.VISIBLE);
-        }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMyItemClickListener.onMyItemClickListener(position);
+        if (list != null && list.size() > 0) {                  //做判空处理，防止无数据返回时页面崩溃
+            String offUpto = list.get(position).getOffUpto();
+
+            int offUptoBuff = TextUtils.isEmpty(offUpto) ? 0 : Integer.parseInt(offUpto);
+            holder.info_tv.setText("满" + ((offUptoBuff / 100) + "." + (offUptoBuff / 10 % 10) + (offUptoBuff % 10)) + "元可用");
+
+            holder.price_tv.setText("¥" + list.get(position).getCouponValue());
+            holder.title_tv.setText(list.get(position).getCouponName());
+            holder.time_tv.setText("有效期:" + list.get(position).getEffTime() + "-" + list.get(position).getExpTime());
+            holder.condtion_tv.setText(list.get(position).getCouponDesc());
+            //holder.deadLine_iv.setTag(position);
+            String expTime = list.get(position).getExpTime();
+            String effTime = list.get(position).getEffTime();
+            long exp = TimeUtils.getStringToDate(expTime);
+            long eff = TimeUtils.getStringToDate(effTime);
+            long time = exp - eff;
+            if (time > 86400000)//判断剩余一天图标是否显示
+            {
+                holder.deadLine_iv.setVisibility(View.GONE);
+            } else {
+                holder.deadLine_iv.setVisibility(View.VISIBLE);
             }
-        });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onMyItemClickListener.onMyItemClickListener(position);
+                }
+            });
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAd
         return list.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.divider_iv)
         ImageView divider_iv;
@@ -102,9 +106,10 @@ public class MyUnUsedInRedPAdapter extends RecyclerView.Adapter<MyUnUsedInRedPAd
         TextView time_tv;
         @BindView(R.id.condtion_tv)
         TextView condtion_tv;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
         }
     }
