@@ -58,6 +58,7 @@ public class WelcomeModel implements WelcomeContract.Model {
                 values.put("authority", "0");
                 values.put("phone", "");
                 values.put("gender", "0");//默认为0
+                values.put("userQrcode", "");//默认为0
                 long flag = MyUsersSqlite.db.insert("userstb", null, values);
                 //Toast.makeText(this,"插入新用户成功:"+flag,Toast.LENGTH_SHORT).show();
                 values.clear();
@@ -69,6 +70,7 @@ public class WelcomeModel implements WelcomeContract.Model {
                 MyApplication.user.setPaymentPwd("0");//是否设置过支付密码
                 MyApplication.user.setSessionId("");
                 MyApplication.user.setIsBClient(false);
+                MyApplication.user.setUserQrcode("");
             } else {
                 String hasLogined = cursor.getString(cursor.getColumnIndex("hasLogined"));
                 if (hasLogined.equals("true"))//首次登陆后,数据会被刷新
@@ -80,6 +82,8 @@ public class WelcomeModel implements WelcomeContract.Model {
                     String isBClient = cursor.getString(cursor.getColumnIndex("isBClient"));
                     String pwd = cursor.getString(cursor.getColumnIndex("pwd"));
                     String paymentPwd = cursor.getString(cursor.getColumnIndex("paymentPwd"));
+                    String userQrcode = cursor.getString(cursor.getColumnIndex("userQrcode"));
+                    MyApplication.user.setUserQrcode(userQrcode);
                     MyApplication.user.setUserId(userId);
                     MyApplication.user.setAuthority(authority);
                     MyApplication.user.setMobile(phone);
@@ -96,6 +100,7 @@ public class WelcomeModel implements WelcomeContract.Model {
                     MyApplication.user.setPaymentPwd("0");
                     MyApplication.user.setSessionId("");
                     MyApplication.user.setIsBClient(false);
+                    MyApplication.user.setUserQrcode("");
                 }
             }
             db.close();

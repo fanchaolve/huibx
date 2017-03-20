@@ -18,6 +18,7 @@ import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.utils.CompressBitmap;
+import com.bb.hbx.utils.MyOssUtils;
 
 import java.io.File;
 
@@ -150,14 +151,32 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
         if (requestCode==101)
         {
             bitmapFront = CompressBitmap.compressBitmapOnly(picPathFront, 2);
-            front_iv.setImageBitmap(bitmapFront);
-            frontFlag_iv.setVisibility(View.GONE);
+            if (bitmapFront==null)
+            {
+                front_iv.setImageResource(R.drawable.shenfenzhengzhengmian);
+                frontFlag_iv.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                front_iv.setImageBitmap(bitmapFront);
+                frontFlag_iv.setVisibility(View.GONE);
+                new MyOssUtils(getApplicationContext(),picPathFront,"idcard","idCard_F","_F");
+            }
         }
         else if (requestCode==102)
         {
             bitmapReverse = CompressBitmap.compressBitmapOnly(picPathReverse, 2);
-            reverse_iv.setImageBitmap(bitmapReverse);
-            reverseFlag_iv.setVisibility(View.GONE);
+            if (bitmapReverse==null)
+            {
+                reverse_iv.setImageResource(R.drawable.shenfenzhengfanmian);
+                reverseFlag_iv.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                reverse_iv.setImageBitmap(bitmapReverse);
+                reverseFlag_iv.setVisibility(View.GONE);
+                new MyOssUtils(getApplicationContext(),picPathReverse,"idcard","idCard_B","_B");
+            }
             //bitmap.recycle();
         }
     }

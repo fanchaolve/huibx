@@ -63,6 +63,7 @@ public class User {
     private String userName = "";
     private String paymentPwd = "";
     private String nickName = "";
+    private String userQrcode = "";
 
     private String authority = "0";
 
@@ -256,6 +257,14 @@ public class User {
 
     public void setPaymentPwd(String paymentPwd) {
         this.paymentPwd = paymentPwd;
+    }
+
+    public String getUserQrcode() {
+        return userQrcode;
+    }
+
+    public void setUserQrcode(String userQrcode) {
+        this.userQrcode = userQrcode;
     }
 
     public String getAuthority() {

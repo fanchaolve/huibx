@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.bb.hbx.bean.IniviteFriendsBean;
 import com.bb.hbx.bean.IniviteFriendsBean.UserAccountDetailRecordBean;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.GlideUtil;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,8 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.tv_money)
     TextView tv_money;
 
+    @BindView(R.id.qrcode_iv)
+    ImageView qrcode_iv;
     @Override
     public int getLayoutId() {
         return R.layout.activity_invite_friend;
@@ -85,7 +89,7 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initView() {
-
+        Glide.with(this).load(MyApplication.user.getUserQrcode()).into(qrcode_iv);
     }
 
     @Override
@@ -130,6 +134,8 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
      * @param bean
      */
     public void setView(IniviteFriendsBean bean) {
+        //qrcode_iv.setImageBitmap(MyApplication.user.getUserQrcode());
+        //Glide.with(this).load(MyApplication.user.getUserQrcode()).into(qrcode_iv);
         List<UserAccountDetailRecordBean> list = bean.getUserAccountDetailRecord();
         tv_inviteNum.setText(bean.getCount() + "位");
         tv_money.setText(bean.getAcctSum() + "元");

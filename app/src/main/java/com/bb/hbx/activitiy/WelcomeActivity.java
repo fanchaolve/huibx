@@ -21,6 +21,7 @@ import com.bb.hbx.utils.DeviceUtils;
 import com.bb.hbx.utils.MyUsersSqlite;
 import com.bb.hbx.utils.PermissionUtils;
 import com.bb.hbx.utils.ShareSPUtils;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 
 public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel> implements
@@ -33,6 +34,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel
     boolean isOnce = false;
     //true: 成功 false:失败
     boolean isFlag = true;
+
+    // IWXAPI 是第三方app和微信通信的openapi接口
+    public static IWXAPI api;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_welcome;
@@ -69,8 +74,18 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel
         MyUsersSqlite.initUsersdb(this);
         mPresenter.settingUser();
 
+        //registToWeChat();
         comm();
+
     }
+
+    /*//注册到微信
+    private void registToWeChat() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
+        // 将该app注册到微信
+        api.registerApp(Constants.APP_ID);
+    }*/
 
 
     private void comm() {

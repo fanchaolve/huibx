@@ -216,6 +216,7 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
                                 String userName = user.getNickName();
                                 String email = user.getEmail();
                                 String logo = user.getLogo();
+                                String userQrcode = user.getUserQrcode();
                                 if (TextUtils.isEmpty(gender))
                                 {
                                     gender="0";
@@ -228,11 +229,12 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
                                 ShareSPUtils.writeShareSp(true,userId,sessionId,"默认用户名",phone, pwd);
                                 //更新表数据
                                 SQLiteDatabase db=DatabaseImpl.getInstance().getReadableDatabase();
-                                db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? where currentUser=currentUser ",
-                                        new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,"1"/*pwd*/,paymentPwd,logo});
+                                db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
+                                        new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,"1"/*pwd*/,paymentPwd,logo,userQrcode});
                                 db.close();
                                 showTip(body.getRespMsg());
 
+                                MyApplication.user.setUserQrcode(userQrcode);
                                 MyApplication.user.setUserId(userId);
                                 MyApplication.user.setMobile(phone);
                                 MyApplication.user.setLoginPwd("1");//1表示已经设置过登录密码

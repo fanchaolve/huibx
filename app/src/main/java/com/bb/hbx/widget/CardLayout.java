@@ -1,10 +1,10 @@
 package com.bb.hbx.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,8 +17,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bb.hbx.R.drawable.on;
 
 
 /**
@@ -296,21 +294,39 @@ public class CardLayout extends LinearLayout implements View.OnClickListener {
         if(planList==null)
             return;
         if(planList.size()>=3){
-            tv_price1.setText(planList.get(0).getPlanPrice());
+            String priceString1 = planList.get(0).getPlanPrice();
+            int priceInt1 = TextUtils.isEmpty(priceString1)?0:Integer.parseInt(priceString1);
+            //tv_price1.setText(planList.get(0).getPlanPrice());
+            tv_price1.setText((priceInt1/100)+"."+(priceInt1/10%10)+(priceInt1%10));
             tv_detail1.setText(planList.get(0).getPlanName());
 
-            tv_price2.setText(planList.get(1).getPlanPrice());
+            String priceString2 = planList.get(1).getPlanPrice();
+            int priceInt2 = TextUtils.isEmpty(priceString2)?0:Integer.parseInt(priceString2);
+            //tv_price2.setText(planList.get(1).getPlanPrice());
+            tv_price2.setText((priceInt2/100)+"."+(priceInt2/10%10)+(priceInt2%10));
             tv_detail2.setText(planList.get(1).getPlanName());
 
-            tv_price3.setText(planList.get(2).getPlanPrice());
+            String priceString3 = planList.get(2).getPlanPrice();
+            int priceInt3 = TextUtils.isEmpty(priceString3)?0:Integer.parseInt(priceString3);
+            //tv_price3.setText(planList.get(2).getPlanPrice());
+            tv_price3.setText((priceInt3/100)+"."+(priceInt3/10%10)+(priceInt3%10));
             tv_detail3.setText(planList.get(2).getPlanName());
         }else if(planList.size()==2){
-            tv_price1.setText(planList.get(0).getPlanPrice());
+            String priceString1 = planList.get(0).getPlanPrice();
+            int priceInt1 = TextUtils.isEmpty(priceString1)?0:Integer.parseInt(priceString1);
+            //tv_price1.setText(planList.get(0).getPlanPrice());
+            tv_price1.setText((priceInt1/100)+"."+(priceInt1/10%10)+(priceInt1%10));
             tv_detail1.setText(planList.get(0).getPlanName());
-            tv_price2.setText(planList.get(1).getPlanPrice());
+
+            String priceString2 = planList.get(1).getPlanPrice();
+            int priceInt2 = TextUtils.isEmpty(priceString2)?0:Integer.parseInt(priceString2);
+            //tv_price2.setText(planList.get(1).getPlanPrice());
+            tv_price2.setText((priceInt2/100)+"."+(priceInt2/10%10)+(priceInt2%10));
             tv_detail2.setText(planList.get(1).getPlanName());
         }else if(planList.size()==1){
-            tv_price1.setText(planList.get(0).getPlanPrice());
+            String priceString1 = planList.get(0).getPlanPrice();
+            int priceInt1 = TextUtils.isEmpty(priceString1)?0:Integer.parseInt(priceString1);
+            tv_price1.setText((priceInt1/100)+"."+(priceInt1/10%10)+(priceInt1%10));
             tv_detail1.setText(planList.get(0).getPlanName());
         }
 

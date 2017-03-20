@@ -201,26 +201,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".activitiy.SelectCarActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".activitiy.UpdateInsurancePlanActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity android:name=".activitiy.MyBankCardActivity" />
         <activity android:name=".activitiy.SettingsActivity" />
-        <activity android:name=".activitiy.FeedBackActivity"></activity>
-
-
+        <activity android:name=".activitiy.FeedBackActivity" />
         <activity
             android:name=".activitiy.SuccessOrderActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -228,36 +223,39 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <!-- 支付宝支付-->
+        <!-- 支付宝支付 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
 
+        <!-- 连连支付 -->
+        <service android:name="com.yintong.secure.service.PayService" />
 
-        <!-- 连连支付-->
-        <service android:name="com.yintong.secure.service.PayService"></service>
-
-        <!--连连支付 LLYT SDK START -->
+        <!-- 连连支付 LLYT SDK START -->
         <activity
             android:name="com.yintong.secure.activity.BaseActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
 
-
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--
+      ATTENTION: This was auto-generated to add Google Play services to your project for
+      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

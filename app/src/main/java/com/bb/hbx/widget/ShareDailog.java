@@ -2,18 +2,16 @@ package com.bb.hbx.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
 import com.bb.hbx.BaseDialog;
 import com.bb.hbx.R;
+import com.bb.hbx.interfaces.OnItemClickListener;
 
 
 /**
@@ -33,6 +31,18 @@ public class ShareDailog extends BaseDialog implements
     private LinearLayout lin_cancl;
 
     private Context mContext;
+
+    OnItemClickListener mItemPYQClickListener;
+    OnItemClickListener mItemHYClickListener;
+
+    public void setmItemPYQClickListener(OnItemClickListener mItemPYQClickListener) {
+        this.mItemPYQClickListener = mItemPYQClickListener;
+    }
+
+    public void setmItemHYClickListener(OnItemClickListener mItemHYClickListener) {
+        this.mItemHYClickListener = mItemHYClickListener;
+    }
+
     /**
      * @param context    上下文
      *
@@ -79,10 +89,12 @@ public class ShareDailog extends BaseDialog implements
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lin_wxshare:
-                Toast.makeText(mContext,"wx",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,"wx",Toast.LENGTH_LONG).show();
+                mItemHYClickListener.onMyItemClickListener(0);
                 break;
             case R.id.lin_pyqshare:
-                Toast.makeText(mContext,"pyq",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,"pyq",Toast.LENGTH_LONG).show();
+                mItemPYQClickListener.onMyItemClickListener(0);
                 break;
             case R.id.lin_qqshare:
                 Toast.makeText(mContext,"qq",Toast.LENGTH_LONG).show();

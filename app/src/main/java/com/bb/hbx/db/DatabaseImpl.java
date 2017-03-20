@@ -19,8 +19,6 @@ import com.bb.hbx.bean.XhbMsg;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-
 /**
  * Created by Administrator on 2017/1/3.
  */
@@ -123,7 +121,7 @@ public class DatabaseImpl extends SQLiteOpenHelper implements Database {
 
         //name表示nickName
         String sql = "create table if not exists userstb(_id integer primary key autoincrement,currentUser text,hasLogined text,authority text,userId text,sessionId text," +
-                "isBClient text,name text,gender text,email text,phone text,pwd text,paymentPwd text,usericon text)";
+                "isBClient text,name text,gender text,email text,phone text,pwd text,paymentPwd text,usericon text,userQrcode text)";
 
         db.execSQL(sql);
     }

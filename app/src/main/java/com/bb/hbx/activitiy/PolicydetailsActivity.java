@@ -20,7 +20,6 @@ import com.bb.hbx.db.DatabaseImpl;
 import com.bb.hbx.provide.PolicyFormProvide;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.StringUtils;
-import com.bb.hbx.utils.TimeUtils;
 import com.bb.hbx.utils.Utils;
 import com.bb.hbx.widget.RecycleViewDivider;
 import com.bb.hbx.widget.multitype.MultiTypeAdapter;
@@ -189,8 +188,10 @@ public class PolicydetailsActivity extends BaseActivity<PolicydetailPresenter, P
             tv_confim.setText("去购买");
         }
 
-        tv_startTime.setText(TimeUtils.formatDate(detail.getStartTime()));
-        tv_endTime.setText(TimeUtils.formatDate(detail.getEndTime()));
+        /*tv_startTime.setText(TimeUtils.formatDate(detail.getStartTime()));
+        tv_endTime.setText(TimeUtils.formatDate(detail.getEndTime()));*/
+        tv_startTime.setText(detail.getStartTime());
+        tv_endTime.setText(detail.getEndTime());
         tv_name.setText(detail.getApplicant());
         tv_idtype.setText(StringUtils.idTostring(detail.getApplicantType()));
         tv_idNo.setText(detail.getApplicantIdNo());

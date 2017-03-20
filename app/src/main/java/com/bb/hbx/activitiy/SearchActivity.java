@@ -228,7 +228,7 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
                 if (body.isSuccess())
                 {
                     rl_view.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
+                    scrollView.setVisibility(View.VISIBLE);
                     ProductBean bean = (ProductBean) body.getOutput();
                     if (bean!=null)
                     {
@@ -306,6 +306,10 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
 
                 if (pos > 0 && (pos - 1) / 4 == 1) {
                     outRect.top = getResources().getDimensionPixelOffset(R.dimen.y26);
+                    outRect.bottom = getResources().getDimensionPixelOffset(R.dimen.y36);
+                }
+                else
+                {
                     outRect.bottom = getResources().getDimensionPixelOffset(R.dimen.y36);
                 }
 

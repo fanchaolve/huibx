@@ -179,6 +179,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/registTime_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -187,14 +188,16 @@
                     android:textColorHint="@color/A5"
                     android:textSize="13sp" />
 
-                <ImageButton
+                <ImageView
+                    android:id="@+id/registTime_ib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:background="#fff"
-                    android:src="@drawable/btn_slector_pull" />
+                    android:src="@drawable/xialaicon"
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -253,6 +256,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/jqxTime_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -261,14 +265,16 @@
                     android:textColorHint="@color/A5"
                     android:textSize="13sp" />
 
-                <ImageButton
+                <ImageView
+                    android:id="@+id/jqxTime_ib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:background="#fff"
-                    android:src="@drawable/btn_slector_pull" />
+                    android:src="@drawable/xialaicon"
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -294,6 +300,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/syxTime_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -302,14 +309,16 @@
                     android:textColorHint="@color/A5"
                     android:textSize="13sp" />
 
-                <ImageButton
+                <ImageView
+                    android:id="@+id/syxTime_ib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:background="#fff"
-                    android:src="@drawable/btn_slector_pull" />
+                    android:src="@drawable/xialaicon"
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:layout_width="match_parent"

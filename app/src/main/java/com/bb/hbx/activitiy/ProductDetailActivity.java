@@ -30,6 +30,7 @@ import com.bb.hbx.bean.Entry;
 import com.bb.hbx.bean.InsuredInfolBean;
 import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.ProductParamDetail;
+import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.Constants;
 import com.bb.hbx.utils.Utils;
@@ -37,8 +38,19 @@ import com.bb.hbx.widget.CardLayout;
 import com.bb.hbx.widget.ClickAble;
 import com.bb.hbx.widget.ItemLayout;
 import com.bb.hbx.widget.ItemLayout2;
+import com.bb.hbx.widget.MyScrollView;
 import com.bb.hbx.widget.PickerDialogOneWheel;
 import com.bb.hbx.widget.ShareDailog;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.GetMessageFromWX;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,11 +68,13 @@ import static com.bb.hbx.utils.Constants.idTypes;
  */
 
 public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, ProductDetailModle> implements ProductDetailContract.View,
-        View.OnClickListener {
+        View.OnClickListener,MyScrollView.OnScrollChangedListener ,IWXAPIEventHandler {
 
 
+    /*@BindView(R.id.sl)
+    ScrollView sl;*/
     @BindView(R.id.sl)
-    ScrollView sl;
+    MyScrollView sl;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -174,6 +188,20 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
     private final static int REQUEST_GETTBR = 0x001;
 
+    private float headerHeight;//顶部高度
+    private float minHeaderHeight;//顶部最低高度，即Bar的高度
+
+    Bundle bundle;
+    // IWXAPI 是第三方app和微信通信的openapi接口
+    public  IWXAPI api;
+
+    //注册到微信
+    private void registToWeChat() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
+        // 将该app注册到微信
+        api.registerApp(Constants.APP_ID);
+    }
 
     //传递接口需要的参数
     private PickerDialogOneWheel.OnTextListener textListener = new PickerDialogOneWheel.OnTextListener() {
@@ -215,7 +243,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @Override
     public int getLayoutId() {
         //沉浸状态栏
-        initState();
+        //initState();
         return R.layout.activity_productdetail;
     }
 
@@ -260,6 +288,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
     @Override
     public void initListener() {
+        sl.setmOnScrollChangedListener(this);
         tv_buy.setOnClickListener(this);
         iv_add.setOnClickListener(this);
         iv_sub.setOnClickListener(this);
@@ -352,7 +381,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @Override
     public void initdata() {
         mPresenter.getProductDetail(productId);
-
+        registToWeChat();
     }
 
 
@@ -366,8 +395,96 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 mPresenter.subCount();
                 break;
             case R.id.lin_share:
-                ShareDailog shareDailog = new ShareDailog(this);
+                final ShareDailog shareDailog = new ShareDailog(this);
                 shareDailog.show();
+                shareDailog.setmItemPYQClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onMyItemClickListener(int position) {
+                        IWXAPI wxapi = WXAPIFactory.createWXAPI(ProductDetailActivity.this, Constants.APP_ID);
+                        int mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
+                        String text = "朋友圈!";
+                        if (text == null || text.length() == 0) {
+                            return;
+                        }
+                        // 初始化一个WXTextObject对象,填写分享的文本内容
+                        WXTextObject textObj = new WXTextObject();
+                        textObj.text = text;
+
+                        // 用WXTextObject对象初始化一个WXMediaMessage对象
+                        WXMediaMessage msg = new WXMediaMessage();
+                        msg.mediaObject = textObj;
+                        // �����ı����͵���Ϣʱ��title�ֶβ�������
+                        // msg.title = "Will be ignored";
+                        msg.description = text;
+
+                        // 构造一个req
+                        SendMessageToWX.Req req = new SendMessageToWX.Req();
+                        //transaction字段用于唯一标识一个请求
+                        req.transaction = String.valueOf(System.currentTimeMillis());
+                        //req.transaction =buildTransaction("text");
+                        req.message = msg;
+                        req.scene = mTargetScene;
+
+                        // 调用api接口发送数据到微信
+                        boolean b = wxapi.sendReq(req);
+                        shareDailog.dismiss();
+
+                    }
+                });
+                shareDailog.setmItemHYClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onMyItemClickListener(int position) {
+                        IWXAPI wxapi = WXAPIFactory.createWXAPI(ProductDetailActivity.this, Constants.APP_ID);
+                        int mTargetScene = SendMessageToWX.Req.WXSceneSession;
+                        String text = "安卓开发";
+                        if (text == null || text.length() == 0) {
+                            return;
+                        }
+                        // ��ʼ��һ��WXTextObject����
+                        WXTextObject textObj = new WXTextObject();
+                        textObj.text = text;
+
+                        // ��WXTextObject�����ʼ��һ��WXMediaMessage����
+                        WXMediaMessage msg = new WXMediaMessage();
+                        msg.mediaObject = textObj;
+                        // �����ı����͵���Ϣʱ��title�ֶβ�������
+                        // msg.title = "Will be ignored";
+                        msg.description = text;
+
+                        // ����һ��Req
+                        SendMessageToWX.Req req = new SendMessageToWX.Req();
+                        req.transaction = String.valueOf(System.currentTimeMillis());
+                        //req.transaction =buildTransaction("text");
+                        req.message = msg;
+                        req.scene = mTargetScene;
+
+                        // ����api�ӿڷ�����ݵ�΢��
+                        boolean b = wxapi.sendReq(req);
+                        shareDailog.dismiss();
+                    }
+                });
+
+
+
+                /*api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
+                bundle = getIntent().getExtras();
+                //String text = "朋友圈分享！";
+                // 初始化一个WXTextObject对象
+                WXTextObject textObj1 = new WXTextObject();
+                textObj1.text = text;
+
+                // 用WXTextObject对象初始化一个WXMediaMessage对象
+                WXMediaMessage msg1 = new WXMediaMessage(textObj);
+                msg1.description = text;
+
+                // 构造一个Resp
+                GetMessageFromWX.Resp resp1 = new GetMessageFromWX.Resp();
+                // 将req的transaction设置到resp对象中，其中bundle为微信传递过来的intent所带的内容，通过getExtras方法获取
+                resp1.transaction = getTransaction();
+                resp1.message = msg1;
+
+                // 调用api接口响应数据到微信
+                api.sendResp(resp1);*/
                 break;
             case R.id.tv_buy:
                 //调用 提交订单 接口
@@ -383,6 +500,18 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         }
     }
 
+    private String getTransaction() {
+        try {
+            final GetMessageFromWX.Req req = new GetMessageFromWX.Req(bundle);
+            return req.transaction;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
     /**
      * 收藏商品的网络请求
      */
@@ -607,5 +736,86 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
             }
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        headerHeight = getResources().getDimension(R.dimen.y500);//顶部高度
+        minHeaderHeight = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);//顶部最低高度，即Bar的高度
+        toolbar.getBackground().mutate().setAlpha(0);
+    }
+
+    @Override
+    public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
+        //Y轴偏移量
+        float scrollY = who.getScrollY();
+        //Log.e("===onScrollChanged===","======="+scrollY);
+        //变化率
+        float headerBarOffsetY = headerHeight - minHeaderHeight;//Toolbar与header高度的差值
+        //Toolbar背景色透明度
+        if (scrollY==0)
+        {
+            toolbar.getBackground().mutate().setAlpha(0);
+        }
+        else if (scrollY>0)
+        {
+            float offset = 1 - Math.max((headerBarOffsetY - scrollY) / headerBarOffsetY, 0f);
+            toolbar.getBackground().mutate().setAlpha((int) (offset * 255));
+        }
+        else
+        {
+            toolbar.getBackground().mutate().setAlpha(0);
+        }
+    }
+
+    @Override
+    public void onReq(BaseReq req) {
+        switch (req.getType()) {
+            case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
+                //goToGetMsg();
+                break;
+            case ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX:
+                //goToShowMsg((ShowMessageFromWX.Req) req);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        api.handleIntent(intent, this);
+    }
+
+    //发送到微信请求的响应结果
+    @Override
+    public void onResp(BaseResp resp) {
+        int result = 0;
+
+        Toast.makeText(this, "baseresp.getType = " + resp.getType(), Toast.LENGTH_SHORT).show();
+
+        switch (resp.errCode) {
+            case BaseResp.ErrCode.ERR_OK:
+                //result = R.string.errcode_success;
+                result = 1;
+                break;
+            case BaseResp.ErrCode.ERR_USER_CANCEL:
+                result = 2;
+                break;
+            case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                result = 3;
+                break;
+            case BaseResp.ErrCode.ERR_UNSUPPORT:
+                result = 4;
+                break;
+            default:
+                result = 5;
+                break;
+        }
+
+        Toast.makeText(this,"result"+ result, Toast.LENGTH_LONG).show();
     }
 }

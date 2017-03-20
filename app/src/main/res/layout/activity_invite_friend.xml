@@ -70,11 +70,13 @@
                     android:textSize="12sp" />
 
                 <ImageView
+                    android:id="@+id/qrcode_iv"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="144dp"
-                    android:src="@drawable/yaoqing_erweima" />
+                    android:src="@drawable/yaoqing_erweima"
+                    android:scaleType="centerCrop"/>
 
                 <Button
                     android:id="@+id/btn_gotoinvitefriend"

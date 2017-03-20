@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.utils.MyOssUtils;
 
 import butterknife.BindView;
 
@@ -37,7 +36,7 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
         String reversePath = intent.getStringExtra("reverse");
         if (!TextUtils.isEmpty(frontPath))
         {
-            MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(), frontPath);
+            //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(), frontPath);
         }
     }
 

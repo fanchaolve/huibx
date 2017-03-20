@@ -105,8 +105,32 @@
                     <!--android:text=" 起"-->
                     <!--android:textAppearance="@style/TextAppear.Theme.A4_Size14" />-->
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_pro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x26"
+                        android:background="@drawable/tuiguangfeibiaoqian"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="20%推广费"
+                        android:textAppearance="@style/TextAppear.Theme.white_Size11"
+                        />
 
-                <TextView
+                    <TextView
+                        android:id="@+id/tv_sales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x26"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppear.Theme.A1_Size12"
+                        tools:text="销量 12万份" />
+                </RelativeLayout>
+<!--
+    <TextView
                     android:id="@+id/tv_pro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,6 +150,7 @@
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppear.Theme.A1_Size12"
                     tools:text="销量 12万份" />
+-->
 
 
             </LinearLayout>

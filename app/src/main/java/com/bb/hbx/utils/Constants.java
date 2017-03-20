@@ -82,4 +82,6 @@ public final class Constants {
     // 支付宝公钥
     public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnEe6hPpOhBHKP/95CLpD18M1dpZDQNCbhq898C/JdFPm0fzABpHChMCejax5fuPCaKlgbrRPYJMFvyCCXQRekbDyXPg+NqTzkY8KN0zffrxOImKa9y5KQLA1lxNzsCdPFsLqie5k0utwxDdlTHG+4mW6UqQNiwlL0QNVFUTXnywIDAQAB";
 
+    //微信分享
+    public static final String APP_ID = "wxc7473dec7d6ffdc0";
 }

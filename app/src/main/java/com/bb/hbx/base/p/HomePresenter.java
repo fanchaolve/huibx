@@ -12,8 +12,6 @@ import com.bb.hbx.bean.BKItem;
 import com.bb.hbx.bean.BannerBean;
 import com.bb.hbx.bean.BobaoItem;
 import com.bb.hbx.bean.MsgInfo;
-import com.bb.hbx.bean.WaitingItem;
-import com.bb.hbx.bean.HomePageInfo;
 import com.bb.hbx.bean.ProductItem;
 import com.bb.hbx.bean.ProductListBean;
 import com.bb.hbx.bean.Special;
@@ -21,7 +19,6 @@ import com.bb.hbx.utils.Constants;
 import com.bb.hbx.widget.multitype.data.Item;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -151,9 +148,12 @@ public class HomePresenter extends HomeContract.Presenter {
         GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                Item item = items.get(position);
-                if (item instanceof ProductItem) {
-                    return 1;
+                if (position<items.size())//-------------------这层判断我新加
+                {
+                    Item item = items.get(position);
+                    if (item instanceof ProductItem) {
+                        return 1;
+                    }
                 }
                 return item_PageSize;
             }

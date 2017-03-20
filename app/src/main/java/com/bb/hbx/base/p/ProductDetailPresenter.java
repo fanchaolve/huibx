@@ -333,15 +333,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         selectPerids = perids[index];
         //selectPerids = perids[index].substring(0, perids[0].indexOf("_"));
         //observable.set(observable.size() - 1, perids[index]);
-        //observable.set(observable.size() - 1, perids[index].substring(0, perids[0].indexOf("_")));
-        if (perids[0].indexOf("_")>0)
-        {
-            observable.set(observable.size() - 1, perids[index].substring(0, perids[0].indexOf("_")));
-        }
-        else
-        {
-            observable.set(observable.size() - 1, perids[index]);
-        }
+        //observable.set(observable.size() - 1, selectPerids);
     }
 
     @Override

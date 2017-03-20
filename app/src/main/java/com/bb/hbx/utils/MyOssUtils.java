@@ -29,18 +29,20 @@ public class MyOssUtils {
     String callbackAddress="http://ebao.seaway.net.cn:9003/api/ossCallback.do";
     String imgPath;
 
-    public MyOssUtils(Context mContext,String imgPath) {
+    public MyOssUtils(Context mContext,String imgPath,String type,String content,String dire) {
         this.mContext = mContext;
         this.imgPath=imgPath;
-        updataLogo();
+        updataLogo(type,content,dire);
     }
 
-    private void updataLogo() {
+    private void updataLogo(String type, final String content, final String dire) {
         STSGetter getter=new STSGetter();
-        OSS oss = new OSSClient(mContext,"http://img-cn-hangzhou.aliyuncs.com",getter);
+        OSS oss = new OSSClient(mContext,"http://img-cn-hangzhoaliyuncs.com",getter);
 
+        //logo-----idcard   _F  _B
         // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", /*Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg"*/imgPath);
+        //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", /*Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg"*/imgPath);
+        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/"+type+"/"+ MyApplication.user.getUserId()+dire+".jpg", /*Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg"*/imgPath);
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
@@ -49,13 +51,15 @@ public class MyOssUtils {
             }
         });
 
+        //logo---
         if (callbackAddress != null) {
             // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
             put.setCallbackParam(new HashMap<String, String>() {
                 {
                     put("callbackUrl", callbackAddress);
                     //callbackBody可以自定义传入的信息
-                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+                    //put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+                    put("callbackBody", "uploadType="+content+"&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
 
                 }
             });
