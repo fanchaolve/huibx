@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import com.bb.hbx.activitiy.CustomerManagerActivity;
 import com.bb.hbx.activitiy.InfoActivity;
 import com.bb.hbx.activitiy.MyAssertActivity;
 import com.bb.hbx.activitiy.MyAssertDetailActivity;
-import com.bb.hbx.activitiy.MyBankCardActivity;
 import com.bb.hbx.activitiy.MyCollectionActivity;
 import com.bb.hbx.activitiy.MyOrderActivity;
 import com.bb.hbx.activitiy.PerInsuOrderActivity;
@@ -41,7 +41,7 @@ import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.GetMyPageInfoBean;
 import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.db.DatabaseImpl;
-import com.bb.hbx.utils.AppManager;
+import com.bb.hbx.utils.GlideUtil;
 import com.bb.hbx.utils.ShareSPUtils;
 
 import butterknife.BindView;
@@ -172,8 +172,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void initView() {
         initListener();
-
-        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
+        /*String ss = ShareSPUtils.sp.getString("userIcon", null);
+        Glide.with(mContext).load(ShareSPUtils.sp.getString("userIcon",null)).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);*/
+        //ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);//----------------------------
         hasLoginShow();
         //updateMyAccount();
     }
@@ -221,7 +222,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*hasLogin_tv,*/mContext);
+        //ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*hasLogin_tv,*/mContext);--------------------
         hasLoginShow();
     }
 
@@ -345,6 +346,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void hasLoginShow() {
         boolean hasLogined = ShareSPUtils.sp.getBoolean("hasLogined", false);
         if (hasLogined) {
+            ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
             identify_tv.setVisibility(View.VISIBLE);
             String userName = null;
             SQLiteDatabase db = DatabaseImpl.getInstance().getReadableDatabase();
@@ -410,6 +412,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         else
         {
+            ShareSPUtils.readShareSP(notLogin_layout, userIcon_civ,/*,hasLogin_tv,*/mContext);
             identify_tv.setVisibility(View.GONE);
             if (hasLogin_tv!=null)
             {
@@ -444,6 +447,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         score_tv.setText((score / 100) + "." + (score / 10 % 10) + (score % 10));
                         redPacket_tv.setText(couponCount + "");
                         identify_tv.setText(0 == realNameStatus ? "未认证" : "已认证");
+                        String userLogo = bean.getUserLogo();
+                        Log.d("========fragmetn","=========="+userLogo);
+                        ShareSPUtils.edit.putString("userIcon", userLogo);
+                        ShareSPUtils.edit.commit();
+                        //ImageCatchUtil.getInstance().clearImageMemoryCache();
+                        GlideUtil.getInstance().clearMemory(mContext);
+                        GlideUtil.getInstance().loadImageWithCache(mContext,userIcon_civ, userLogo);
                     }
                 }
             }

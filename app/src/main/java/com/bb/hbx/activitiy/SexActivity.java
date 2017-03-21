@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
@@ -145,6 +146,7 @@ public class SexActivity extends BaseActivity implements View.OnClickListener{
                         db.execSQL("update userstb set gender=? where currentUser=currentUser ",
                                 new String[]{gender});
                         db.close();
+                        MyApplication.user.setGender(gender);
                     }
                     showTip(body.getRespMsg());
                 }

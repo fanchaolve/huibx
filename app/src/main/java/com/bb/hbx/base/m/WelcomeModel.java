@@ -70,6 +70,7 @@ public class WelcomeModel implements WelcomeContract.Model {
                 MyApplication.user.setPaymentPwd("0");//是否设置过支付密码
                 MyApplication.user.setSessionId("");
                 MyApplication.user.setIsBClient(false);
+                MyApplication.user.setGender("0");
                 MyApplication.user.setUserQrcode("");
             } else {
                 String hasLogined = cursor.getString(cursor.getColumnIndex("hasLogined"));
@@ -81,12 +82,14 @@ public class WelcomeModel implements WelcomeContract.Model {
                     String sessionId = cursor.getString(cursor.getColumnIndex("sessionId"));
                     String isBClient = cursor.getString(cursor.getColumnIndex("isBClient"));
                     String pwd = cursor.getString(cursor.getColumnIndex("pwd"));
+                    String gender = cursor.getString(cursor.getColumnIndex("gender"));
                     String paymentPwd = cursor.getString(cursor.getColumnIndex("paymentPwd"));
                     String userQrcode = cursor.getString(cursor.getColumnIndex("userQrcode"));
                     MyApplication.user.setUserQrcode(userQrcode);
                     MyApplication.user.setUserId(userId);
                     MyApplication.user.setAuthority(authority);
                     MyApplication.user.setMobile(phone);
+                    MyApplication.user.setGender(gender);
                     //MyApplication.user.setLoginPwd(TextUtils.isEmpty(pwd)?"0":"1");
                     MyApplication.user.setLoginPwd(pwd);
                     MyApplication.user.setPaymentPwd(paymentPwd);
@@ -96,6 +99,7 @@ public class WelcomeModel implements WelcomeContract.Model {
                     MyApplication.user.setUserId("");
                     MyApplication.user.setAuthority("0");
                     MyApplication.user.setMobile("");
+                    MyApplication.user.setGender("0");
                     MyApplication.user.setLoginPwd("0");
                     MyApplication.user.setPaymentPwd("0");
                     MyApplication.user.setSessionId("");

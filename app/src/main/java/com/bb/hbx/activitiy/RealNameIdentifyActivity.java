@@ -3,24 +3,43 @@ package com.bb.hbx.activitiy;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.utils.CompressBitmap;
-import com.bb.hbx.utils.MyOssUtils;
+import com.bb.hbx.utils.STSGetter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -52,6 +71,8 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
 
     //true: 成功 false:失败
     boolean isFlag = true;
+    OSSFederationToken token;
+    String callbackAddress="http://ebao.seaway.net.cn:9003/api/ossCallback.do";
     @Override
     public int getLayoutId() {
         return R.layout.activity_real_name_identify;
@@ -150,22 +171,107 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==101)
         {
-            bitmapFront = CompressBitmap.compressBitmapOnly(picPathFront, 2);
-            if (bitmapFront==null)
+
+            bitmapFront = CompressBitmap.compressBitmapOnly(picPathFront, 4);
+            if (bitmapFront==null)//bitmapFront==null
             {
                 front_iv.setImageResource(R.drawable.shenfenzhengzhengmian);
                 frontFlag_iv.setVisibility(View.VISIBLE);
             }
             else
             {
-                front_iv.setImageBitmap(bitmapFront);
+                //Bitmap getbitmap=null;
+                if (picFileFront.exists())
+                {
+                    picFileFront.delete();
+                }
+                try {
+                    picFileFront.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(picFileFront);//fos 为毛是null
+                    bitmapFront.compress(Bitmap.CompressFormat.PNG,100,fos);
+                    /*getbitmap = getbitmap(bitmapFront);
+                    getbitmap.compress(Bitmap.CompressFormat.PNG,100,fos);*/
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                front_iv.setImageBitmap(bitmapFront);//bitmapFront
                 frontFlag_iv.setVisibility(View.GONE);
-                new MyOssUtils(getApplicationContext(),picPathFront,"idcard","idCard_F","_F");
+                //new MyOssUtils(getApplicationContext(),picPathFront,"idcard","idCard_F","_F");
+                STSGetter getter=new STSGetter();
+                OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+
+                        /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
+                        String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
+                // 构造上传请求
+                //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+                PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/idcard/"+ MyApplication.user.getUserId()+"_F.jpg", picPathFront);
+                // 异步上传时可以设置进度回调
+                put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                    @Override
+                    public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                        Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                    }
+                });
+
+                if (callbackAddress != null) {
+                    // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+                    put.setCallbackParam(new HashMap<String, String>() {
+                        {
+                            put("callbackUrl", callbackAddress);
+                            //callbackBody可以自定义传入的信息
+                            put("callbackBody", "uploadType=idCard_F&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+"_F.jpg");
+
+                        }
+                    });
+                }
+
+                OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                    @Override
+                    public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                        Log.d("PutObject", "UploadSuccess");
+                        Log.d("ETag", result.getETag());
+                        Log.d("RequestId", result.getRequestId());
+                        String string = result.getServerCallbackReturnBody().toString();
+                        Log.d("callbackAddress",string);
+                        try {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(string);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JSONObject output = jsonObject.getJSONObject("output");
+                            String userLogo = output.getString("userLogo");
+                            showTip("userLogo"+userLogo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                        // 请求异常
+                        if (clientExcepion != null) {
+                            // 本地异常如网络异常等
+                            clientExcepion.printStackTrace();
+                        }
+                        if (serviceException != null) {
+                            // 服务异常
+                            Log.e("ErrorCode", serviceException.getErrorCode());
+                            Log.e("RequestId", serviceException.getRequestId());
+                            Log.e("HostId", serviceException.getHostId());
+                            Log.e("RawMessage", serviceException.getRawMessage());
+                        }
+                    }
+                });
             }
         }
         else if (requestCode==102)
         {
-            bitmapReverse = CompressBitmap.compressBitmapOnly(picPathReverse, 2);
+            bitmapReverse = CompressBitmap.compressBitmapOnly(picPathReverse, 4);
+
             if (bitmapReverse==null)
             {
                 reverse_iv.setImageResource(R.drawable.shenfenzhengfanmian);
@@ -173,9 +279,89 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
             }
             else
             {
+                if (picFileReverse.exists())
+                {
+                    picFileReverse.delete();
+                }
+                try {
+                    picFileReverse.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(picFileReverse);//fos 为毛是null
+                    bitmapReverse.compress(Bitmap.CompressFormat.PNG,100,fos);
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 reverse_iv.setImageBitmap(bitmapReverse);
                 reverseFlag_iv.setVisibility(View.GONE);
-                new MyOssUtils(getApplicationContext(),picPathReverse,"idcard","idCard_B","_B");
+                //new MyOssUtils(getApplicationContext(),picPathReverse,"idcard","idCard_B","_B");
+                STSGetter getter=new STSGetter();
+                OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+
+                        /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
+                        String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
+                // 构造上传请求
+                //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+                PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/idcard/"+ MyApplication.user.getUserId()+"_B.jpg", picPathReverse);
+                // 异步上传时可以设置进度回调
+                put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                    @Override
+                    public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                        Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                    }
+                });
+
+                if (callbackAddress != null) {
+                    // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+                    put.setCallbackParam(new HashMap<String, String>() {
+                        {
+                            put("callbackUrl", callbackAddress);
+                            //callbackBody可以自定义传入的信息
+                            put("callbackBody", "uploadType=idCard_B&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+"_B.jpg");
+
+                        }
+                    });
+                }
+
+                OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                    @Override
+                    public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                        Log.d("PutObject", "UploadSuccess");
+                        Log.d("ETag", result.getETag());
+                        Log.d("RequestId", result.getRequestId());
+                        String string = result.getServerCallbackReturnBody().toString();
+                        Log.d("callbackAddress",string);
+                        try {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(string);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JSONObject output = jsonObject.getJSONObject("output");
+                            String userLogo = output.getString("userLogo");
+                            showTip("userLogo"+userLogo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                        // 请求异常
+                        if (clientExcepion != null) {
+                            // 本地异常如网络异常等
+                            clientExcepion.printStackTrace();
+                        }
+                        if (serviceException != null) {
+                            // 服务异常
+                            Log.e("ErrorCode", serviceException.getErrorCode());
+                            Log.e("RequestId", serviceException.getRequestId());
+                            Log.e("HostId", serviceException.getHostId());
+                            Log.e("RawMessage", serviceException.getRawMessage());
+                        }
+                    }
+                });
             }
             //bitmap.recycle();
         }
@@ -206,5 +392,30 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
         {
             bitmapReverse.recycle();
         }
+    }
+
+    public Bitmap getbitmap(Bitmap bitmap){
+        int buff=0;
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        //放大為屏幕的1/2大小
+        float screenWidth  = getWindowManager().getDefaultDisplay().getHeight();     // 屏幕宽（像素，如：480px）
+        float screenHeight = getWindowManager().getDefaultDisplay().getWidth();        // 屏幕高（像素，如：800p）
+        Log.d("screen",screenWidth+"");
+        float scaleWidth = screenWidth/2/width;
+        float scaleHeight = screenWidth/2/width;
+        if (width<height)
+        {
+            scaleWidth=2;
+            scaleHeight=0.2f;
+        }
+
+        // 取得想要缩放的matrix參數
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的圖片
+        Bitmap newbm = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix,true);
+        return newbm;
     }
 }

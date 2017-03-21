@@ -237,6 +237,7 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
                                 MyApplication.user.setUserQrcode(userQrcode);
                                 MyApplication.user.setUserId(userId);
                                 MyApplication.user.setMobile(phone);
+                                MyApplication.user.setGender(gender);
                                 MyApplication.user.setLoginPwd("1");//1表示已经设置过登录密码
                                 MyApplication.user.setPaymentPwd(paymentPwd);
                                 MyApplication.user.setSessionId(sessionId);

@@ -4,14 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 /**
@@ -75,6 +71,22 @@ public class GlideUtil {
                     .error(R.mipmap.ic_launcher)
                     .into(imageView);
         }
+    }
+
+    /**
+     * 常规加载图片----------不缓存
+     *
+     * @param context
+     * @param imageView 图片容器
+     * @param imgUrl    图片地址
+     */
+    public void loadImageWithCache(Context context, ImageView imageView,
+                          String imgUrl) {
+            Glide.with(context)
+                    .load(imgUrl)
+                    .error(R.mipmap.ic_launcher)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存策略
+                    .into(imageView);
     }
 
 

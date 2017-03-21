@@ -9,28 +9,45 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.db.DatabaseImpl;
+import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.CompressBitmap;
-import com.bb.hbx.utils.MyOssUtils;
+import com.bb.hbx.utils.GlideUtil;
+import com.bb.hbx.utils.ImageCatchUtil;
+import com.bb.hbx.utils.STSGetter;
 import com.bb.hbx.utils.ShareSPUtils;
+import com.bb.hbx.widget.ChangeIconDailog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -90,68 +107,88 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
         Can.userPhone=ShareSPUtils.sp.getString("userPhone",null);
         Can.userPwd=ShareSPUtils.sp.getString("userPwd",null);
         Can.userIcon= ShareSPUtils.sp.getString("userIcon", null);
-        userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));
+        //Log.d("========activity","=========="+Can.userIcon);
+        //userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));---------------
+        //Glide.with(this).load(Can.userIcon).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);
+        ImageCatchUtil.getInstance().clearImageAllCache();
+        GlideUtil.getInstance().loadImageWithCache(this,userIcon_civ,Can.userIcon);
+        /*if (ShareSPUtils.sp.getBoolean("isChangeUserIcon",false))
+        {
+            GlideUtil.getInstance().loadImageWithCache(this,userIcon_civ,Can.userIcon,false);
+        }
+        else
+        {
+            GlideUtil.getInstance().loadImageWithCache(this,userIcon_civ,Can.userIcon,true);
+        }*/
         //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg","logo","logo","");
-        MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),ShareSPUtils.sp.getString("userIcon",null),"logo","logo","");
-//        /*STSGetter getter=new STSGetter();
-//        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
-//
-//        // 构造上传请求
-//        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
-//        // 异步上传时可以设置进度回调
-//        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
-//            @Override
-//            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-//                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
-//            }
-//        });
-//
-//        if (callbackAddress != null) {
-//            // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
-//            put.setCallbackParam(new HashMap<String, String>() {
-//                {
-//                    put("callbackUrl", callbackAddress);
-//                    //callbackBody可以自定义传入的信息
-//                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
-//
-//                }
-//            });
-//        }
-//
-//        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-//            @Override
-//            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-//                Log.d("PutObject", "UploadSuccess");
-//                Log.d("ETag", result.getETag());
-//                Log.d("RequestId", result.getRequestId());
-//                String string = result.getServerCallbackReturnBody().toString();
-//                Log.d("callbackAddress",string);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(string);
-//                    JSONObject output = jsonObject.getJSONObject("output");
-//                    String userLogo = output.getString("userLogo");
-//                    showTip("userLogo"+userLogo);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-//                // 请求异常
-//                if (clientExcepion != null) {
-//                    // 本地异常如网络异常等
-//                    clientExcepion.printStackTrace();
-//                }
-//                if (serviceException != null) {
-//                    // 服务异常
-//                    Log.e("ErrorCode", serviceException.getErrorCode());
-//                    Log.e("RequestId", serviceException.getRequestId());
-//                    Log.e("HostId", serviceException.getHostId());
-//                    Log.e("RawMessage", serviceException.getRawMessage());
-//                }
-//            }
-//        });*/
+        //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),ShareSPUtils.sp.getString("userIcon",null),"logo","logo","");
+        /*STSGetter getter=new STSGetter();
+        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+
+        String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
+        String s1 = ShareSPUtils.sp.getString("userIcon", null);
+        // 构造上传请求
+        //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", ShareSPUtils.sp.getString("userIcon",null));
+        // 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        if (callbackAddress != null) {
+            // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+            put.setCallbackParam(new HashMap<String, String>() {
+                {
+                    put("callbackUrl", callbackAddress);
+                    //callbackBody可以自定义传入的信息
+                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+
+                }
+            });
+        }
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+                Log.d("ETag", result.getETag());
+                Log.d("RequestId", result.getRequestId());
+                String string = result.getServerCallbackReturnBody().toString();
+                Log.d("callbackAddress",string);
+                try {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(string);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JSONObject output = jsonObject.getJSONObject("output");
+                    String userLogo = output.getString("userLogo");
+                    showTip("userLogo"+userLogo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });*/
 
     }
 
@@ -237,6 +274,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
         db.close();
     }
 
+
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -246,18 +284,11 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.userIcon_layout:
-                View view = LayoutInflater.from(this).inflate(R.layout.layout_change_usericon, null);
-                camera_tv = (TextView) view.findViewById(R.id.camera_tv);
-                mapstorage_tv = (TextView) view.findViewById(R.id.mapstorage_tv);
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("请选择:");
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                camera_tv.setOnClickListener(new View.OnClickListener() {
+                final ChangeIconDailog iconDailog = new ChangeIconDailog(this);
+                iconDailog.show();
+                iconDailog.setmItemCameralickListener(new OnItemClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        Toast.makeText(PersonInfoSettingActivity.this,"相机",Toast.LENGTH_SHORT).show();
+                    public void onMyItemClickListener(int position) {
                         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
                         {
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -276,18 +307,17 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                         {
                             Toast.makeText(PersonInfoSettingActivity.this,"请检查您的sdk",Toast.LENGTH_SHORT).show();
                         }
-                        dialog.dismiss();
+                        iconDailog.dismiss();
                     }
                 });
-                mapstorage_tv.setOnClickListener(new View.OnClickListener() {
+                iconDailog.setmItemMapClickListener(new OnItemClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        Toast.makeText(PersonInfoSettingActivity.this,"图库",Toast.LENGTH_SHORT).show();
+                    public void onMyItemClickListener(int position) {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_PICK);
                         startActivityForResult(intent,102);
-                        dialog.dismiss();
+                        iconDailog.dismiss();
                     }
                 });
                 break;
@@ -351,12 +381,81 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                 bos.close();
                                 //fos在压缩完毕后关闭
                                 Bitmap compressBitmap = CompressBitmap.compressBitmap(mapPath, fos,3);
-                                ShareSPUtils.edit.putString("userIcon", mapPath);
-                                ShareSPUtils.edit.commit();
+
+                                /*ShareSPUtils.edit.putString("userIcon", mapPath);
+                                ShareSPUtils.edit.commit();*/
                                 if (compressBitmap!=null)
                                 {
                                     userIcon_civ.setImageBitmap(compressBitmap);
                                 }
+
+                                STSGetter getter=new STSGetter();
+                                OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+
+                        /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
+                        String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
+                                // 构造上传请求
+                                //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+                                PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", mapPath);
+                                // 异步上传时可以设置进度回调
+                                put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                                    @Override
+                                    public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                                        Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                                    }
+                                });
+
+                                if (callbackAddress != null) {
+                                    // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+                                    put.setCallbackParam(new HashMap<String, String>() {
+                                        {
+                                            put("callbackUrl", callbackAddress);
+                                            //callbackBody可以自定义传入的信息
+                                            put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+
+                                        }
+                                    });
+                                }
+
+                                OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                                    @Override
+                                    public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                                        Log.d("PutObject", "UploadSuccess");
+                                        Log.d("ETag", result.getETag());
+                                        Log.d("RequestId", result.getRequestId());
+                                        String string = result.getServerCallbackReturnBody().toString();
+                                        Log.d("callbackAddress",string);
+                                        try {
+                                            JSONObject jsonObject = null;
+                                            try {
+                                                jsonObject = new JSONObject(string);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            JSONObject output = jsonObject.getJSONObject("output");
+                                            String userLogo = output.getString("userLogo");
+                                            showTip("userLogo"+userLogo);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                                        // 请求异常
+                                        if (clientExcepion != null) {
+                                            // 本地异常如网络异常等
+                                            clientExcepion.printStackTrace();
+                                        }
+                                        if (serviceException != null) {
+                                            // 服务异常
+                                            Log.e("ErrorCode", serviceException.getErrorCode());
+                                            Log.e("RequestId", serviceException.getRequestId());
+                                            Log.e("HostId", serviceException.getHostId());
+                                            Log.e("RawMessage", serviceException.getRawMessage());
+                                        }
+                                    }
+                                });
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -373,14 +472,18 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
         }
         else if (requestCode==101)
         {
+            if (data!=null)
+            {
                 Bundle bundle = data.getExtras();
                 if (bundle!=null)
                 {
                     try {
                         Bitmap bitmap = (Bitmap) bundle.get("data");
                         userIcon_civ.setImageBitmap(bitmap);
-                        ShareSPUtils.edit.putString("userIcon", picPath);
+                        ShareSPUtils.edit.putBoolean("isChangeUserIcon", true);
                         ShareSPUtils.edit.commit();
+                        /*ShareSPUtils.edit.putString("userIcon", picPath);
+                        ShareSPUtils.edit.commit();*/
                         if (picFile.exists())
                         {
                             picFile.delete();
@@ -390,12 +493,84 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                         bitmap.compress(Bitmap.CompressFormat.PNG,100,fos);
                         fos.flush();
                         fos.close();
+
+                        //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),picPath,"logo","logo","");
+
+                        STSGetter getter=new STSGetter();
+                        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+
+                        /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
+                        String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
+                        // 构造上传请求
+                        //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
+                        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", picPath);
+                        // 异步上传时可以设置进度回调
+                        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+                            @Override
+                            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                            }
+                        });
+
+                        if (callbackAddress != null) {
+                            // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
+                            put.setCallbackParam(new HashMap<String, String>() {
+                                {
+                                    put("callbackUrl", callbackAddress);
+                                    //callbackBody可以自定义传入的信息
+                                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+
+                                }
+                            });
+                        }
+
+                        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                            @Override
+                            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                                Log.d("PutObject", "UploadSuccess");
+                                Log.d("ETag", result.getETag());
+                                Log.d("RequestId", result.getRequestId());
+                                String string = result.getServerCallbackReturnBody().toString();
+                                Log.d("callbackAddress",string);
+                                try {
+                                    JSONObject jsonObject = null;
+                                    try {
+                                        jsonObject = new JSONObject(string);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    JSONObject output = jsonObject.getJSONObject("output");
+                                    String userLogo = output.getString("userLogo");
+                                    showTip("userLogo"+userLogo);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                                // 请求异常
+                                if (clientExcepion != null) {
+                                    // 本地异常如网络异常等
+                                    clientExcepion.printStackTrace();
+                                }
+                                if (serviceException != null) {
+                                    // 服务异常
+                                    Log.e("ErrorCode", serviceException.getErrorCode());
+                                    Log.e("RequestId", serviceException.getRequestId());
+                                    Log.e("HostId", serviceException.getHostId());
+                                    Log.e("RawMessage", serviceException.getRawMessage());
+                                }
+                            }
+                        });
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                //Glide.with(PersonInfoSettingActivity.this).load(new File(picPath)).into(userIcon_civ);
+                    //Glide.with(PersonInfoSettingActivity.this).load(new File(picPath)).into(userIcon_civ);
+                }
             }
             /*if (resultCode!=0)
             {

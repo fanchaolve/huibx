@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:gravity="center">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/camera_tv"
-        android:text="拍照"
-        android:textSize="16sp"/>
+        android:layout_height="55dp"
+        android:text="从相册选择"
+        android:textSize="16sp"
+        android:textColor="@color/A3"
+        android:id="@+id/mapstorage_tv"
+        android:gravity="center"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="图库"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/camera_tv"
+        android:text="拍照"
         android:textSize="16sp"
-        android:layout_below="@id/camera_tv"
-        android:id="@+id/mapstorage_tv"
-        android:layout_marginTop="10dp"/>
-</RelativeLayout>
+        android:textColor="@color/A3"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:background="@color/A7"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="取消"
+        android:id="@+id/cancle_tv"
+        android:textColor="@color/A3"
+        android:textSize="16sp"
+        android:gravity="center"/>
+</LinearLayout>

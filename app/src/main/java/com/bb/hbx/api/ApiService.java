@@ -53,8 +53,6 @@ import com.bb.hbx.bean.UserRegist;
 import com.bb.hbx.bean.VersionInfo;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -256,6 +254,13 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api.do?method=getOssToken&type=post")
     Call<Result_Api<OssBean>> getOssToken(@Field("userId") String userId);
+
+    //上传身份证
+    @FormUrlEncoded
+    @POST("api.do?method=applyCertification&type=post")
+    Call<Result_Api> applyCertification(@Field("userId") String userId,@Field("idCardImgZ") String idCardImgZ,@Field("idCardImgF") String idCardImgF,
+            @Field("idNo") String idNo,@Field("idType") String idType,@Field("realName") String realName,@Field("realName") String gender);
+
 
     //获取常用保险联系人--已测,接口返回数据待修改
     @FormUrlEncoded

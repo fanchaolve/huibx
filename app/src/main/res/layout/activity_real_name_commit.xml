@@ -75,13 +75,15 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dp"
             android:layout_centerVertical="true"/>
-        <TextView
-            android:id="@+id/name_tv"
+        <EditText
+            android:id="@+id/realName_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="罗伟"
+            android:hint="姓名"
             android:textSize="13sp"
-            android:textColor="@color/A5"
+            android:textColorHint="@color/A5"
+            android:textColor="@color/A3"
+            android:background="@null"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/nextStepFriend_iv"
             android:layout_marginRight="9dp"/>
@@ -111,9 +113,10 @@
             android:id="@+id/idCard_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="330333333333333333"
+            android:hint="身份证"
             android:textSize="13sp"
-            android:textColor="@color/A5"
+            android:textColorHint="@color/A5"
+            android:textColor="@color/A3"
             android:background="@null"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

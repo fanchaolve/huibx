@@ -324,6 +324,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
                     String userName = user.getNickName();
                     String email = user.getEmail();
                     String logo = user.getLogo();
+                    String userQrcode = user.getUserQrcode();
                     if (TextUtils.isEmpty(gender))
                     {
                         gender="0";
@@ -336,13 +337,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
                     //更新表数据
                     //MyUsersSqlite.db
                     SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
-                    db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? where currentUser=currentUser ",
-                            new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,loginPwd,paymentPwd,logo});
+                    db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
+                            new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,loginPwd,paymentPwd,logo,userQrcode});
                     db.close();
                     showTip(body.getRespMsg());
 
+                    MyApplication.user.setUserQrcode(userQrcode);
                     MyApplication.user.setUserId(userId);
                     MyApplication.user.setMobile(phone);
+                    MyApplication.user.setGender(gender);
                     MyApplication.user.setLoginPwd(loginPwd);
                     MyApplication.user.setPaymentPwd(paymentPwd);
                     MyApplication.user.setSessionId(sessionId);

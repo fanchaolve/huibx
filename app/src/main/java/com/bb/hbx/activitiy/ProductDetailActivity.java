@@ -1,6 +1,8 @@
 package com.bb.hbx.activitiy;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -48,10 +50,12 @@ import com.tencent.mm.opensdk.modelmsg.GetMessageFromWX;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -440,51 +444,25 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                         if (text == null || text.length() == 0) {
                             return;
                         }
-                        // ��ʼ��һ��WXTextObject����
-                        WXTextObject textObj = new WXTextObject();
-                        textObj.text = text;
+                        WXWebpageObject webpage = new WXWebpageObject();
+                        webpage.webpageUrl = "http://www.qq.com";
+                        WXMediaMessage msg = new WXMediaMessage(webpage);
+                        msg.title = "WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title WebPage Title Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
+                        msg.description = "WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description WebPage Description Very Long Very Long Very Long Very Long Very Long Very Long Very Long";
+                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.holder);
+                        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+                        bmp.recycle();
+                        msg.thumbData = bmpToByteArray(thumbBmp, true);
 
-                        // ��WXTextObject�����ʼ��һ��WXMediaMessage����
-                        WXMediaMessage msg = new WXMediaMessage();
-                        msg.mediaObject = textObj;
-                        // �����ı����͵���Ϣʱ��title�ֶβ�������
-                        // msg.title = "Will be ignored";
-                        msg.description = text;
-
-                        // ����һ��Req
                         SendMessageToWX.Req req = new SendMessageToWX.Req();
-                        req.transaction = String.valueOf(System.currentTimeMillis());
-                        //req.transaction =buildTransaction("text");
+                        req.transaction = buildTransaction("webpage");
                         req.message = msg;
                         req.scene = mTargetScene;
-
-                        // ����api�ӿڷ�����ݵ�΢��
-                        boolean b = wxapi.sendReq(req);
+                        wxapi.sendReq(req);
                         shareDailog.dismiss();
                     }
                 });
 
-
-
-                /*api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
-                bundle = getIntent().getExtras();
-                //String text = "朋友圈分享！";
-                // 初始化一个WXTextObject对象
-                WXTextObject textObj1 = new WXTextObject();
-                textObj1.text = text;
-
-                // 用WXTextObject对象初始化一个WXMediaMessage对象
-                WXMediaMessage msg1 = new WXMediaMessage(textObj);
-                msg1.description = text;
-
-                // 构造一个Resp
-                GetMessageFromWX.Resp resp1 = new GetMessageFromWX.Resp();
-                // 将req的transaction设置到resp对象中，其中bundle为微信传递过来的intent所带的内容，通过getExtras方法获取
-                resp1.transaction = getTransaction();
-                resp1.message = msg1;
-
-                // 调用api接口响应数据到微信
-                api.sendResp(resp1);*/
                 break;
             case R.id.tv_buy:
                 //调用 提交订单 接口
@@ -498,6 +476,24 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 break;
 
         }
+    }
+
+    //微信分享用
+    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
+        if (needRecycle) {
+            bmp.recycle();
+        }
+
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     private String getTransaction() {
