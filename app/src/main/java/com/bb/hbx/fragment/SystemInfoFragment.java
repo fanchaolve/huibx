@@ -21,9 +21,8 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.Message;
 import com.bb.hbx.bean.MsgInfo;
-import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
-import com.bb.hbx.utils.RealmUtils;
+import com.bb.hbx.utils.RealmUtilsForMessage;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
@@ -115,14 +114,14 @@ public class SystemInfoFragment extends BaseFragment {
                 if (((Integer) position) == view.getTag()) {
 
                     Message mess = totalList.get(position);
-                    if (RealmUtils.queryMessageById(mess.getMsgId()) == null) {
+                    if (RealmUtilsForMessage.queryMessageById(mess.getMsgId()) == null) {
                         Log.d("ddd","----------------------------");
                         if (unReadCount > 0) {
                             unReadCount--;
                         }
                         InfoActivity.resetLabSystem(unReadCount);
 //                        mess.setSts(2);
-                        RealmUtils.add(mess);
+                        RealmUtilsForMessage.add(mess);
                         view.setBackgroundResource(R.drawable.shape_circle_white);
                         totalList.get(position).setSts(2);
                         adapter.notifyItemChanged(position);
@@ -143,7 +142,7 @@ public class SystemInfoFragment extends BaseFragment {
                 if (bean != null) {
                     totalCount = bean.getTotalCount();
                     //List<Message> msgList = bean.getMsgList();
-                    haveReadCount = RealmUtils.queryAllMessages().size();
+                    haveReadCount = RealmUtilsForMessage.queryAllMessages().size();
 
                     if (pageIndex == 1) {
                         totalList.clear();
@@ -180,7 +179,7 @@ public class SystemInfoFragment extends BaseFragment {
                 Message mess = totalList.get(i);
                 mess.setSts(2);
 //                myDBManagerSystemInfo.insertObject(mess);
-                RealmUtils.add(mess);
+                RealmUtilsForMessage.add(mess);
             }
             adapter.notifyDataSetChanged();
             unReadCount = 0;

@@ -54,6 +54,10 @@ public class BottomDialog extends Dialog {
         this.selector.setOnAddressSelectedListener(listener);
     }
 
+//    public void setOnAddressSelectedListenerInContact(OnAddressSelectedListenerForAddContacts listener) {
+//        this.selector.setOnAddressSelectedListenerInContact(listener);
+//    }
+
     public static BottomDialog show(Context context) {
         return show(context, null);
     }

@@ -1,11 +1,10 @@
 package com.bb.hbx.widget.adress;
 
-
-import com.bb.hbx.base.City;
-import com.bb.hbx.base.County;
-import com.bb.hbx.base.Province;
-import com.bb.hbx.base.Street;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX.ChildrenBean;
 
 public interface OnAddressSelectedListener {
-    void onAddressSelected(Province province, City city, County county, Street street);
+//    void onAddressSelected(Province province, City city, County county, Street street);
+void onAddressSelected(AreasListBean province, ChildrenBeanX city, ChildrenBean county);
 }

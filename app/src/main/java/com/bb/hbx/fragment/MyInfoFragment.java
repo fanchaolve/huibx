@@ -26,7 +26,7 @@ import com.bb.hbx.bean.MsgInfo;
 import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
 import com.bb.hbx.interfaces.OnItemClickListener;
-import com.bb.hbx.utils.RealmUtils;
+import com.bb.hbx.utils.RealmUtilsForMessage;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
@@ -103,7 +103,7 @@ public class MyInfoFragment extends BaseFragment {
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-//        RealmUtils.deleteAll();
+//        RealmUtilsForMessage.deleteAll();
 //        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
         manager = new GridLayoutManager(mContext, 1) {
             @Override
@@ -246,7 +246,7 @@ public class MyInfoFragment extends BaseFragment {
 
                     for (int i = 0; i < msgList.size(); i++) {
                         Message msg = msgList.get(i);
-                        if (RealmUtils.queryMessageById(msg.getMsgId()) == null) {
+                        if (RealmUtilsForMessage.queryMessageById(msg.getMsgId()) == null) {
                             unReadSysMsgNum++;
                         }
                     }

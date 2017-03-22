@@ -11,10 +11,10 @@ import static android.R.attr.id;
 
 /**
  * Created by Administrator on 2017/3/17.
- * realm数据库操作工具类
+ * realm数据库操作工具类(针对message)
  */
 
-public class RealmUtils {
+public class RealmUtilsForMessage {
 
     /**
      * 增

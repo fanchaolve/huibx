@@ -50,6 +50,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bb.hbx.cans.Can.hasLogined;
+
 /**
  * Created by Administrator on 2016/12/20.
  */
@@ -229,11 +231,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
+        boolean hasLogined = ShareSPUtils.sp.getBoolean("hasLogined", false);
         switch (v.getId()) {
             case R.id.message_iv:
                 //Toast.makeText(mContext,"消息",Toast.LENGTH_SHORT).show();
-                intent.setClass(mContext, InfoActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, InfoActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
+
                 break;
             case R.id.setting_iv:
                 //Toast.makeText(mContext,"设置",Toast.LENGTH_SHORT).show();
@@ -241,19 +249,30 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.myOrder_layout:
-                intent.setClass(mContext, MyOrderActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, MyOrderActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.pInsurance_layout:
-                intent.setClass(mContext, PerInsuOrderActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, PerInsuOrderActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.cInsurance_layout:
-                intent.setClass(mContext, CarInsuOrderActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, CarInsuOrderActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.userIcon_civ:
-                boolean hasLogined = ShareSPUtils.sp.getBoolean("hasLogined", false);
                 if (hasLogined) {
                     intent.setClass(mContext, PersonInfoSettingActivity.class);
                 } else {
@@ -262,29 +281,34 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.myAsset_tv:
-                intent.putExtra("acctBalanceInt", acctBalanceInt);
-                intent.putExtra("acctMonthSumInt", acctMonthSumInt);
-                intent.putExtra("acctSettSumInt", acctSettSumInt);
-                intent.putExtra("acctSumInt", acctSumInt);
-                intent.setClass(mContext, MyAssertActivity.class);
+                if (hasLogined) {
+                    intent.putExtra("acctBalanceInt", acctBalanceInt);
+                    intent.putExtra("acctMonthSumInt", acctMonthSumInt);
+                    intent.putExtra("acctSettSumInt", acctSettSumInt);
+                    intent.putExtra("acctSumInt", acctSumInt);
+                    intent.setClass(mContext, MyAssertActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
+
                 break;
             case R.id.canCash_layout:
-                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                if (hasLogined) {
                     startActivity(new Intent(mContext,MyAssertActivity.class));
                 } else {
                     startActivity(new Intent(mContext,LoginActivity.class));
                 }
                 break;
             case R.id.leftMoney_layout:
-                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                if (hasLogined) {
                     startActivity(new Intent(mContext, MyAssertDetailActivity.class));
                 } else {
                     startActivity(new Intent(mContext,LoginActivity.class));
                 }
                 break;
             case R.id.score_layout:
-                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                if (hasLogined) {
                     intent.putExtra("accountScoreInt", accountScoreInt);
                     intent.setClass(mContext, ScoreActivity.class);
                     startActivity(intent);
@@ -293,7 +317,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.redPacket_layout:
-                if (ShareSPUtils.sp.getBoolean("hasLogined",false)) {
+                if (hasLogined) {
                     intent.setClass(mContext, RedPacketActivity.class);
                     startActivity(intent);
                 } else {
@@ -311,20 +335,35 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;*/
             case R.id.purchase_layout:
                 //Toast.makeText(mContext,"赠险产品",Toast.LENGTH_SHORT).show();
-                intent.setClass(mContext, PresentInsuActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, PresentInsuActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.customers_layout:
-                intent.setClass(mContext, CustomerManagerActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, CustomerManagerActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.collect_layout:
-                intent.setClass(mContext, MyCollectionActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, MyCollectionActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
-
                 break;
             case R.id.invite_layout:
-                intent.setClass(mContext, RecommendRewardActivity.class);
+                if (hasLogined) {
+                    intent.setClass(mContext, RecommendRewardActivity.class);
+                } else {
+                    intent.setClass(mContext, LoginActivity.class);
+                }
                 startActivity(intent);
 
                /* HomeActivity activity = (HomeActivity) getActivity();

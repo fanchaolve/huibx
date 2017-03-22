@@ -1,10 +1,10 @@
 package com.bb.hbx.api;
 
+import com.bb.hbx.base.Province;
 import com.bb.hbx.bean.Account;
 import com.bb.hbx.bean.ActivitInfo;
 import com.bb.hbx.bean.AddConsignee;
 import com.bb.hbx.bean.AddInsured;
-import com.bb.hbx.bean.AreasListBean;
 import com.bb.hbx.bean.BannerBean;
 import com.bb.hbx.bean.BindingBankCard;
 import com.bb.hbx.bean.BobaoItem;
@@ -51,6 +51,8 @@ import com.bb.hbx.bean.User;
 import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.bean.UserRegist;
 import com.bb.hbx.bean.VersionInfo;
+import com.bb.hbx.bean.address.AddressBean;
+import com.bb.hbx.bean.address.ProvinceBean;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
 
 import retrofit2.Call;
@@ -210,7 +212,7 @@ public interface ApiService {
     //获取地区信息
     @FormUrlEncoded
     @POST("api.do?method=getAreaList&type=post")
-    Call<Result_Api<AreasListBean>> getAreaList(@Field("findAllFlag") boolean findAllFlag);
+    Call<Result_Api<AddressBean>> getAreaList(@Field("findAllFlag") boolean findAllFlag);
 
     //获取用户银行卡信息
     @FormUrlEncoded

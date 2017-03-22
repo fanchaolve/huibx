@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.bean.Message;
-import com.bb.hbx.db.MyDBManagerSystemInfo;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
-import com.bb.hbx.utils.RealmUtils;
+import com.bb.hbx.utils.RealmUtilsForMessage;
 import com.bb.hbx.utils.TimeUtils;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class MySystemInfoAdapter extends RecyclerView.Adapter<MySystemInfoAdapte
     @Override
     public void onBindViewHolder(MyViewHodler holder, final int position) {
 //        dbList = myDBManagerSystemInfo.queryOne(list.get(position).getMsgId());
-        Message message = RealmUtils.queryMessageById(list.get(position).getMsgId());
+        Message message = RealmUtilsForMessage.queryMessageById(list.get(position).getMsgId());
         if (message != null)
         {
             holder.circle_tv.setBackgroundResource(R.drawable.shape_circle_white);  //已读

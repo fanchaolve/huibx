@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -14,16 +15,18 @@ import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.login.LoginContract;
 import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.base.City;
-import com.bb.hbx.base.County;
 import com.bb.hbx.base.Province;
-import com.bb.hbx.base.Street;
 import com.bb.hbx.bean.AddInsured;
 import com.bb.hbx.bean.SingleCustomBean;
+import com.bb.hbx.bean.address.AddressBean;
+import com.bb.hbx.bean.address.ProvinceBean;
 import com.bb.hbx.interfaces.LoginTextWatcher;
+import com.bb.hbx.utils.AddressUtils;
+import com.bb.hbx.utils.FileHelper;
 import com.bb.hbx.utils.GetPhoneContactsUtil;
 import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.widget.adress.AddressSelector;
@@ -31,14 +34,17 @@ import com.bb.hbx.widget.adress.BottomDialog;
 import com.bb.hbx.widget.adress.OnAddressSelectedListener;
 import com.bb.hbx.widget.dialog.IdTypePickerDialog;
 import com.bb.hbx.widget.dialog.SexPickerDialog;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX.ChildrenBean;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.yintong.secure.c.ae.j.br;
 
 /**
  * 添加客户界面
@@ -98,12 +104,20 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     TextView verify_tv;
 
     private BottomDialog dialogAddress;
-    private String provinceCode;
-    private String cityCode;
-    private String countyCode;
-    private String streetCode;
+    private String provinceId;
+    private String cityId;
+    private String countyId;
+//    private String streetCode;
     private String mSex;
     private String mIdType;
+
+    private FileHelper fileHelper;
+    private String addressStr = "";
+    private String fileName = "address.txt";
+    private AddressBean addressBean;
+
+
+    private boolean isFlag = false;
 
     String birthday = "";
     String[] itemBuf = new String[4];
@@ -145,6 +159,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initdata() {
+        getAddressInfo();
 
     }
 
@@ -234,6 +249,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 String idType = idType_et.getText().toString().trim();
                 String idNumber = idNumber_et.getText().toString().trim();
                 String address = area_et.getText().toString().trim();
+                String areaId = "1258452";                                  //向服务器请求地址，会返回一个地区的Id
                 String street = address_et.getText().toString().trim();
                 String email = email_et.getText().toString().trim();
                 String descr = more_et.getText().toString().trim();
@@ -269,7 +285,8 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 infoBuf[1] = "手机号";
                 infoBuf[2] = "证件类型";
                 infoBuf[3] = "证件号码";
-                SingleCustomBean singleCustomBean = new SingleCustomBean(MyApplication.user.getUserId(), name, gender, birthday, phone, "1", idNumber, address, street, email, descr);
+                SingleCustomBean singleCustomBean = new SingleCustomBean(MyApplication.user.getUserId(),
+                        name, "1", idNumber, gender, birthday, phone, email, null, null, areaId, street, descr);
                 //!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(phone)/*&&!TextUtils.isEmpty(idType)*/&&!TextUtils.isEmpty(idNumber)
                 if (isverTel() && isverCode() && isverpassword() && isCheckbx()) {
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
@@ -327,26 +344,44 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void onAddressSelected(Province province, City city, County county, Street street) {
-        provinceCode = (province == null ? "" : province.code);
-        cityCode = (city == null ? "" : city.code);
-        countyCode = (county == null ? "" : county.code);
-        streetCode = (street == null ? "" : street.code);
-        LogUtil.d("数据", "省份id=" + provinceCode);
-        LogUtil.d("数据", "城市id=" + cityCode);
-        LogUtil.d("数据", "乡镇id=" + countyCode);
-        LogUtil.d("数据", "街道id=" + streetCode);
-        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
-                (street == null ? "" : street.name);
-        //address=s;
-        //areaId=city.id+"";
-        /*address_tv.setText(s);
-        address_tv.setTextColor(getResources().getColor(R.color.A3));*/
-        area_et.setText(s);
+    public void onAddressSelected(AreasListBean province, ChildrenBeanX city, ChildrenBean county) {
+        provinceId = (province == null ? "" : province.getAreaId() + "");
+        cityId = (city == null ? "" : city.getAreaId() + "");
+        countyId = (county == null ? "" : county.getAreaId() + "");
+        LogUtil.d("数据——id","省份id=" + provinceId);
+        LogUtil.d("数据——id","城市id=" + cityId);
+        LogUtil.d("数据——id","乡镇id=" + countyId);
+
+        String str = (province == null ? "" : province.getAreaName())
+                + (city == null ? "" : city.getAreaName())
+                + (county == null ? "" : county.getAreaName());
+        area_et.setText(str);
         if (dialogAddress != null) {
             dialogAddress.dismiss();
         }
     }
+
+//    @Override
+//    public void onAddressSelected(Province province, City city, County county, Street street) {
+//        provinceCode = (province == null ? "" : province.code);
+//        cityCode = (city == null ? "" : city.code);
+//        countyCode = (county == null ? "" : county.code);
+//        streetCode = (street == null ? "" : street.code);
+//        LogUtil.d("数据", "省份id=" + provinceCode);
+//        LogUtil.d("数据", "城市id=" + cityCode);
+//        LogUtil.d("数据", "乡镇id=" + countyCode);
+//        LogUtil.d("数据", "街道id=" + streetCode);
+//        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
+//                (street == null ? "" : street.name);
+//        //address=s;
+//        //areaId=city.id+"";
+//        /*address_tv.setText(s);
+//        address_tv.setTextColor(getResources().getColor(R.color.A3));*/
+//        area_et.setText(s);
+//        if (dialogAddress != null) {
+//            dialogAddress.dismiss();
+//        }
+//    }
 
     @Override
     public void loginSuccess() {
@@ -388,5 +423,36 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             return true;
         }
         return false;
+    }
+
+    /**
+     * 从服务器获取地址信息
+     */
+    private void getAddressInfo() {
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call=service.getAreaList(true);
+        call.enqueue(new PostCallback() {
+            @Override
+            public void successCallback(Result_Api api) {
+                Log.d("tttttt","------"+api.getOutput());
+                if (api.getOutput() != null && api.getOutput() instanceof AddressBean) {
+//                    List<ProvinceBean> provinceBeanList = (List<ProvinceBean>) api.getOutput();
+//                    Log.d("tttttt","================================" + provinceBeanList.size());
+                    addressBean = (AddressBean) api.getOutput();
+                    Log.d("tttttt","================================" + addressBean.toString());
+                    AddressUtils.saveObject(mContext,"addressBean",addressBean);
+                    Log.d("tttttt","================================" + "success");
+                } else {
+                    Log.d("tttttt","================================" + "null");
+                }
+                showTip("success");
+            }
+
+            @Override
+            public void failCallback() {
+                Log.d("tttttt","iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                showTip("fail");
+            }
+        });
     }
 }

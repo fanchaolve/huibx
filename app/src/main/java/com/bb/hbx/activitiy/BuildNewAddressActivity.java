@@ -15,17 +15,15 @@ import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.base.City;
-import com.bb.hbx.base.County;
-import com.bb.hbx.base.Province;
-import com.bb.hbx.base.Street;
 import com.bb.hbx.bean.AddConsignee;
 import com.bb.hbx.utils.GetPhoneContactsUtil;
 import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.widget.adress.AddressSelector;
 import com.bb.hbx.widget.adress.BottomDialog;
 import com.bb.hbx.widget.adress.OnAddressSelectedListener;
-
+import com.bb.hbx.bean.address.AddressBean.AreasListBean;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX;
+import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX.ChildrenBean;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -63,7 +61,7 @@ public class BuildNewAddressActivity extends BaseActivity implements View.OnClic
     private String provinceCode;
     private String cityCode;
     private String countyCode;
-    private String streetCode;
+//    private String streetCode;
 
     String userId;
     String areaId;
@@ -213,19 +211,20 @@ public class BuildNewAddressActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    public void onAddressSelected(Province province, City city, County county, Street street) {
-        provinceCode = (province == null ? "" : province.code);
-        cityCode = (city == null ? "" : city.code);
-        countyCode = (county == null ? "" : county.code);
-        streetCode = (street == null ? "" : street.code);
+    public void onAddressSelected(AreasListBean province, ChildrenBeanX city, ChildrenBean county) {
+        provinceCode = (province == null ? "" : province.getAreaId() + "");
+        cityCode = (city == null ? "" : city.getAreaId() + "");
+        countyCode = (county == null ? "" : county.getAreaId() + "");
+//        streetCode = (street == null ? "" : street.code);
         LogUtil.d("数据", "省份id=" + provinceCode);
         LogUtil.d("数据", "城市id=" + cityCode);
         LogUtil.d("数据", "乡镇id=" + countyCode);
-        LogUtil.d("数据", "街道id=" + streetCode);
-        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
-                (street == null ? "" : street.name);
+//        LogUtil.d("数据", "街道id=" + streetCode);
+        String s = (province == null ? "" : province.getAreaName())
+                + (city == null ? "" : city.getAreaName())
+                + (county == null ? "" : county.getAreaName());
         address=s;
-        areaId=city.id+"";
+        areaId=city.getAreaId()+"";
         address_tv.setText(s);
         address_tv.setTextColor(getResources().getColor(R.color.A3));
         if (dialog != null) {
