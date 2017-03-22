@@ -23,10 +23,12 @@ public class InsuredInfolBean implements Parcelable{
     private String mobile;
     private String occupation;
     private String relation;
+    private String areaId;
+    private String area;
 
     public InsuredInfolBean(String birthday, String email, String gender, String idNo, String idType, String insurantDesc, String insuredAbbr,
                             String insuredAddress, String insuredEname, String insuredId, String insuredName, String mobile, String occupation,
-                            String relation) {
+                            String relation, String areaId, String area) {
         this.birthday = birthday;
         this.email = email;
         this.gender = gender;
@@ -41,6 +43,8 @@ public class InsuredInfolBean implements Parcelable{
         this.mobile = mobile;
         this.occupation = occupation;
         this.relation = relation;
+        this.area = area;
+        this.areaId = areaId;
     }
 
     protected InsuredInfolBean(Parcel in) {
@@ -58,6 +62,8 @@ public class InsuredInfolBean implements Parcelable{
         mobile = in.readString();
         occupation = in.readString();
         relation = in.readString();
+        area = in.readString();
+        areaId = in.readString();
     }
 
     public static final Creator<InsuredInfolBean> CREATOR = new Creator<InsuredInfolBean>() {
@@ -184,6 +190,22 @@ public class InsuredInfolBean implements Parcelable{
         this.relation = relation;
     }
 
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -205,5 +227,7 @@ public class InsuredInfolBean implements Parcelable{
         dest.writeString(mobile);
         dest.writeString(occupation);
         dest.writeString(relation);
+        dest.writeString(area);
+        dest.writeString(areaId);
     }
 }

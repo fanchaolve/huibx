@@ -1,17 +1,22 @@
 package com.bb.hbx.activitiy;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.adapter.MyCustomAdapter;
@@ -30,18 +35,25 @@ public class MyCustomActivity extends BaseActivity implements View.OnClickListen
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
     @BindView(R.id.tablayout)
     TabLayout tablayout;
+
     @BindView(R.id.more_layout)
     RelativeLayout more_layout;
+
     @BindView(R.id.phone_iv)
     ImageView phone_iv;
 
-    String [] title=new String[]{"保单记录","赠险记录","客户资料"};
-    ArrayList<MyCustomContentFragment> fragmentList=new ArrayList<>();
-    MyCustomAdapter adapter;
+    @BindView(R.id.custom_tv)
+    TextView custom_tv;
+
+    private String [] title=new String[]{"保单记录","赠险记录","客户资料"};
+    private ArrayList<MyCustomContentFragment> fragmentList=new ArrayList<>();
+    private MyCustomAdapter adapter;
 
     public static InsuredInfolBean insuredInfolBean;
     @Override
@@ -51,7 +63,15 @@ public class MyCustomActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-
+        int code = ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+        if (code == -1) {
+            //授权失败
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CAMERA,Manifest.permission.CALL_PHONE}, 201);
+        } else {
+            //授权成功
+            isFlag = true;
+        }
     }
 
     @Override
@@ -67,6 +87,7 @@ public class MyCustomActivity extends BaseActivity implements View.OnClickListen
         Bundle bundleBean = intent.getBundleExtra("insuredInfolBean");
         insuredInfolBean = bundleBean.getParcelable("insuredInfolBean");
         Can.myCustomFragmentList=Can.getFragmentListInMyCustom();
+        custom_tv.setText(insuredInfolBean.getInsuredName());
         tablayout.setTabMode(TabLayout.MODE_FIXED);
         tablayout.setTabTextColors(Color.GRAY,Color.BLACK);
         for (int i = 0; i < title.length; i++) {
@@ -83,6 +104,7 @@ public class MyCustomActivity extends BaseActivity implements View.OnClickListen
         setIndicator(this,tablayout,28,28);
     }
 
+    private boolean isFlag = false;
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -95,10 +117,27 @@ public class MyCustomActivity extends BaseActivity implements View.OnClickListen
                 moreDialog.show();
                 break;
             case R.id.phone_iv:
-                showTip("拨打电话");
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + insuredInfolBean.getMobile()));
+                startActivity(intent);
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 201) {
+            if (grantResults[0] == 0&&grantResults[1] == 0&&grantResults[2] == 0) {
+                //授权成功
+                isFlag = true;
+            } else {
+                //授权失败
+                isFlag = false;
+            }
         }
     }
 

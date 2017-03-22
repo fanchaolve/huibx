@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!--
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -146,7 +146,9 @@
         <activity android:name=".activitiy.MyCustomActivity" />
         <activity android:name=".activitiy.CustomServiceActivity" />
         <activity android:name=".activitiy.CustomServiceDetailActivity" />
-        <activity android:name=".activitiy.EditInsuredInfoActivity" />
+        <activity
+            android:name=".activitiy.EditInsuredInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activitiy.InsurancePlanActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -254,7 +256,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".wxapi.WXEntryActivity"
+        <activity
+            android:name=".wxapi.WXEntryActivity"
             android:exported="true"></activity>
     </application>
 

@@ -2,26 +2,38 @@ package com.bb.hbx.activitiy;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
+import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.PostCallback;
+import com.bb.hbx.api.Result_Api;
+import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.base.m.WelcomeModel;
 import com.bb.hbx.base.p.WelcomePresenter;
 import com.bb.hbx.base.v.WelcomeContract;
 import com.bb.hbx.bean.User;
 import com.bb.hbx.bean.VersionInfo;
+import com.bb.hbx.bean.address.AddressBean;
 import com.bb.hbx.service.DownloadIconService;
+import com.bb.hbx.utils.AddressUtils;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.DeviceUtils;
 import com.bb.hbx.utils.MyUsersSqlite;
 import com.bb.hbx.utils.PermissionUtils;
 import com.bb.hbx.utils.ShareSPUtils;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
+
+import retrofit2.Call;
+
+import static com.bb.hbx.utils.AddressUtils.readObject;
 
 
 public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel> implements
@@ -30,6 +42,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel
     //private LocationService locationService;
 
     private PermissionUtils utils;
+    private AddressBean addressBean;
 
     boolean isOnce = false;
     //true: 成功 false:失败
@@ -77,6 +90,13 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel
         //registToWeChat();
         comm();
 
+        Object o = AddressUtils.readObject(this,"addressBean");
+        if (o == null) {
+            getAddressInfo();
+            Log.d("ttttt","-------------第一次打开APP，需要存储地址数据------------");
+        } else {
+            Log.d("ttttt","************不是第一次打开APP，不需要存储地址数据************");
+        }
     }
 
     /*//注册到微信
@@ -296,5 +316,28 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter, WelcomeModel
                 finish();
             }
         }, 3000);
+    }
+
+    /**
+     * 从服务器获取地址信息
+     */
+    private void getAddressInfo() {
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call=service.getAreaList(true);
+        call.enqueue(new PostCallback() {
+            @Override
+            public void successCallback(Result_Api api) {
+
+                if (api.getOutput() != null && api.getOutput() instanceof AddressBean) {
+                    addressBean = (AddressBean) api.getOutput();
+                    AddressUtils.saveObject(mContext,"addressBean",addressBean);
+                }
+            }
+
+            @Override
+            public void failCallback() {
+                showTip("加载地址数据失败！");
+            }
+        });
     }
 }

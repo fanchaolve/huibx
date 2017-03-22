@@ -17,7 +17,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/2/12.
  */
 
-public class CustomInfoInMyCustomFragment extends BaseFragment implements View.OnClickListener{
+public class CustomInfoInMyCustomFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.name_tv)
     TextView name_tv;
@@ -44,18 +44,18 @@ public class CustomInfoInMyCustomFragment extends BaseFragment implements View.O
 
     Context mContext;
     private static CustomInfoInMyCustomFragment fragment;
-    public static CustomInfoInMyCustomFragment getInstance()
-    {
-        if (fragment==null)
-        {
-            fragment=new CustomInfoInMyCustomFragment();
+
+    public static CustomInfoInMyCustomFragment getInstance() {
+        if (fragment == null) {
+            fragment = new CustomInfoInMyCustomFragment();
         }
         return fragment;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
@@ -75,8 +75,7 @@ public class CustomInfoInMyCustomFragment extends BaseFragment implements View.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.edit_tv:
                 //Toast.makeText(mContext,"编辑资料",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, EditInsuredInfoActivity.class);
@@ -84,7 +83,7 @@ public class CustomInfoInMyCustomFragment extends BaseFragment implements View.O
                 startActivity(intent);
                 break;
             default:
-              break;
+                break;
         }
     }
 
@@ -101,13 +100,27 @@ public class CustomInfoInMyCustomFragment extends BaseFragment implements View.O
         phone_tv.setText(MyCustomActivity.insuredInfolBean.getMobile());
         idNumber_tv.setText(MyCustomActivity.insuredInfolBean.getIdNo());
         area_tv.setText(MyCustomActivity.insuredInfolBean.getInsuredAddress());
-        address_tv.setText("没有字段");
+        address_tv.setText(MyCustomActivity.insuredInfolBean.getInsuredAddress());
         email_tv.setText(MyCustomActivity.insuredInfolBean.getEmail());
-        more_tv.setText("没有字段");
-        switch (MyCustomActivity.insuredInfolBean.getIdType())
-        {
+        more_tv.setText(MyCustomActivity.insuredInfolBean.getInsurantDesc());
+        switch (MyCustomActivity.insuredInfolBean.getIdType()) {
             case "1":
                 idType_tv.setText("身份证");
+                break;
+            case "2":
+                idType_tv.setText("军官证");
+                break;
+            case "3":
+                idType_tv.setText("护照");
+                break;
+            case "4":
+                idType_tv.setText("驾驶证");
+                break;
+            case "5":
+                idType_tv.setText("港澳台通行证");
+                break;
+            case "6":
+                idType_tv.setText("回乡证");
                 break;
             default:
                 break;

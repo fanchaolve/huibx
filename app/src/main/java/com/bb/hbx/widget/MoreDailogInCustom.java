@@ -2,6 +2,7 @@ package com.bb.hbx.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -12,9 +13,11 @@ import android.widget.Toast;
 import com.bb.hbx.BaseDialog;
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
+import com.bb.hbx.activitiy.EditInsuredInfoActivity;
 import com.bb.hbx.activitiy.MyCustomActivity;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.RetrofitFactory;
+import com.bb.hbx.utils.AppManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,7 +90,7 @@ public class MoreDailogInCustom extends BaseDialog implements
                 Toast.makeText(mContext,"发送贺卡",Toast.LENGTH_LONG).show();
                 break;
             case R.id.lin_bianji:
-                Toast.makeText(mContext,"编辑资料",Toast.LENGTH_LONG).show();
+                mContext.startActivity(new Intent(mContext, EditInsuredInfoActivity.class));
                 break;
             case R.id.lin_shanchu:
                 //Toast.makeText(mContext,"删除客户",Toast.LENGTH_LONG).show();
@@ -97,6 +100,7 @@ public class MoreDailogInCustom extends BaseDialog implements
                     @Override
                     public void onResponse(Call call, Response response) {
                         Toast.makeText(mContext,"删除客户成功",Toast.LENGTH_LONG).show();
+                        AppManager.getInstance().finishParticularActivity(MyCustomActivity.class);
                     }
 
                     @Override

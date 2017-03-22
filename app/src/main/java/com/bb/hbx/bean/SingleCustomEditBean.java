@@ -18,9 +18,11 @@ public class SingleCustomEditBean {
     private String street;
     private String email;
     private String description;
+    private String occupation;
+    private String relation;
 
     public SingleCustomEditBean(String userId, String insuredId, String insuredName, String gender, String birthday, String mobile, String idType,
-                                String idNo, String address, String street, String email, String description) {
+                                String idNo, String address, String street, String email, String occupation, String relation, String description) {
         this.userId = userId;
         this.insuredId = insuredId;
         this.insuredName = insuredName;
@@ -33,6 +35,8 @@ public class SingleCustomEditBean {
         this.street = street;
         this.email = email;
         this.description = description;
+        this.occupation = occupation;
+        this.relation = relation;
     }
 
     public String getUserId() {
@@ -129,5 +133,21 @@ public class SingleCustomEditBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 }

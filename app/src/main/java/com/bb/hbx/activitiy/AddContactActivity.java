@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -15,18 +14,12 @@ import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.login.LoginContract;
 import com.bb.hbx.api.ApiService;
-import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.base.Province;
 import com.bb.hbx.bean.AddInsured;
 import com.bb.hbx.bean.SingleCustomBean;
-import com.bb.hbx.bean.address.AddressBean;
-import com.bb.hbx.bean.address.ProvinceBean;
 import com.bb.hbx.interfaces.LoginTextWatcher;
-import com.bb.hbx.utils.AddressUtils;
-import com.bb.hbx.utils.FileHelper;
 import com.bb.hbx.utils.GetPhoneContactsUtil;
 import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.widget.adress.AddressSelector;
@@ -37,9 +30,6 @@ import com.bb.hbx.widget.dialog.SexPickerDialog;
 import com.bb.hbx.bean.address.AddressBean.AreasListBean;
 import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX;
 import com.bb.hbx.bean.address.AddressBean.AreasListBean.ChildrenBeanX.ChildrenBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -111,15 +101,9 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     private String mSex;
     private String mIdType;
 
-    private FileHelper fileHelper;
-    private String addressStr = "";
-    private String fileName = "address.txt";
-    private AddressBean addressBean;
-
-
     private boolean isFlag = false;
 
-    String birthday = "";
+//    String birthday = "";
     String[] itemBuf = new String[4];
     String[] infoBuf = new String[4];
 
@@ -159,7 +143,6 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initdata() {
-        getAddressInfo();
 
     }
 
@@ -200,7 +183,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onClick(String year, String month, String day) {
                         birth_et.setText(year + "-" + month + "-" + day);
-                        birthday = year + month + day;
+//                        birthday = year + month + day;
                     }
 
                     @Override
@@ -249,7 +232,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 String idType = idType_et.getText().toString().trim();
                 String idNumber = idNumber_et.getText().toString().trim();
                 String address = area_et.getText().toString().trim();
-                String areaId = "1258452";                                  //向服务器请求地址，会返回一个地区的Id
+                String areaId = countyId;                                  //选择地址后上传给服务器最后一个id（乡镇的id）
                 String street = address_et.getText().toString().trim();
                 String email = email_et.getText().toString().trim();
                 String descr = more_et.getText().toString().trim();
@@ -259,21 +242,27 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 switch (idType) {
                     case "身份证":
                         itemBuf[2] = "1";
+                        idType = "1";
                         break;
                     case "军官证":
                         itemBuf[2] = "2";
+                        idType = "2";
                         break;
                     case "护照":
                         itemBuf[2] = "3";
+                        idType = "3";
                         break;
                     case "驾驶证":
                         itemBuf[2] = "4";
+                        idType = "4";
                         break;
                     case "港澳台通行证":
                         itemBuf[2] = "5";
+                        idType = "5";
                         break;
                     case "回乡证":
                         itemBuf[2] = "6";
+                        idType = "6";
                         break;
                     default:
                         break;
@@ -286,7 +275,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 infoBuf[2] = "证件类型";
                 infoBuf[3] = "证件号码";
                 SingleCustomBean singleCustomBean = new SingleCustomBean(MyApplication.user.getUserId(),
-                        name, "1", idNumber, gender, birthday, phone, email, null, null, areaId, street, descr);
+                        name, idType, idNumber, gender, birthday, phone, email, null, null, areaId, street, descr);
                 //!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(phone)/*&&!TextUtils.isEmpty(idType)*/&&!TextUtils.isEmpty(idNumber)
                 if (isverTel() && isverCode() && isverpassword() && isCheckbx()) {
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
@@ -423,36 +412,5 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             return true;
         }
         return false;
-    }
-
-    /**
-     * 从服务器获取地址信息
-     */
-    private void getAddressInfo() {
-        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getAreaList(true);
-        call.enqueue(new PostCallback() {
-            @Override
-            public void successCallback(Result_Api api) {
-                Log.d("tttttt","------"+api.getOutput());
-                if (api.getOutput() != null && api.getOutput() instanceof AddressBean) {
-//                    List<ProvinceBean> provinceBeanList = (List<ProvinceBean>) api.getOutput();
-//                    Log.d("tttttt","================================" + provinceBeanList.size());
-                    addressBean = (AddressBean) api.getOutput();
-                    Log.d("tttttt","================================" + addressBean.toString());
-                    AddressUtils.saveObject(mContext,"addressBean",addressBean);
-                    Log.d("tttttt","================================" + "success");
-                } else {
-                    Log.d("tttttt","================================" + "null");
-                }
-                showTip("success");
-            }
-
-            @Override
-            public void failCallback() {
-                Log.d("tttttt","iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                showTip("fail");
-            }
-        });
     }
 }

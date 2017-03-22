@@ -1,6 +1,5 @@
 package com.bb.hbx.api;
 
-import com.bb.hbx.base.Province;
 import com.bb.hbx.bean.Account;
 import com.bb.hbx.bean.ActivitInfo;
 import com.bb.hbx.bean.AddConsignee;
@@ -52,7 +51,6 @@ import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.bean.UserRegist;
 import com.bb.hbx.bean.VersionInfo;
 import com.bb.hbx.bean.address.AddressBean;
-import com.bb.hbx.bean.address.ProvinceBean;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
 
 import retrofit2.Call;

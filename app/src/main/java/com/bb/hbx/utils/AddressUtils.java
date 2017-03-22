@@ -32,25 +32,31 @@ public class AddressUtils {
      * @param obj 要保存的对象，只能保存实现了serializable的对象
      * modified:
      */
-    public static void saveObject(Context context,String key ,Object obj){
-        try {
-            // 保存对象
-            SharedPreferences.Editor sharedata = context.getSharedPreferences(FILENAME, 0).edit();
-            //先将序列化结果写到byte缓存中，其实就分配一个内存空间
-            ByteArrayOutputStream bos=new ByteArrayOutputStream();
-            ObjectOutputStream os=new ObjectOutputStream(bos);
-            //将对象序列化写入byte缓存
-            os.writeObject(obj);
-            //将序列化的数据转为16进制保存
-            String bytesToHexString = bytesToHexString(bos.toByteArray());
-            //保存该16进制数组
-            sharedata.putString(key, bytesToHexString);
-            sharedata.commit();
-            Log.e("tttttt", "--------------保存obj成功---------------");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("tttttt", "--------------保存obj失败---------------");
-        }
+    public static void saveObject(final Context context,final String key ,final Object obj){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 保存对象
+                    SharedPreferences.Editor sharedata = context.getSharedPreferences(FILENAME, 0).edit();
+                    //先将序列化结果写到byte缓存中，其实就分配一个内存空间
+                    ByteArrayOutputStream bos=new ByteArrayOutputStream();
+                    ObjectOutputStream os=new ObjectOutputStream(bos);
+                    //将对象序列化写入byte缓存
+                    os.writeObject(obj);
+                    //将序列化的数据转为16进制保存
+                    String bytesToHexString = bytesToHexString(bos.toByteArray());
+                    //保存该16进制数组
+                    sharedata.putString(key, bytesToHexString);
+                    sharedata.commit();
+                    Log.e("tttttt", "--------------保存obj成功---------------");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("tttttt", "--------------保存obj失败---------------");
+                }
+            }
+        }).run();
+
     }
     /**
      * desc:将数组转为16进制

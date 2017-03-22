@@ -38,6 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bb.hbx.activitiy.MyCustomActivity.insuredInfolBean;
+
 /**
  * Created by Administrator on 2017/2/8.
  */
@@ -192,8 +194,12 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
                     String mobile = insuredList.get(position).getMobile();
                     String occupation = insuredList.get(position).getOccupation();
                     String relation = insuredList.get(position).getRelation();
+
+                    String areaId = "";
+                    String area = "";
+
                     InsuredInfolBean insuredInfolBean = new InsuredInfolBean(birthday,email,gender,idNo,idType,insurantDesc,insuredAbbr,insuredAddress,
-                            insuredEname,insuredId,insuredName,mobile,occupation,relation);
+                            insuredEname,insuredId,insuredName,mobile,occupation,relation,areaId,area);
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("insuredInfolBean",insuredInfolBean);
                     intent.putExtra("insuredInfolBean",bundle);
