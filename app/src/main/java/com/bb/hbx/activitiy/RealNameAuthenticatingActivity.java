@@ -1,14 +1,16 @@
 package com.bb.hbx.activitiy;
 
-import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
 
-public class HadRealNameIdentifyActivity extends BaseActivity {
+/**
+ * Created by Administrator on 2017/3/24.
+ *实名认证审核中页面
+ */
 
-
+public class RealNameAuthenticatingActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
-        return R.layout.activity_had_real_name_identify;
+        return 0;
     }
 
     @Override
