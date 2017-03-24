@@ -58,7 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PersonInfoSettingActivity extends BaseActivity implements View.OnClickListener{
+public class PersonInfoSettingActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -99,7 +99,8 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     String picPath;
 
     OSSFederationToken token;
-    String callbackAddress="http://ebao.seaway.net.cn:9003/api/ossCallback.do";
+    String callbackAddress = "http://ebao.seaway.net.cn:9003/api/ossCallback.do";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_person_info_setting;
@@ -108,18 +109,17 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     @Override
     public void initView() {
         //ShareSPUtils.readShareSP();
-        if (ShareSPUtils.sp!=null)
-        {
-            Can.hasLogined=ShareSPUtils.sp.getBoolean("hasLogined",false);
-            Can.userName=ShareSPUtils.sp.getString("userName",null);
-            Can.userPhone=ShareSPUtils.sp.getString("userPhone",null);
-            Can.userPwd=ShareSPUtils.sp.getString("userPwd",null);
-            Can.userIcon= ShareSPUtils.sp.getString("userIcon", null);
+        if (ShareSPUtils.sp != null) {
+            Can.hasLogined = ShareSPUtils.sp.getBoolean("hasLogined", false);
+            Can.userName = ShareSPUtils.sp.getString("userName", null);
+            Can.userPhone = ShareSPUtils.sp.getString("userPhone", null);
+            Can.userPwd = ShareSPUtils.sp.getString("userPwd", null);
+            Can.userIcon = ShareSPUtils.sp.getString("userIcon", null);
             //Log.d("========activity","=========="+Can.userIcon);
             //userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));---------------
             //Glide.with(this).load(Can.userIcon).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);
             //ImageCatchUtil.getInstance().clearImageAllCache();
-            GlideUtil.getInstance().loadImageWithNoCache(this,userIcon_civ,Can.userIcon);
+            GlideUtil.getInstance().loadImageWithNoCache(this, userIcon_civ, Can.userIcon);
         }
         /*if (ShareSPUtils.sp.getBoolean("isChangeUserIcon",false))
         {
@@ -225,12 +225,10 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     }
 
     private void updateUserInfo() {
-        SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+        SQLiteDatabase db = DatabaseImpl.getInstance().getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from userstb where currentUser = ?", new String[]{"currentUser"});
-        if (cursor!=null)
-        {
-            if (cursor.moveToNext())
-            {
+        if (cursor != null) {
+            if (cursor.moveToNext()) {
                 /*String userId = cursor.getString(cursor.getColumnIndex("userId"));
                 String sessionId = cursor.getString(cursor.getColumnIndex("sessionId"));*/
                 userId = cursor.getString(cursor.getColumnIndex("userId"));
@@ -241,43 +239,29 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 //使用正则匹配将电话号码的4-7位替换成*
                 String displayPhoneNum = phone.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
                 name_tv.setText(name);
-                if (TextUtils.isEmpty(email))
-                {
+                if (TextUtils.isEmpty(email)) {
                     email_tv.setText("请设置邮箱地址");
-                }
-                else
-                {
+                } else {
                     email_tv.setText(email);
                 }
                 if (TextUtils.isEmpty(phone))//用户可能是通过短信的方式登录
                 {
                     phone_tv.setText("请绑定手机号");
-                }
-                else
-                {
+                } else {
                     phone_tv.setText(displayPhoneNum);
                 }
-                if (gender.equals("0"))
-                {
+                if (gender.equals("0")) {
                     sex_tv.setText("男");
-                }
-                else if (gender.equals("1"))
-                {
+                } else if (gender.equals("1")) {
                     sex_tv.setText("女");
-                }
-                else
-                {
+                } else {
                     sex_tv.setText("性别未知");
                 }
+            } else {
+                Toast.makeText(mContext, "cursor下一条不存在", Toast.LENGTH_SHORT);
             }
-            else
-            {
-                Toast.makeText(mContext,"cursor下一条不存在",Toast.LENGTH_SHORT);
-            }
-        }
-        else
-        {
-            Toast.makeText(mContext,"cursor为空",Toast.LENGTH_SHORT);
+        } else {
+            Toast.makeText(mContext, "cursor为空", Toast.LENGTH_SHORT);
         }
         cursor.close();
         db.close();
@@ -287,8 +271,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         final Intent intent = new Intent();
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
@@ -298,23 +281,20 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 iconDailog.setmItemCameralickListener(new OnItemClickListener() {
                     @Override
                     public void onMyItemClickListener(int position) {
-                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-                        {
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             //以下为了获得原图
-                            String cameraPath= Can.getDefaultUsersIconFile();
+                            String cameraPath = Can.getDefaultUsersIconFile();
                             File file = new File(cameraPath);
                             picFile = new File(file, System.currentTimeMillis() + ".jpg");
-                            picPath=picFile.getAbsolutePath();
+                            picPath = picFile.getAbsolutePath();
                             //Uri uri = Uri.fromFile(picFile);
                             //为拍摄的图片指定一个存储的路径
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, picFile);
                             //intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
-                            startActivityForResult(intent,101);
-                        }
-                        else
-                        {
-                            Toast.makeText(PersonInfoSettingActivity.this,"请检查您的sdk",Toast.LENGTH_SHORT).show();
+                            startActivityForResult(intent, 101);
+                        } else {
+                            Toast.makeText(PersonInfoSettingActivity.this, "请检查您的sdk", Toast.LENGTH_SHORT).show();
                         }
                         iconDailog.dismiss();
                     }
@@ -325,48 +305,59 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_PICK);
-                        startActivityForResult(intent,102);
+                        startActivityForResult(intent, 102);
                         iconDailog.dismiss();
                     }
                 });
                 break;
             case R.id.name_layout:
-                intent.setClass(PersonInfoSettingActivity.this,EditNameActivity.class);
-                intent.putExtra("name",name);
-                startActivityForResult(intent,103);
+                intent.setClass(PersonInfoSettingActivity.this, EditNameActivity.class);
+                intent.putExtra("name", name);
+                startActivityForResult(intent, 103);
                 break;
             case R.id.sex_layout:
-                intent.setClass(PersonInfoSettingActivity.this,SexActivity.class);
+                intent.setClass(PersonInfoSettingActivity.this, SexActivity.class);
                 startActivity(intent);
                 break;
             case R.id.email_layout:
-                intent.setClass(PersonInfoSettingActivity.this,EditEmailActivity.class);
-                intent.putExtra("email",email);
-                startActivityForResult(intent,104);
+                intent.setClass(PersonInfoSettingActivity.this, EditEmailActivity.class);
+                intent.putExtra("email", email);
+                startActivityForResult(intent, 104);
                 break;
             case R.id.address_layout:
-                intent.setClass(PersonInfoSettingActivity.this,AddressManagerActivity.class);
-                intent.putExtra("userId",userId);
+                intent.setClass(PersonInfoSettingActivity.this, AddressManagerActivity.class);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
                 break;
             case R.id.realNameIdentify_layout:
                 ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                Call call=service.getApplyCertificationInfo(MyApplication.user.getUserId());
+                Call call = service.getApplyCertificationInfo(MyApplication.user.getUserId());
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
                         Result_Api body = (Result_Api) response.body();
                         GetApplyCertificationInfoBean bean = (GetApplyCertificationInfoBean) body.getOutput();
-                        if (body.isSuccess())
-                        {
-                            intent.setClass(PersonInfoSettingActivity.this,HadRealNameIdentifyActivity.class);
-                            intent.putExtra("audit_sts",bean.getAudit_sts());
-                            intent.putExtra("audit_comment",bean.getAudit_sts());
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                            intent.setClass(PersonInfoSettingActivity.this,RealNameIdentifyActivity.class);
+                        if (body.isSuccess()) {
+
+                            switch (bean.getAudit_sts()) {
+                                case -1:                    //审核未通过
+                                    intent.setClass(mContext,HaveNotRealNameAuthenticationActivity.class);
+                                    intent.putExtra("audit_sts", bean.getAudit_sts());
+                                    intent.putExtra("audit_comment", bean.getAudit_comment());
+                                    startActivity(intent);
+                                    break;
+                                case 0:                     //审核中
+                                    intent.setClass(mContext,RealNameAuthenticatingActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 1:                     //审核通过
+                                    intent.setClass(PersonInfoSettingActivity.this, RealNameFinishActivity.class);
+                                    startActivity(intent);
+                                    break;
+                            }
+
+                        } else {
+                            intent.setClass(PersonInfoSettingActivity.this, RealNameIdentifyActivity.class);
                             startActivity(intent);
                         }
                     }
@@ -380,7 +371,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.countSafe_layout:
                 //Toast.makeText(PersonInfoSettingActivity.this,"点击",Toast.LENGTH_SHORT).show();
-                intent.setClass(PersonInfoSettingActivity.this,CountSecurityActivity.class);
+                intent.setClass(PersonInfoSettingActivity.this, CountSecurityActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -392,12 +383,9 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //打开系统图库请求
-        if (requestCode==102)
-        {
-            if (resultCode==RESULT_OK)
-            {
-            if (data!=null)
-                {
+        if (requestCode == 102) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
                     Uri uri = data.getData();
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
@@ -411,26 +399,25 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                 fos = new FileOutputStream(mapPath);
                                 bos = new BufferedOutputStream(fos);
                                 //compressBitmap(mapPath, fos);
-                                bitmap.compress(Bitmap.CompressFormat.JPEG,80,bos);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                                 bos.close();
                                 //fos在压缩完毕后关闭
-                                Bitmap compressBitmap = CompressBitmap.compressBitmap(mapPath, fos,3);
+                                Bitmap compressBitmap = CompressBitmap.compressBitmap(mapPath, fos, 3);
 
                                 /*ShareSPUtils.edit.putString("userIcon", mapPath);
                                 ShareSPUtils.edit.commit();*/
-                                if (compressBitmap!=null)
-                                {
+                                if (compressBitmap != null) {
                                     userIcon_civ.setImageBitmap(compressBitmap);
                                 }
 
-                                STSGetter getter=new STSGetter();
-                                OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+                                STSGetter getter = new STSGetter();
+                                OSS oss = new OSSClient(getApplicationContext(), "http://img-cn-hangzhou.aliyuncs.com", getter);
 
                         /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
                         String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
                                 // 构造上传请求
                                 //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
-                                PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", mapPath);
+                                PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/" + MyApplication.user.getUserId() + ".jpg", mapPath);
                                 // 异步上传时可以设置进度回调
                                 put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
                                     @Override
@@ -445,7 +432,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                         {
                                             put("callbackUrl", callbackAddress);
                                             //callbackBody可以自定义传入的信息
-                                            put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+                                            put("callbackBody", "uploadType=logo&content=" + MyApplication.user.getUserId() + "&filename=" + MyApplication.user.getUserId() + ".jpg");
 
                                         }
                                     });
@@ -458,7 +445,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                         Log.d("ETag", result.getETag());
                                         Log.d("RequestId", result.getRequestId());
                                         String string = result.getServerCallbackReturnBody().toString();
-                                        Log.d("callbackAddress",string);
+                                        Log.d("callbackAddress", string);
                                         try {
                                             JSONObject jsonObject = null;
                                             try {
@@ -468,7 +455,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                             }
                                             JSONObject output = jsonObject.getJSONObject("output");
                                             String userLogo = output.getString("userLogo");
-                                            showTip("userLogo"+userLogo);
+                                            showTip("userLogo" + userLogo);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -503,14 +490,10 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                     }
                 }
             }
-        }
-        else if (requestCode==101)
-        {
-            if (data!=null)
-            {
+        } else if (requestCode == 101) {
+            if (data != null) {
                 Bundle bundle = data.getExtras();
-                if (bundle!=null)
-                {
+                if (bundle != null) {
                     try {
                         Bitmap bitmap = (Bitmap) bundle.get("data");
                         userIcon_civ.setImageBitmap(bitmap);
@@ -518,26 +501,25 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                         ShareSPUtils.edit.commit();
                         /*ShareSPUtils.edit.putString("userIcon", picPath);
                         ShareSPUtils.edit.commit();*/
-                        if (picFile.exists())
-                        {
+                        if (picFile.exists()) {
                             picFile.delete();
                         }
                         picFile.createNewFile();
                         FileOutputStream fos = new FileOutputStream(picFile);//fos 为毛是null
-                        bitmap.compress(Bitmap.CompressFormat.PNG,100,fos);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                         fos.flush();
                         fos.close();
 
                         //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(),picPath,"logo","logo","");
 
-                        STSGetter getter=new STSGetter();
-                        OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
+                        STSGetter getter = new STSGetter();
+                        OSS oss = new OSSClient(getApplicationContext(), "http://img-cn-hangzhou.aliyuncs.com", getter);
 
                         /*String s = Can.getDefaultUsersIconFile() + "/20245617_095937129615_2.jpg";
                         String s1 = ShareSPUtils.sp.getString("userIcon", null);*/
                         // 构造上传请求
                         //PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", Can.getDefaultUsersIconFile()+"/20245617_095937129615_2.jpg");
-                        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/"+ MyApplication.user.getUserId()+".jpg", picPath);
+                        PutObjectRequest put = new PutObjectRequest("hbx-image", "resource/images/user/logo/" + MyApplication.user.getUserId() + ".jpg", picPath);
                         // 异步上传时可以设置进度回调
                         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
                             @Override
@@ -552,7 +534,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                 {
                                     put("callbackUrl", callbackAddress);
                                     //callbackBody可以自定义传入的信息
-                                    put("callbackBody", "uploadType=logo&content="+MyApplication.user.getUserId()+"&filename="+MyApplication.user.getUserId()+".jpg");
+                                    put("callbackBody", "uploadType=logo&content=" + MyApplication.user.getUserId() + "&filename=" + MyApplication.user.getUserId() + ".jpg");
 
                                 }
                             });
@@ -565,7 +547,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                 Log.d("ETag", result.getETag());
                                 Log.d("RequestId", result.getRequestId());
                                 String string = result.getServerCallbackReturnBody().toString();
-                                Log.d("callbackAddress",string);
+                                Log.d("callbackAddress", string);
                                 try {
                                     JSONObject jsonObject = null;
                                     try {
@@ -575,7 +557,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                                     }
                                     JSONObject output = jsonObject.getJSONObject("output");
                                     String userLogo = output.getString("userLogo");
-                                    showTip("userLogo"+userLogo);
+                                    showTip("userLogo" + userLogo);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -623,30 +605,20 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                     e.printStackTrace();
                 }
             }*/
-        }
-        else if (requestCode==103)
-        {
-            if (resultCode==Can.RESULT_NAME)
-            {
-                if (data!=null)
-                {
+        } else if (requestCode == 103) {
+            if (resultCode == Can.RESULT_NAME) {
+                if (data != null) {
                     String name = data.getStringExtra("name");
-                    if (!TextUtils.isEmpty(name))
-                    {
+                    if (!TextUtils.isEmpty(name)) {
                         name_tv.setText(name);
                     }
                 }
             }
-        }
-        else if (requestCode==104)
-        {
-            if (resultCode==Can.RESULT_EMAIL)
-            {
-                if (data!=null)
-                {
+        } else if (requestCode == 104) {
+            if (resultCode == Can.RESULT_EMAIL) {
+                if (data != null) {
                     String email = data.getStringExtra("email");
-                    if (!TextUtils.isEmpty(email))
-                    {
+                    if (!TextUtils.isEmpty(email)) {
                         email_tv.setText(email);
                     }
                 }

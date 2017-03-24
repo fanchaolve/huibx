@@ -99,6 +99,9 @@
         <activity android:name=".activitiy.RedPacketActivity" />
         <activity android:name=".activitiy.MyCollectionActivity" />
         <activity android:name=".activitiy.MsgDetailsActivity" />
+        <activity android:name=".activitiy.HaveNotRealNameAuthenticationActivity" />
+        <activity android:name=".activitiy.RealNameAuthenticatingActivity" />
+
         <activity
             android:name=".activitiy.SearchActivity"
             android:theme="@style/AppTheme" />
@@ -266,7 +269,6 @@
         <activity
             android:name=".activitiy.ACameraActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activitiy.HadRealNameIdentifyActivity"></activity>
     </application>
 
 </manifest>

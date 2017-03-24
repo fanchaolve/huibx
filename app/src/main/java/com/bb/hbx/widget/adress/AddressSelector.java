@@ -158,14 +158,14 @@ public class AddressSelector implements AdapterView.OnItemClickListener {
         retrieveProvinces();
     }
 
-    /**
-     * 得到数据库管理者
-     *
-     * @return
-     */
-//    public AddressDictManager getAddressDictManager() {
-//        return addressDictManager;
-//    }
+//    /**
+//     * 得到数据库管理者
+//     *
+//     * @return
+//     */
+////    public AddressDictManager getAddressDictManager() {
+////        return addressDictManager;
+////    }
 
     /**
      * 初始化布局

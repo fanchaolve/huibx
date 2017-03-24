@@ -18,14 +18,14 @@ public class GetApplyCertificationInfoBean {
          * audit_sts : 0
          */
 
-        private Object audit_comment;
+        private String audit_comment;
         private int audit_sts;
 
-        public Object getAudit_comment() {
+        public String getAudit_comment() {
             return audit_comment;
         }
 
-        public void setAudit_comment(Object audit_comment) {
+        public void setAudit_comment(String audit_comment) {
             this.audit_comment = audit_comment;
         }
 

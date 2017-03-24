@@ -1,6 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/A7">
 
-</LinearLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/fanhui"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/realnameauth"
+            android:textAppearance="@style/TextAppear.Theme.A1_Size17" />
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/shimingrenzheng_shshibai" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_bg"
+        android:background="#fff">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <ImageView
+                android:id="@+id/iv_xx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/shimingrenzheng_shsb" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ziliao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_toRightOf="@id/iv_xx">
+
+                <TextView
+                    android:id="@+id/tv_commit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="资料已提交"
+                    android:textColor="@color/A3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_commit"
+                    android:layout_marginTop="8dp"
+                    android:text="身份证信息已上传"
+                    android:textColor="@color/A4"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_ziliao"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="26dp"
+                android:layout_toRightOf="@id/iv_xx">
+
+                <TextView
+                    android:id="@+id/tv_fail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="审核失败"
+                    android:textColor="@color/A3"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_fail"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="失败原因："
+                        android:textColor="@color/A4"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名与身份证信息不符"
+                        android:textColor="#ff5d59"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_confim"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y98"
+        android:layout_below="@id/ll_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_btn_a1"
+        android:gravity="center"
+        android:text="@string/recommit"
+        android:textAppearance="@style/TextAppear.Theme.white_Size18" />
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/service_iv"
+            android:layout_width="19dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/kefuzhognxin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/service_iv"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="9dp"
+            android:text="如有问题,请联系客服"
+            android:textColor="@color/A4"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>
