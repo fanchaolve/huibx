@@ -54,8 +54,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
 	private boolean mUseIntrinsicAnimation;
 
-	private final TextView mHeaderText;
-	private final TextView mSubHeaderText;
+	protected final TextView mHeaderText;
+	protected final TextView mSubHeaderText;
 
 	protected final Mode mMode;
 	protected final Orientation mScrollDirection;
