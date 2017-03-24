@@ -7,13 +7,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bb.hbx.R;
+import com.bb.hbx.adapter.MyInfoAdapter;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.fragment.MyInfoFragment;
 import com.bb.hbx.fragment.SystemInfoFragment;
+import com.bb.hbx.widget.SlidingDeleteItemView;
 
 import butterknife.BindView;
 
-public class InfoActivity extends BaseActivity implements View.OnClickListener{
+public class InfoActivity extends BaseActivity implements View.OnClickListener,MyInfoAdapter.IonSlidingViewClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -133,5 +135,15 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener{
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onDeleteBtnCilck(View view, int position) {
+
     }
 }

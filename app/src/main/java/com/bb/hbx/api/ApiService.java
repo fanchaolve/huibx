@@ -145,7 +145,12 @@ public interface ApiService {
     //积分签到--待测
     @FormUrlEncoded
     @POST("api.do?method=checkIn&type=post")
-    Call<String> checkIn(@Field("userId") String userId, @Field("acctType") String acctType);
+    Call<Result_Api> checkIn(@Field("userId") String userId, @Field("acctType") String acctType);
+
+    //判断是否可以积分签到
+    @FormUrlEncoded
+    @POST("api.do?method=checkInFlag&type=post")
+    Call<Result_Api> checkInFlag(@Field("userId") String userId, @Field("acctType") String acctType);
 
     //累计收入
     @FormUrlEncoded

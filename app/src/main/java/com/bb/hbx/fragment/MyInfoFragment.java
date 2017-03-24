@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.ScrollView;
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.InfoActivity;
+import com.bb.hbx.activitiy.MsgDetailsActivity;
 import com.bb.hbx.adapter.MyInfoAdapter;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
@@ -42,23 +44,24 @@ import retrofit2.Response;
  * Created by Administrator on 2017/2/17.
  */
 
-public class MyInfoFragment extends BaseFragment {
+public class MyInfoFragment extends BaseFragment implements MyInfoAdapter.IonSlidingViewClickListener {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    Context mContext;
-    List<Message> totalList = new ArrayList<>();
-    GridLayoutManager manager;
-    MyInfoAdapter adapter;
-    MyInfoReceiver myInfoReceiver;
-    int pageIndex = 1;
+    private Context mContext;
+    private List<Message> totalList = new ArrayList<>();
+    private GridLayoutManager manager;
+    private MyInfoAdapter adapter;
+    private MyInfoReceiver myInfoReceiver;
+    private int pageIndex = 1;
 
-    int unReadCount;
-    private MyDBManagerSystemInfo myDBManagerSystemInfo;
-    int unReadSysMsgNum = 0;
+    private int unReadCount;
+//    private MyDBManagerSystemInfo myDBManagerSystemInfo;
+    private int unReadSysMsgNum = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -114,6 +117,8 @@ public class MyInfoFragment extends BaseFragment {
         adapter = new MyInfoAdapter(mContext, totalList);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         showMsgList(pageIndex);
         //adapter.notifyDataSetChanged();
         adapter.setOnMyItemClickListener(new OnItemChangeStateClickListener() {
@@ -130,6 +135,7 @@ public class MyInfoFragment extends BaseFragment {
                         totalList.get(position).setSts(2);
                         adapter.notifyItemChanged(position);
                     }
+                    startActivity(new Intent(mContext, MsgDetailsActivity.class));
                     uploadServices(totalList.get(position).getMsgId());
 
                 }
@@ -213,6 +219,15 @@ public class MyInfoFragment extends BaseFragment {
         super.onDestroyView();
         mContext.unregisterReceiver(myInfoReceiver);
 //        myDBManagerSystemInfo.closeDaoSession();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+    }
+
+    @Override
+    public void onDeleteBtnCilck(View view, int position) {
+        adapter.removeData(position);
     }
 
     class MyInfoReceiver extends BroadcastReceiver {

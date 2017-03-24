@@ -98,6 +98,7 @@
         <activity android:name=".activitiy.ScoreActivity" />
         <activity android:name=".activitiy.RedPacketActivity" />
         <activity android:name=".activitiy.MyCollectionActivity" />
+        <activity android:name=".activitiy.MsgDetailsActivity" />
         <activity
             android:name=".activitiy.SearchActivity"
             android:theme="@style/AppTheme" />

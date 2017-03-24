@@ -88,4 +88,21 @@ public class ShareSPUtils {
         edit.commit();
         return usersIconPath;
     }
+
+    /**
+     * 记录是否已签到
+     * @param isSign
+     */
+    public static void writeIsSignToSp(boolean isSign) {
+        edit.putBoolean("isSign",isSign);
+        edit.commit();
+    }
+
+    /**
+     * 读取签到状态
+     * @return
+     */
+    public static boolean readIsSign() {
+        return sp.getBoolean("isSign",false);
+    }
 }

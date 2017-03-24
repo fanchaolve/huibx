@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.InfoActivity;
+import com.bb.hbx.activitiy.MsgDetailsActivity;
 import com.bb.hbx.adapter.MySystemInfoAdapter;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
@@ -115,7 +116,6 @@ public class SystemInfoFragment extends BaseFragment {
 
                     Message mess = totalList.get(position);
                     if (RealmUtilsForMessage.queryMessageById(mess.getMsgId()) == null) {
-                        Log.d("ddd","----------------------------");
                         if (unReadCount > 0) {
                             unReadCount--;
                         }
@@ -126,6 +126,7 @@ public class SystemInfoFragment extends BaseFragment {
                         totalList.get(position).setSts(2);
                         adapter.notifyItemChanged(position);
                     }
+                    startActivity(new Intent(mContext, MsgDetailsActivity.class));
                 }
             }
         });

@@ -150,6 +150,7 @@
     <string name="qbsj2">起保时间</string>
     <string name="selectcar">选择车型</string>
     <string name="newcarprice">新车参考价 : </string>
+    <string name="msgdetails">消息详情</string>
 
     <string name="others">君威\t\t别克牌POLO1.6轿车手自一体</string>
     <string name="format_jf">可用%1$s积分抵扣￥%2$s</string>

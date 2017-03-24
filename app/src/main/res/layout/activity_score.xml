@@ -80,11 +80,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/score_tv"
                         android:layout_marginTop="20dp">
-                        <TextView
+                        <Button
                             android:id="@+id/state_tv"
                             android:layout_width="74dp"
                             android:layout_height="24dp"
-                            android:text="签到成功"
+                            android:text="签 到"
                             android:textColor="@color/A1"
                             android:textSize="12sp"
                             android:background="@drawable/identify_shape"
@@ -94,7 +94,7 @@
                             android:id="@+id/info_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="签到可领10积分"
+                            android:text="签到可领100积分"
                             android:textColor="@color/white"
                             android:textSize="12sp"
                             android:gravity="center"
