@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bb.hbx.widget.freshlayout.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <android.support.v7.widget.RecyclerView
-
-        android:id="@+id/rl_view"
+    <RelativeLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/x26"
-        android:paddingRight="@dimen/x26" />
+        android:visibility="gone">
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <android.support.v7.widget.RecyclerView
 
+                    android:id="@+id/rl_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/x26"
+                    android:paddingRight="@dimen/x26" />
 
-</com.bb.hbx.widget.freshlayout.RefreshLayout>
+            </LinearLayout>
+
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

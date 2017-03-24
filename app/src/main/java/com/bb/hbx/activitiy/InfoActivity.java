@@ -46,7 +46,6 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener{
         myInfoFragment=new MyInfoFragment();
         systemInfoFragment=new SystemInfoFragment();
 
-
     }
 
     public static void resetLabMine(int count)

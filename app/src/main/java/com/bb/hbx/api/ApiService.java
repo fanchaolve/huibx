@@ -13,6 +13,7 @@ import com.bb.hbx.bean.DeleteConsignee;
 import com.bb.hbx.bean.FilterBean;
 import com.bb.hbx.bean.GetAccountDetailBean;
 import com.bb.hbx.bean.GetAcctSettSumBean;
+import com.bb.hbx.bean.GetApplyCertificationInfoBean;
 import com.bb.hbx.bean.GetBankCardList;
 import com.bb.hbx.bean.GetInsured;
 import com.bb.hbx.bean.GetMyPageInfoBean;
@@ -259,7 +260,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api.do?method=applyCertification&type=post")
     Call<Result_Api> applyCertification(@Field("userId") String userId,@Field("idCardImgZ") String idCardImgZ,@Field("idCardImgF") String idCardImgF,
-            @Field("idNo") String idNo,@Field("idType") String idType,@Field("realName") String realName,@Field("realName") String gender);
+            @Field("idNo") String idNo,@Field("idType") String idType,@Field("realName") String realName);
+
+    //获取实名认证审核
+    @FormUrlEncoded
+    @POST("api.do?method=getApplyCertificationInfo&type=post")
+    Call<Result_Api<GetApplyCertificationInfoBean>> getApplyCertificationInfo(@Field("userId") String userId);
 
 
     //获取常用保险联系人--已测,接口返回数据待修改
@@ -436,6 +442,11 @@ public interface ApiService {
     @POST("api.do?method=getInsurers&type=post")
     Call<Result_Api<FilterBean>> getInsurers(@Field("parentId") String parentId, @Field("insurerId") String insurerId,
                                              @Field("insurerType") String insurerType);
+
+    //获取保险公司列表
+    @FormUrlEncoded
+    @POST("api.do?method=getOccupationType&type=post")
+    Call<Result_Api> getOccupationType(@Field("parentId") String parentId, @Field("insurerId") String insurerId);
 
 
     //查看订单（保单）详情(getTradeDetail)

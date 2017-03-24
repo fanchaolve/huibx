@@ -3,11 +3,9 @@ package com.bb.hbx.base.p;
 
 import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
-import com.bb.hbx.base.v.MallContract;
 import com.bb.hbx.base.v.Mall_ItemContract;
 import com.bb.hbx.bean.ProductBean;
 import com.bb.hbx.bean.RequestProduct;
-import com.bb.hbx.bean.TypeModel;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.widget.multitype.data.Item;
 
@@ -61,6 +59,7 @@ public class Mall_ItemPresenter extends Mall_ItemContract.Presenter {
                     if (bean.getProductList() == null || bean.getProductList().isEmpty()) {
                         mView.showMsg("没有数据啦...");
                     } else {
+                        mView.stopLoading();
                         items.addAll(bean.getProductList());
                         mView.notfiy();
                     }

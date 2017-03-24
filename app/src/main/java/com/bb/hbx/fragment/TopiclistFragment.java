@@ -1,26 +1,29 @@
 package com.bb.hbx.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.base.m.TopListModel;
 import com.bb.hbx.base.p.ToplistPresenter;
 import com.bb.hbx.base.v.TopicListContract;
-import com.bb.hbx.bean.RecommendBean;
 import com.bb.hbx.bean.Special;
-import com.bb.hbx.bean.TopicBean;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.provide.TopicListProvide;
 import com.bb.hbx.widget.DottedLineItemDecoration;
-import com.bb.hbx.widget.freshlayout.OnPullListener;
-import com.bb.hbx.widget.freshlayout.RefreshLayout;
 import com.bb.hbx.widget.multitype.MultiTypeAdapter;
 import com.bb.hbx.widget.multitype.data.Item;
+import com.bumptech.glide.Glide;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,18 +40,30 @@ public class TopiclistFragment extends BaseFragment<ToplistPresenter, TopListMod
 
     private final String TAG = TopiclistFragment.class.getSimpleName();
 
+    @BindView(R.id.refresh_layout)
+    RelativeLayout refresh_layout;
     @BindView(R.id.rl_view)
     RecyclerView rl_view;
 
+    /*@BindView(R.id.refresh)
+    RefreshLayout refresh;*/
     @BindView(R.id.refresh)
-    RefreshLayout refresh;
-
+    PullToRefreshScrollView refresh;
+    @BindView(R.id.iv_progress)
+    ImageView iv_progress;
 
     private MultiTypeAdapter adapter;
 
 
     private List<Item> items;
 
+    Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
+    }
 
     @Override
     public int getLayoutId() {
@@ -57,7 +72,12 @@ public class TopiclistFragment extends BaseFragment<ToplistPresenter, TopListMod
 
     @Override
     public void initView() {
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         rl_view.setLayoutManager(manager);
         adapter = new MultiTypeAdapter();
         adapter.applyGlobalMultiTypePool();
@@ -65,7 +85,7 @@ public class TopiclistFragment extends BaseFragment<ToplistPresenter, TopListMod
         rl_view.setAdapter(adapter);
         rl_view.addItemDecoration(new DottedLineItemDecoration());
 
-        refresh.setOnPullListener(new OnPullListener() {
+        /*refresh.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh() {
                 mPresenter.getSpecials(DataLoadDirection.Refresh);
@@ -75,6 +95,18 @@ public class TopiclistFragment extends BaseFragment<ToplistPresenter, TopListMod
             public void onLoadMore() {
                 mPresenter.getSpecials(DataLoadDirection.LoadMore);
             }
+        });*/
+        refresh.setMode(PullToRefreshBase.Mode.BOTH);
+        refresh.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                mPresenter.getSpecials(DataLoadDirection.Refresh);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                mPresenter.getSpecials(DataLoadDirection.LoadMore);
+            }
         });
     }
 
@@ -82,16 +114,31 @@ public class TopiclistFragment extends BaseFragment<ToplistPresenter, TopListMod
     protected void initdate(Bundle savedInstanceState) {
         adapter.setItems(mPresenter.getList());
         mPresenter.getSpecials(DataLoadDirection.Refresh);
+        Glide.with(mContext).load(R.drawable.loading).into(iv_progress);
     }
 
     @Override
     public void stopRefresh() {
-        refresh.stopRefresh(true);
+        //refresh.stopRefresh(true);
+        if (refresh.isRefreshing())
+        {
+            refresh.onRefreshComplete();
+        }
     }
 
     @Override
     public void stopLoadMore() {
-        refresh.stopLoadMore(true);
+        //refresh.stopLoadMore(true);
+        if (refresh.isRefreshing())
+        {
+            refresh.onRefreshComplete();
+        }
+    }
+
+    @Override
+    public void stopLoading() {
+        iv_progress.setVisibility(View.GONE);
+        refresh_layout.setVisibility(View.VISIBLE);
     }
 
     @Override

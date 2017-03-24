@@ -29,7 +29,7 @@ public interface ActivitContract {
 
         void stopLoadMore();
 
-
+        void stopLoading();
         void notfiy();
 
     }

@@ -99,7 +99,11 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             if (bundle.containsKey("product")) {
-                product = (Product) bundle.getSerializable("product");
+                product = (Product) bundle.getParcelable("product");
+                if (product!=null)
+                {
+                    tv_title.setText(product.getInsurerName());
+                }
             }
         }
     }
@@ -122,6 +126,7 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
                     dialog.setTextUnSelectedColor(R.color.A3);
                     dialog.setIndicatorBackgroundColor(R.color.A1);
                     mPresenter.getProvicesCarAreas("110");
+                    //mPresenter.getProvicesCarAreas(product.getInsurerId());
                 }
                 dialog.show();
                 break;

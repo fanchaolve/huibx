@@ -34,7 +34,7 @@ public interface Mall_ItemContract {
         void stopRefresh();
 
         void stopLoadMore();
-
+        void stopLoading();
 
     }
 

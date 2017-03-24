@@ -80,10 +80,9 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
                 startActivity(intent);*/
                 String realName = realName_et.getText().toString();
                 String idCard1 = idCard_et.getText().toString();
-                String gender = MyApplication.user.getGender();
                 ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
                 Call call = service.applyCertification(MyApplication.user.getUserId(),head+"idcard/"+MyApplication.user.getUserId()+"_F"+".jpg",
-                        head+"idcard/"+MyApplication.user.getUserId()+"_B"+".jpg",idCard1,"0","liu","1".equals(gender)?"2":"1");
+                        head+"idcard/"+MyApplication.user.getUserId()+"_B"+".jpg",idCard1,"1",realName);
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {

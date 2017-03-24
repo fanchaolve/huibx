@@ -65,6 +65,7 @@
 
     <string name="share">分享</string>
     <string name="ibuy">我要投保</string>
+    <string name="qzf">去支付</string>
     <string name="more_features">查看更多特色</string>
     <string name="protection_list">保障清单</string>
     <string name="insured">投保人信息</string>
@@ -80,6 +81,7 @@
     <string name="beinsurer">被保人</string>
     <string name="please_beinsurer">请输入被保人姓名</string>
     <string name="protectiontime">保障时间</string>
+    <string name="occupationtype">职业类别</string>
     <string name="girl">女</string>
     <string name="protectionsex">被保人性别</string>
     <string name="dateofbirth">出生日期</string>
@@ -100,6 +102,8 @@
     <string name="insureplan">选择投保方案</string>
     <string name="confim">确定</string>
     <string name="orderdetail">订单详情</string>
+    <string name="orderconfirm">订单确认</string>
+    <string name="orderreview">订单审核</string>
     <string name="bdxx">保单信息</string>
     <string name="ddzt">订单状态 : </string>
     <string name="ddh">订单号 : </string>
@@ -110,6 +114,7 @@
     <string name="lxdh">联系电话 : </string>
     <string name="dz">地址 : </string>
     <string name="clxx">车辆信息</string>
+    <string name="tbrxx">投保人信息</string>
     <string name="cp">车牌 : </string>
     <string name="cz">车主 : </string>
     <string name="zjhm">证件号码 : </string>

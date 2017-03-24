@@ -21,17 +21,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rl_view"
+            <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                app:layoutManager="LinearLayoutManager" />
-        </LinearLayout>
+                android:visibility="gone">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rl_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                     /><!--app:layoutManager="LinearLayoutManager"-->
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_progress"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
 
     </com.bb.hbx.widget.freshlayout.RefreshLayout>
 

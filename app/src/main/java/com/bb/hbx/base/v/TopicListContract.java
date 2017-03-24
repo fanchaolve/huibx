@@ -29,7 +29,7 @@ public interface TopicListContract {
         void stopRefresh();
 
         void stopLoadMore();
-
+        void stopLoading();
         void notfiy();
 
     }

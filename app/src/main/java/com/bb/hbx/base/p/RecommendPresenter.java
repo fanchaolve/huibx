@@ -2,9 +2,7 @@ package com.bb.hbx.base.p;
 
 import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
-import com.bb.hbx.base.v.ActivitContract;
 import com.bb.hbx.base.v.RecommendContract;
-import com.bb.hbx.bean.ActivitInfo;
 import com.bb.hbx.bean.RecommendBean;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.widget.multitype.data.Item;
@@ -43,6 +41,7 @@ public class RecommendPresenter extends RecommendContract.Presenter {
                     }
                     if (bean.getProductList() != null && bean.getProductList().size() > 0) {
                         items.addAll(bean.getProductList());
+                        mView.stopLoading();
                         mView.notfiy();
                         PAGE_INDEX++;
                     }

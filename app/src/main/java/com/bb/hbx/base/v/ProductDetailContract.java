@@ -1,22 +1,16 @@
 package com.bb.hbx.base.v;
 
-import android.support.v7.widget.GridLayoutManager;
-
 import com.bb.hbx.base.m.BaseModel;
 import com.bb.hbx.base.p.BasePresenter;
 import com.bb.hbx.bean.Benefit;
 import com.bb.hbx.bean.Entry;
 import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.ProdectDetalRequest;
-import com.bb.hbx.bean.ProductDetail;
 import com.bb.hbx.bean.ProductParamDetail;
-import com.bb.hbx.widget.multitype.data.Item;
 
 import java.util.List;
 
 import retrofit2.Callback;
-
-import static android.R.attr.value;
 
 /**
  * Created by Administrator on 2017/1/9.
@@ -61,6 +55,8 @@ public interface ProductDetailContract {
         void setEffectiveTypewithButon(String effectDate);//layout2的显示或隐藏
 
         void setlineGone();//隐藏横线
+
+        void setOccupationGone();//隐藏职业类别条目
 
         void IsBClientView(boolean isClient, String CommisionValue1);//是否显示推广费
 

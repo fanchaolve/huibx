@@ -2,9 +2,7 @@ package com.bb.hbx.base.p;
 
 import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
-
 import com.bb.hbx.base.v.TopicListContract;
-import com.bb.hbx.bean.RecommendBean;
 import com.bb.hbx.bean.TopicBean;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.widget.multitype.data.Item;
@@ -40,6 +38,7 @@ public class ToplistPresenter extends TopicListContract.Presenter {
                         mView.stopLoadMore();
                     }
                     if (bean.getSpecialList() != null && bean.getSpecialList().size() > 0) {
+                        mView.stopLoading();
                         items.addAll(bean.getSpecialList());
                         mView.notfiy();
                         PAGE_INDEX++;

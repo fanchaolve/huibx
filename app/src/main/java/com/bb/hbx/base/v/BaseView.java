@@ -15,4 +15,5 @@ public interface BaseView {
     void dissmissLoading();
 
     void updateLoading();
+
 }

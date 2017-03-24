@@ -3,10 +3,7 @@ package com.bb.hbx.base.p;
 import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.base.v.ActivitContract;
-import com.bb.hbx.base.v.TopicListContract;
-import com.bb.hbx.bean.ActivitBean;
 import com.bb.hbx.bean.ActivitInfo;
-import com.bb.hbx.bean.ProductBean;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.widget.multitype.data.Item;
 
@@ -46,6 +43,7 @@ public class ActivitPresenter extends ActivitContract.Presenter {
                     if (bean.getAdsList() == null || bean.getAdsList().isEmpty()) {
                         mView.showMsg("没有数据啦...");
                     } else {
+                        mView.stopLoading();
                         items.addAll(bean.getAdsList());
                         mView.notfiy();
                     }

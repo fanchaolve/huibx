@@ -258,7 +258,14 @@
 
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+        <activity android:name=".activitiy.CarOrderConfirmActivity" />
+        <activity android:name=".activitiy.CarOrderReviewActivity" />
+        <activity android:name=".activitiy.CarConfirmPayActivity" />
+        <activity
+            android:name=".activitiy.ACameraActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activitiy.HadRealNameIdentifyActivity"></activity>
     </application>
 
 </manifest>

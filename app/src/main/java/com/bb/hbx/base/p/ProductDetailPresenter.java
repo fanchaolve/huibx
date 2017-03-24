@@ -111,6 +111,10 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                         mView.setlin_countInvisiblity();
                     }
 
+                    if ("1".equals(detail.getOccupation())||"9".equals(detail.getOccupation()))
+                    {
+                        mView.setOccupationGone();
+                    }
                     //-----显示日期 不能点击
                     if (detail.getEffectiveType() == 1) {
                         mView.setEffectiveTypewithButon(detail.getEffectDate());

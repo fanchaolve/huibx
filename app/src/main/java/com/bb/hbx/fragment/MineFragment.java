@@ -50,8 +50,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.bb.hbx.cans.Can.hasLogined;
-
 /**
  * Created by Administrator on 2016/12/20.
  */
@@ -491,8 +489,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         ShareSPUtils.edit.putString("userIcon", userLogo);
                         ShareSPUtils.edit.commit();
                         //ImageCatchUtil.getInstance().clearImageMemoryCache();
-                        GlideUtil.getInstance().clearMemory(mContext);
-                        GlideUtil.getInstance().loadImageWithCache(mContext,userIcon_civ, userLogo);
+                        //GlideUtil.getInstance().clearMemory(mContext);
+                        GlideUtil.getInstance().loadImageWithNoCache(mContext,userIcon_civ, userLogo);
                     }
                 }
             }

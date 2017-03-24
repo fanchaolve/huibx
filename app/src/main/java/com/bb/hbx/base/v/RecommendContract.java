@@ -29,7 +29,7 @@ public interface RecommendContract {
 
         void stopLoadMore();
 
-
+        void stopLoading();
         void notfiy();
 
     }

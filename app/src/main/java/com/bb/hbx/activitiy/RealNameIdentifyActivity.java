@@ -1,12 +1,11 @@
 package com.bb.hbx.activitiy;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -29,16 +28,14 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.cans.Can;
 import com.bb.hbx.utils.CompressBitmap;
 import com.bb.hbx.utils.STSGetter;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -118,7 +115,7 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
             case R.id.front_layout:
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     //以下为了获得原图
                     String cameraPath= Can.getDefaultUsersIconFile();
                     File file = new File(cameraPath);
@@ -128,6 +125,8 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
                     //为拍摄的图片指定一个存储的路径
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                     //intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
+                    startActivityForResult(intent,101);*/
+                    Intent intent = new Intent(this, ACameraActivity.class);
                     startActivityForResult(intent,101);
                 }
                 else
@@ -138,7 +137,7 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
             case R.id.reverse_layout:
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     //以下为了获得原图
                     String cameraPath= Can.getDefaultUsersIconFile();
                     File file = new File(cameraPath);
@@ -148,6 +147,8 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
                     //为拍摄的图片指定一个存储的路径
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                     //intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
+                    startActivityForResult(intent,102);*/
+                    Intent intent = new Intent(this, ACameraActivity.class);
                     startActivityForResult(intent,102);
                 }
                 else
@@ -169,19 +170,30 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data==null){
+            return;
+        }
+        byte[] results = data.getByteArrayExtra("result");
+        picPathFront=data.getStringExtra("filePathBuff");
+        picPathReverse=data.getStringExtra("filePathBuff");
+        if(resultCode!= Activity.RESULT_OK)
+        {
+            return;
+        }
         if (requestCode==101)
         {
 
-            bitmapFront = CompressBitmap.compressBitmapOnly(picPathFront, 4);
-            if (bitmapFront==null)//bitmapFront==null
+            //bitmapFront = CompressBitmap.compressBitmapOnly(picPathFront, 4);--------------
+            if (results==null)//bitmapFront==null--------
             {
                 front_iv.setImageResource(R.drawable.shenfenzhengzhengmian);
                 frontFlag_iv.setVisibility(View.VISIBLE);
             }
             else
             {
+                Glide.with(this).load(results).into(front_iv);
                 //Bitmap getbitmap=null;
-                if (picFileFront.exists())
+                /*if (picFileFront.exists())
                 {
                     picFileFront.delete();
                 }
@@ -189,16 +201,17 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
                     picFileFront.createNewFile();
                     FileOutputStream fos = new FileOutputStream(picFileFront);//fos 为毛是null
                     bitmapFront.compress(Bitmap.CompressFormat.PNG,100,fos);
-                    /*getbitmap = getbitmap(bitmapFront);
-                    getbitmap.compress(Bitmap.CompressFormat.PNG,100,fos);*/
+                    *//*getbitmap = getbitmap(bitmapFront);
+                    getbitmap.compress(Bitmap.CompressFormat.PNG,100,fos);*//*
                     fos.flush();
                     fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                front_iv.setImageBitmap(bitmapFront);//bitmapFront
+                front_iv.setImageBitmap(bitmapFront);//bitmapFront*/
                 frontFlag_iv.setVisibility(View.GONE);
                 //new MyOssUtils(getApplicationContext(),picPathFront,"idcard","idCard_F","_F");
+
                 STSGetter getter=new STSGetter();
                 OSS oss = new OSSClient(getApplicationContext(),"http://img-cn-hangzhou.aliyuncs.com",getter);
 
@@ -272,14 +285,15 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
         {
             bitmapReverse = CompressBitmap.compressBitmapOnly(picPathReverse, 4);
 
-            if (bitmapReverse==null)
+            if (results==null)//bitmapReverse
             {
                 reverse_iv.setImageResource(R.drawable.shenfenzhengfanmian);
                 reverseFlag_iv.setVisibility(View.VISIBLE);
             }
             else
             {
-                if (picFileReverse.exists())
+                Glide.with(this).load(results).into(reverse_iv);
+                /*if (picFileReverse.exists())
                 {
                     picFileReverse.delete();
                 }
@@ -292,7 +306,7 @@ public class RealNameIdentifyActivity extends BaseActivity implements View.OnCli
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                reverse_iv.setImageBitmap(bitmapReverse);
+                reverse_iv.setImageBitmap(bitmapReverse);*/
                 reverseFlag_iv.setVisibility(View.GONE);
                 //new MyOssUtils(getApplicationContext(),picPathReverse,"idcard","idCard_B","_B");
                 STSGetter getter=new STSGetter();

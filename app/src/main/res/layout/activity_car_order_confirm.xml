@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/A7"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/fanhui"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/orderconfirm"
+            android:textAppearance="@style/TextAppear.Theme.A1_Size17" />
+
+    </android.support.v7.widget.Toolbar>
+
+<!--<include layout="@layout/line_e" />-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/y26">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x10"
+                android:src="@drawable/piaodaiyangshi"
+                android:scaleType="centerCrop"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <TextView
+                    android:id="@+id/tv_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="罗伟"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/y42"
+                    android:layout_marginLeft="@dimen/x98"/>
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="157****0000"
+                    android:textColor="@color/A3"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/y42"
+                    android:layout_marginRight="@dimen/x72"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y36"
+                android:background="@color/white"></RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <ImageView
+                    android:id="@+id/iv_dingwei"
+                    android:layout_width="@dimen/x36"
+                    android:layout_height="@dimen/y48"
+                    android:src="@drawable/dingwei"
+                    android:scaleType="centerCrop"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x36"/>
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/nextstep"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/x36"
+                    android:layout_marginTop="@dimen/y5"/>
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="浙江省杭州市西湖区学院路28号德力西大厦3号楼2层浙江保保科技有限公司"
+                    android:textSize="13sp"
+                    android:textColor="@color/A3"
+                    android:lineSpacingExtra="@dimen/y16"
+                    android:layout_toLeftOf="@id/iv_next"
+                    android:layout_marginRight="@dimen/x40"
+                    android:layout_toRightOf="@id/iv_dingwei"
+                    android:layout_marginLeft="@dimen/x26"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x42"
+                android:background="@color/white"></RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y22"
+                    android:layout_marginLeft="@dimen/x36"
+                    android:layout_marginTop="@dimen/y30"
+                    android:text="@string/clxx"
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/x36"
+                android:paddingTop="@dimen/y38">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cp"
+                        android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+                    <TextView
+                        android:id="@+id/cardLicense_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="1234567890" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/y28">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cz"
+                        android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+                    <TextView
+                        android:id="@+id/tv_carHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="2017-08-08" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/y28">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/zjhm"
+                        android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+                    <TextView
+                        android:id="@+id/tv_cardNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="2017-08-08" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y38"
+                    android:layout_marginTop="@dimen/y28">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lxdh"
+                        android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+                    <TextView
+                        android:id="@+id/tv_carMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="2017-08-08" />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y22"
+                    android:layout_marginLeft="@dimen/x36"
+                    android:layout_marginTop="@dimen/y30"
+                    android:text="@string/bzxq"
+                    android:textAppearance="@style/TextAppear.Theme.A4_Size14" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/x36"
+                android:paddingTop="@dimen/y38">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cpxq"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+
+                    <TextView
+                        android:id="@+id/tv_cpxq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="平安车险" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/y28">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tbcs1"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+
+                    <TextView
+                        android:id="@+id/tv_tbcs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="杭州市" />
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin_jqx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/line_e" />
+
+                    <TextView
+                        android:id="@+id/tv_jqx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/y26"
+                        android:layout_marginTop="@dimen/y36"
+                        android:text="@string/jqx"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerViewJQX"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/y36"
+                        android:layout_marginRight="@dimen/x36"
+                        android:background="@drawable/shape_white_a6">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lin_syx"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/line_e" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/y26"
+                        android:layout_marginTop="@dimen/y36"
+                        android:text="@string/syx"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerViewSYX"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/y36"
+                        android:layout_marginRight="@dimen/x36"
+                        android:background="@drawable/shape_white_a6">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/agree_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y180"
+                android:background="@color/A7"
+                android:paddingLeft="@dimen/x36"
+                android:paddingRight="@dimen/x36"
+                android:paddingTop="@dimen/y42">
+
+                <CheckBox
+                    android:id="@+id/ck_agree"
+                    style="@style/mycheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ck_agree"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@+id/ck_agree"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="@string/agreement2"
+                    android:textAppearance="@style/TextAppear.Theme.A3_Size11" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y118"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppear.Theme.A2_Size21"
+            android:textStyle="bold"
+            tools:text="￥116.00" />
+
+        <LinearLayout
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/A6" />
+
+
+        <TextView
+            android:id="@+id/tv_buy"
+            android:layout_width="@dimen/x298"
+            android:layout_height="match_parent"
+            android:background="@color/A1"
+            android:gravity="center"
+            android:text="@string/qzf"
+            android:textAppearance="@style/TextAppear.Theme.white_Size21" />
+    </LinearLayout>
+</LinearLayout>
+

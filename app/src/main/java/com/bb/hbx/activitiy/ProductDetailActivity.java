@@ -127,6 +127,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @BindView(R.id.il_up1)
     ItemLayout2 il_up1;
 
+    @BindView(R.id.ll_occupationType)
+    LinearLayout ll_occupationType;
+    @BindView(R.id.il_occupationType)
+    ItemLayout2 il_occupationType;
+
 
     @BindView(R.id.il_insurer1)
     ItemLayout il_insurer1;
@@ -597,6 +602,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @Override
     public void setlineGone() {
         line.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setOccupationGone() {
+        ll_occupationType.setVisibility(View.GONE);
     }
 
     @Override

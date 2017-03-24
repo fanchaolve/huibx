@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.adapter.CardPagerAdapter;
@@ -32,7 +33,8 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
     ViewPager vp_tb;
     @BindView(R.id.lin_add)
     LinearLayout lin_add;
-
+    @BindView(R.id.commit_tv)
+    TextView commit_tv;
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
 
@@ -131,6 +133,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                 showTip("position:"+position);
             }
         });
+        commit_tv.setOnClickListener(this);
     }
 
     @Override
@@ -140,13 +143,13 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        /*switch (v.getId())
+        switch (v.getId())
         {
-            case iv_back:
-                finish();
+            case R.id.commit_tv:
+                AppManager.getInstance().showActivity(CarOrderConfirmActivity.class, null);
                 break;
             default:
                 break;
-        }*/
+        }
     }
 }

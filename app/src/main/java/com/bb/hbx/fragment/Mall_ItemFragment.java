@@ -1,10 +1,14 @@
 package com.bb.hbx.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.FilterActivity;
@@ -24,6 +28,7 @@ import com.bb.hbx.widget.freshlayout.OnPullListener;
 import com.bb.hbx.widget.freshlayout.RefreshLayout;
 import com.bb.hbx.widget.multitype.MultiTypeAdapter;
 import com.bb.hbx.widget.multitype.data.Item;
+import com.bumptech.glide.Glide;
 
 
 import java.util.List;
@@ -46,8 +51,10 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
 
     @BindView(R.id.refresh)
     RefreshLayout refresh;
-
-
+    @BindView(R.id.ll_content)
+    LinearLayout ll_content;
+    @BindView(R.id.iv_progress)
+    ImageView iv_progress;
     private MultiTypeAdapter adapter;
 
     private int pageType;
@@ -57,6 +64,7 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
 
 
     private ConditionLayout.STATE state = ConditionLayout.STATE.DEFAULT;
+    Context mContext;
 
     @BindView(R.id.cl_condit)
     ConditionLayout cl_condit;
@@ -64,11 +72,18 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
 
     private TypeModel model;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
+    }
 
     public Mall_ItemFragment(TypeModel model) {
         this.model = model;
     }
 
+    public Mall_ItemFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +104,6 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
 
     @Override
     public void initView() {
-
 
         cl_condit.setSate(state);
         cl_condit.setListener(new ConditionLayout.ConditionListener() {
@@ -161,6 +175,7 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
     protected void initdate(Bundle savedInstanceState) {
         adapter.setItems(mPresenter.getList());
         mPresenter.getProducts(DataLoadDirection.Refresh);
+        Glide.with(mContext).load(R.drawable.loading).into(iv_progress);
     }
 
 
@@ -176,11 +191,29 @@ public class Mall_ItemFragment extends BaseFragment<Mall_ItemPresenter, Mall_ite
 
     @Override
     public void stopRefresh() {
-        refresh.stopRefresh(true);
+        if (refresh!=null)
+        {
+            refresh.stopRefresh(true);
+        }
     }
 
     @Override
     public void stopLoadMore() {
-        refresh.stopLoadMore(true);
+        if (refresh!=null)
+        {
+            refresh.stopLoadMore(true);
+        }
+    }
+
+    @Override
+    public void stopLoading() {
+        if (iv_progress!=null)
+        {
+            iv_progress.setVisibility(View.GONE);
+        }
+        if (ll_content!=null)
+        {
+            ll_content.setVisibility(View.VISIBLE);
+        }
     }
 }

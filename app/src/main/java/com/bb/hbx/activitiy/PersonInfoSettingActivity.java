@@ -28,13 +28,16 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
+import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.Result_Api;
+import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
+import com.bb.hbx.bean.GetApplyCertificationInfoBean;
 import com.bb.hbx.cans.Can;
 import com.bb.hbx.db.DatabaseImpl;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.CompressBitmap;
 import com.bb.hbx.utils.GlideUtil;
-import com.bb.hbx.utils.ImageCatchUtil;
 import com.bb.hbx.utils.STSGetter;
 import com.bb.hbx.utils.ShareSPUtils;
 import com.bb.hbx.widget.ChangeIconDailog;
@@ -51,6 +54,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonInfoSettingActivity extends BaseActivity implements View.OnClickListener{
 
@@ -102,16 +108,19 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
     @Override
     public void initView() {
         //ShareSPUtils.readShareSP();
-        Can.hasLogined=ShareSPUtils.sp.getBoolean("hasLogined",false);
-        Can.userName=ShareSPUtils.sp.getString("userName",null);
-        Can.userPhone=ShareSPUtils.sp.getString("userPhone",null);
-        Can.userPwd=ShareSPUtils.sp.getString("userPwd",null);
-        Can.userIcon= ShareSPUtils.sp.getString("userIcon", null);
-        //Log.d("========activity","=========="+Can.userIcon);
-        //userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));---------------
-        //Glide.with(this).load(Can.userIcon).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);
-        ImageCatchUtil.getInstance().clearImageAllCache();
-        GlideUtil.getInstance().loadImageWithCache(this,userIcon_civ,Can.userIcon);
+        if (ShareSPUtils.sp!=null)
+        {
+            Can.hasLogined=ShareSPUtils.sp.getBoolean("hasLogined",false);
+            Can.userName=ShareSPUtils.sp.getString("userName",null);
+            Can.userPhone=ShareSPUtils.sp.getString("userPhone",null);
+            Can.userPwd=ShareSPUtils.sp.getString("userPwd",null);
+            Can.userIcon= ShareSPUtils.sp.getString("userIcon", null);
+            //Log.d("========activity","=========="+Can.userIcon);
+            //userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));---------------
+            //Glide.with(this).load(Can.userIcon).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);
+            //ImageCatchUtil.getInstance().clearImageAllCache();
+            GlideUtil.getInstance().loadImageWithNoCache(this,userIcon_civ,Can.userIcon);
+        }
         /*if (ShareSPUtils.sp.getBoolean("isChangeUserIcon",false))
         {
             GlideUtil.getInstance().loadImageWithCache(this,userIcon_civ,Can.userIcon,false);
@@ -277,7 +286,7 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.back_layout:
@@ -341,8 +350,33 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
                 startActivity(intent);
                 break;
             case R.id.realNameIdentify_layout:
-                intent.setClass(PersonInfoSettingActivity.this,RealNameIdentifyActivity.class);
-                startActivity(intent);
+                ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+                Call call=service.getApplyCertificationInfo(MyApplication.user.getUserId());
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        Result_Api body = (Result_Api) response.body();
+                        GetApplyCertificationInfoBean bean = (GetApplyCertificationInfoBean) body.getOutput();
+                        if (body.isSuccess())
+                        {
+                            intent.setClass(PersonInfoSettingActivity.this,HadRealNameIdentifyActivity.class);
+                            intent.putExtra("audit_sts",bean.getAudit_sts());
+                            intent.putExtra("audit_comment",bean.getAudit_sts());
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            intent.setClass(PersonInfoSettingActivity.this,RealNameIdentifyActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+
+                    }
+                });
+
                 break;
             case R.id.countSafe_layout:
                 //Toast.makeText(PersonInfoSettingActivity.this,"点击",Toast.LENGTH_SHORT).show();

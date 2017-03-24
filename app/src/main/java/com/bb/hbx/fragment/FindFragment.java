@@ -118,6 +118,7 @@ public class FindFragment extends BaseFragment {
 
     }
 
+
     public class FindReceiver extends BroadcastReceiver {
 
         @Override

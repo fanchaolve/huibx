@@ -85,6 +85,23 @@ public class GlideUtil {
             Glide.with(context)
                     .load(imgUrl)
                     .error(R.mipmap.ic_launcher)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //缓存策略
+                    .into(imageView);
+    }
+
+    /**
+     * 常规加载图片----------不缓存
+     *    http://blog.csdn.net/zhangphil/article/details/52862225?locationNum=10&fps=1
+     * @param context
+     * @param imageView 图片容器
+     * @param imgUrl    图片地址
+     */
+    public void loadImageWithNoCache(Context context, ImageView imageView,
+                          String imgUrl) {
+            Glide.with(context)
+                    .load(imgUrl)
+                    .error(R.mipmap.ic_launcher)
+                    .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存策略
                     .into(imageView);
     }
