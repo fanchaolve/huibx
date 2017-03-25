@@ -13,151 +13,172 @@
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
+
         <ImageView
+            android:id="@+id/back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/back_iv"
-            android:src="@drawable/fanhui"
+            android:layout_marginLeft="18dp"
             android:scaleType="centerCrop"
-            android:layout_marginLeft="18dp"/>
+            android:src="@drawable/fanhui" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实名认证"
-            android:textSize="22sp"
-            android:textColor="@color/A1"
             android:layout_centerHorizontal="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="实名认证"
+            android:textColor="@color/A1"
+            android:textSize="22sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/warn_layout"
-        android:layout_below="@id/topbar_layout"
         android:layout_width="match_parent"
         android:layout_height="43dp"
+        android:layout_below="@id/topbar_layout"
         android:background="@color/colorDivider">
+
         <ImageView
+            android:id="@+id/warn_iv"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:src="@drawable/warn"
-            android:scaleType="centerCrop"
             android:layout_centerVertical="true"
             android:layout_marginLeft="18dp"
-            android:id="@+id/warn_iv"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/warn" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请核对信息,如有误请点击修改"
-            android:textSize="12sp"
-            android:textColor="@color/A4"
-            android:layout_toRightOf="@id/warn_iv"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
-            android:layout_centerVertical="true"/>
+            android:layout_toRightOf="@id/warn_iv"
+            android:text="请核对信息,如有误请点击修改"
+            android:textColor="@color/A4"
+            android:textSize="12sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_below="@id/warn_layout"
         android:background="@color/white">
+
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="14sp"
-            android:textColor="@color/A3"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="18dp"
-            android:layout_centerVertical="true"/>
+            android:text="姓名"
+            android:textColor="@color/A3"
+            android:textSize="14sp" />
+
         <ImageView
             android:id="@+id/nextStepFriend_iv"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/edit"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/edit" />
+
         <EditText
             android:id="@+id/realName_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="姓名"
-            android:textSize="13sp"
-            android:textColorHint="@color/A5"
-            android:textColor="@color/A3"
-            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:layout_marginRight="9dp"
             android:layout_toLeftOf="@id/nextStepFriend_iv"
-            android:layout_marginRight="9dp"/>
+            android:layout_toRightOf="@id/tv_name"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="姓名"
+            android:textColor="@color/A3"
+            android:textColorHint="@color/A5"
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="18dp"
-            android:background="@color/colorDivider"
-            android:layout_alignParentBottom="true"/>
+            android:background="@color/colorDivider" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/idCard_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_below="@id/name_layout"
         android:background="@color/white">
+
         <TextView
+            android:id="@+id/tv_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="身份证号"
-            android:textSize="14sp"
-            android:textColor="@color/A3"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="18dp"
-            android:layout_centerVertical="true"/>
+            android:text="身份证号"
+            android:textColor="@color/A3"
+            android:textSize="14sp" />
+
         <EditText
             android:id="@+id/idCard_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="身份证"
-            android:textSize="13sp"
-            android:textColorHint="@color/A5"
-            android:textColor="@color/A3"
-            android:background="@null"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="18dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:layout_toRightOf="@id/tv_id"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="身份证"
+            android:textColor="@color/A3"
+            android:textColorHint="@color/A5"
+            android:textSize="13sp" />
 
     </RelativeLayout>
+
     <TextView
         android:id="@+id/commit_tv"
-        android:layout_below="@id/idCard_layout"
-        android:background="@drawable/shape_btn_a1"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:layout_below="@id/idCard_layout"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginTop="31dp"
+        android:background="@drawable/shape_btn_a1"
+        android:gravity="center"
         android:text="提交验证"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:gravity="center"/>
+        android:textSize="18sp" />
 
     <RelativeLayout
+        android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_layout"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp">
+
         <ImageView
             android:id="@+id/service_iv"
             android:layout_width="19dp"
             android:layout_height="20dp"
-            android:src="@drawable/kefuzhognxin"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/kefuzhognxin" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/service_iv"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="9dp"
             android:text="如有问题,请联系客服"
-            android:textSize="12sp"
             android:textColor="@color/A4"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="12sp" />
     </RelativeLayout>
 </RelativeLayout>

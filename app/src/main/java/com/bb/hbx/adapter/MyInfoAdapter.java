@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bb.hbx.R;
 import com.bb.hbx.bean.Message;
@@ -22,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.bb.hbx.widget.SlidingDeleteItemView.*;
-import static com.yintong.secure.c.ae.j.bi;
 
 /**
  * Created by Administrator on 2017/2/17.
@@ -37,13 +38,14 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
     private OnItemChangeStateClickListener onMyItemClickListener;
     private OnItemClickListener onDeleteItemClickListener;
     private SlidingDeleteItemView mMenu = null;
-    private IonSlidingViewClickListener ionSlidingViewClickListener;
+    private OnDelBtnClickListener onDelBtnClickListener;
+//    private IonSlidingViewClickListener ionSlidingViewClickListener;
 
     public MyInfoAdapter(Context mContext, List<Message> list) {
         this.mContext = mContext;
         this.list = list;
         inflater=LayoutInflater.from(mContext);
-        ionSlidingViewClickListener = (IonSlidingViewClickListener) mContext;
+//        ionSlidingViewClickListener = (IonSlidingViewClickListener) mContext;
     }
 
     public void setOnMyItemClickListener(OnItemChangeStateClickListener onMyItemClickListener) {
@@ -56,6 +58,10 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
 
     public void setOnDeleteItemClickListener(OnItemClickListener onDeleteItemClickListener) {
         this.onDeleteItemClickListener = onDeleteItemClickListener;
+    }
+
+    public void setOnDelBtnClickListener(OnDelBtnClickListener onDelBtnClickListener) {
+        this.onDelBtnClickListener = onDelBtnClickListener;
     }
 
     @Override
@@ -85,7 +91,7 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
         holder.time_tv.setText(TimeUtils.getDateToString(stringToDateNoSpace));
         final MyViewHolder finalHolder=holder;
         finalHolder.circle_tv.setTag(position);
-        finalHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.layout_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -95,13 +101,13 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
                 } else {
                     onMyItemClickListener.onMyItemChangeStateClickListener(position,finalHolder.circle_tv);
                     int n = holder.getLayoutPosition();
-                    ionSlidingViewClickListener.onItemClick(v, n);
+//                    ionSlidingViewClickListener.onItemClick(v, n);
                 }
             }
         });
 
         //长按删除的监听
-        finalHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.layout_content.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 onDeleteItemClickListener.onMyItemClickListener(position);
@@ -109,11 +115,19 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
             }
         });
 
-        holder.btn_Delete.setOnClickListener(new View.OnClickListener() {
+//        holder.btn_Delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int n = holder.getLayoutPosition();
+//                ionSlidingViewClickListener.onDeleteBtnCilck(v, n);
+//            }
+//        });
+
+        holder.btn_Delete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int n = holder.getLayoutPosition();
-                ionSlidingViewClickListener.onDeleteBtnCilck(v, n);
+                int i = holder.getLayoutPosition();
+                onDelBtnClickListener.onDelBtnClick(v,i);
             }
         });
     }
@@ -124,6 +138,9 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.rl_content)
+        RelativeLayout rl_content;
+
         @BindView(R.id.tv_delete)
         TextView btn_Delete;
 
@@ -152,7 +169,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
     public void removeData(int position){
         list.remove(position);
         notifyItemRemoved(position);
-
     }
 
     /**
@@ -195,10 +211,12 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
         return false;
     }
 
+//    public interface IonSlidingViewClickListener {
+//        void onItemClick(View view,int position);
+//        void onDeleteBtnCilck(View view,int position);
+//    }
 
-
-    public interface IonSlidingViewClickListener {
-        void onItemClick(View view,int position);
-        void onDeleteBtnCilck(View view,int position);
+    public interface OnDelBtnClickListener {
+        void onDelBtnClick(View view,int position);
     }
 }

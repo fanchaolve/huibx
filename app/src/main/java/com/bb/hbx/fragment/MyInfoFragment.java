@@ -44,7 +44,7 @@ import retrofit2.Response;
  * Created by Administrator on 2017/2/17.
  */
 
-public class MyInfoFragment extends BaseFragment implements MyInfoAdapter.IonSlidingViewClickListener {
+public class MyInfoFragment extends BaseFragment {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
@@ -163,6 +163,13 @@ public class MyInfoFragment extends BaseFragment implements MyInfoAdapter.IonSli
             }
         });
 
+        adapter.setOnDelBtnClickListener(new MyInfoAdapter.OnDelBtnClickListener() {
+            @Override
+            public void onDelBtnClick(View view, int position) {
+                adapter.removeData(position);
+            }
+        });
+
         loadSysMsgData();
     }
 
@@ -221,14 +228,16 @@ public class MyInfoFragment extends BaseFragment implements MyInfoAdapter.IonSli
 //        myDBManagerSystemInfo.closeDaoSession();
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-    }
-
-    @Override
-    public void onDeleteBtnCilck(View view, int position) {
-        adapter.removeData(position);
-    }
+//    @Override
+//    public void onItemClick(View view, int position) {
+//        showTip("点击了");
+//    }
+//
+//    @Override
+//    public void onDeleteBtnCilck(View view, int position) {
+//        showTip("删除");
+//        adapter.removeData(position);
+//    }
 
     class MyInfoReceiver extends BroadcastReceiver {
 

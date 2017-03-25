@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.bb.hbx.widget.SlidingDeleteItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:background="@android:color/white"
     android:layout_marginBottom="1dp">
 
     <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_delete"
-            android:layout_height="108dp"
-            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_width="100dp"
             android:gravity="center"
             android:layout_toRightOf="@+id/layout_content"
             android:text="删 除"
+            android:clickable="true"
             android:background="@drawable/btn_click_red_havebackground"
             android:textColor="#DDFFFFFF" />
 

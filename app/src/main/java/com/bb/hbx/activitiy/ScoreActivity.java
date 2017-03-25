@@ -233,7 +233,7 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void successCallback(Result_Api api) {
                 Log.d("tttttt","------------------------" + api.toString());
-                showTip("success");
+//                showTip("success");
                 if (api != null) {
                     isSign = api.isSuccess();
                     Log.d("tttttt","-----------isSignedByScore-isSign------------" + isSign);
@@ -250,7 +250,7 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void failCallback() {
-                showTip("fail");
+//                showTip("fail");
                 Log.d("tttttt", "---------fail--------");
             }
         });

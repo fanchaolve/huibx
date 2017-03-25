@@ -1,7 +1,9 @@
 package com.bb.hbx.activitiy;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
@@ -12,6 +14,15 @@ public class RealNameFinishActivity extends BaseActivity implements View.OnClick
 
     @BindView(R.id.back_iv)
     ImageView back_iv;
+
+    @BindView(R.id.name_tv)
+    TextView name_tv;
+
+    @BindView(R.id.idCard_et)
+    TextView idCard_et;
+
+    private String realName = "";
+    private String idNo = "";
 
     @Override
     public int getLayoutId() {
@@ -30,7 +41,12 @@ public class RealNameFinishActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void initdata() {
+        Intent intent = getIntent();
+        realName = intent.getStringExtra("audit_realname");
+        idNo = intent.getStringExtra("audit_idno");
 
+        name_tv.setText(realName);
+        idCard_et.setText(idNo);
     }
 
     @Override

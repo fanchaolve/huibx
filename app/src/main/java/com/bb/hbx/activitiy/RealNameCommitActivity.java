@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RealNameCommitActivity extends BaseActivity implements View.OnClickListener{
+public class RealNameCommitActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_iv)
     ImageView back_iv;
@@ -34,7 +34,7 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.commit_tv)
     TextView commit_tv;
 
-    String head="http://img.51hbx.com/resource/images/user/";
+    String head = "http://img.51hbx.com/resource/images/user/";
 
     @Override
     public int getLayoutId() {
@@ -47,8 +47,7 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
         Intent intent = getIntent();
         String frontPath = intent.getStringExtra("front");
         String reversePath = intent.getStringExtra("reverse");
-        if (!TextUtils.isEmpty(frontPath))
-        {
+        if (!TextUtils.isEmpty(frontPath)) {
             //MyOssUtils myOssUtils = new MyOssUtils(getApplicationContext(), frontPath);
         }
     }
@@ -67,13 +66,12 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_iv:
                 finish();
                 break;
             case R.id.name_layout:
-                Toast.makeText(this,"修改个人信息",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "修改个人信息", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.commit_tv:
                 /*Intent intent = new Intent(this, RealNameFinishActivity.class);
@@ -81,21 +79,18 @@ public class RealNameCommitActivity extends BaseActivity implements View.OnClick
                 String realName = realName_et.getText().toString();
                 String idCard1 = idCard_et.getText().toString();
                 ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                Call call = service.applyCertification(MyApplication.user.getUserId(),head+"idcard/"+MyApplication.user.getUserId()+"_F"+".jpg",
-                        head+"idcard/"+MyApplication.user.getUserId()+"_B"+".jpg",idCard1,"1",realName);
+                Call call = service.applyCertification(MyApplication.user.getUserId(), head + "idcard/" + MyApplication.user.getUserId() + "_F" + ".jpg",
+                        head + "idcard/" + MyApplication.user.getUserId() + "_B" + ".jpg", idCard1, "1", realName);
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
                         Result_Api body = (Result_Api) response.body();
-                        if (body!=null)
-                        {
-                            if (body.isSuccess())
-                            {
-                                Intent intent = new Intent(RealNameCommitActivity.this, RealNameFinishActivity.class);
+                        if (body != null) {
+                            if (body.isSuccess()) {
+                                Intent intent = new Intent(RealNameCommitActivity.this, RealNameAuthenticatingActivity.class);
                                 startActivity(intent);
-                            }
-                            else
-                            {
+                                finish();
+                            } else {
                                 showTip(body.getRespMsg());
                             }
                         }

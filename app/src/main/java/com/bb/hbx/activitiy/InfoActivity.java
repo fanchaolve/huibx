@@ -15,7 +15,7 @@ import com.bb.hbx.widget.SlidingDeleteItemView;
 
 import butterknife.BindView;
 
-public class InfoActivity extends BaseActivity implements View.OnClickListener,MyInfoAdapter.IonSlidingViewClickListener {
+public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -135,15 +135,5 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener,M
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
-    @Override
-    public void onDeleteBtnCilck(View view, int position) {
-
     }
 }
