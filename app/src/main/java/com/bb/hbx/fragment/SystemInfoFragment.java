@@ -2,9 +2,11 @@ package com.bb.hbx.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,7 @@ import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.InfoActivity;
 import com.bb.hbx.activitiy.MsgDetailsActivity;
+import com.bb.hbx.adapter.MyInfoAdapter;
 import com.bb.hbx.adapter.MySystemInfoAdapter;
 import com.bb.hbx.api.ApiService;
 import com.bb.hbx.api.Result_Api;
@@ -22,7 +25,9 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.Message;
 import com.bb.hbx.bean.MsgInfo;
+import com.bb.hbx.interfaces.OnDelBtnClickListener;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
+import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.RealmUtilsForMessage;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -43,19 +48,19 @@ public class SystemInfoFragment extends BaseFragment {
 
     @BindView(R.id.scrollView)
     PullToRefreshScrollView scrollView;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    Context mContext;
-    List<Message> totalList = new ArrayList<>();
-    GridLayoutManager manager;
-    MySystemInfoAdapter adapter;
-    SystemInfoReceiver systemInfoReceiver;
-    int pageIndex = 1;
-    int unReadCount = 0;
-    int totalCount;
-    int realsystemInfoCount;
-    int haveReadCount;
+    private Context mContext;
+    private List<Message> totalList = new ArrayList<>();
+    private GridLayoutManager manager;
+    private MySystemInfoAdapter adapter;
+    private SystemInfoReceiver systemInfoReceiver;
+    private int pageIndex = 1;
+    private int unReadCount = 0;
+    private int totalCount;
+    private int haveReadCount;
 //    private int unReadSysMsgNum = 0;
 
     @Override
@@ -120,7 +125,6 @@ public class SystemInfoFragment extends BaseFragment {
                             unReadCount--;
                         }
                         InfoActivity.resetLabSystem(unReadCount);
-//                        mess.setSts(2);
                         RealmUtilsForMessage.add(mess);
                         view.setBackgroundResource(R.drawable.shape_circle_white);
                         totalList.get(position).setSts(2);
@@ -128,6 +132,41 @@ public class SystemInfoFragment extends BaseFragment {
                     }
                     startActivity(new Intent(mContext, MsgDetailsActivity.class));
                 }
+            }
+        });
+
+        adapter.setOnDeleteItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onMyItemClickListener(final int position) {
+                //Toast.makeText(mContext,"长按删除:"+position,Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                dialog.setTitle("确认要删除本条信息吗");
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(mContext,"删除:"+position,Toast.LENGTH_SHORT).show();
+                        totalList.remove(position);
+//                        delMsg(totalList.get(position).getMsgId());
+                        adapter.notifyDataSetChanged();
+                        for (int i = 0; i < totalList.size(); i++) {
+                            Log.e("===AA===" + totalList.size(), "=========" + totalList.get(i).getSts());
+                        }
+                    }
+                });
+                dialog.setNegativeButton("取消", null);
+                dialog.show();
+            }
+        });
+
+        adapter.setOnDelBtnClickListener(new OnDelBtnClickListener() {
+            @Override
+            public void onDelBtnClick(View view, int position) {
+//                delMsg(totalList.get(position).getMsgId());
+                adapter.removeData(position);
+                if (adapter.menuIsOpen()) {
+                    adapter.closeMenu();
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -176,10 +215,8 @@ public class SystemInfoFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i = 0; i < totalList.size(); i++) {
-//                totalList.get(i).setSts(2);
                 Message mess = totalList.get(i);
                 mess.setSts(2);
-//                myDBManagerSystemInfo.insertObject(mess);
                 RealmUtilsForMessage.add(mess);
             }
             adapter.notifyDataSetChanged();

@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="恭喜您获得新手红包,有效期30天,请尽快使用dddddddd"
+                android:text="恭喜您获得新手红包,有效期30天,请尽快使用"
                 android:textColor="@color/A3"
                 android:textSize="12sp"
                 android:layout_alignLeft="@id/title_tv"

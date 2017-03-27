@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
@@ -20,12 +21,14 @@ import com.bb.hbx.activitiy.InfoActivity;
 import com.bb.hbx.activitiy.MsgDetailsActivity;
 import com.bb.hbx.adapter.MyInfoAdapter;
 import com.bb.hbx.api.ApiService;
+import com.bb.hbx.api.PostCallback;
 import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseFragment;
 import com.bb.hbx.bean.Message;
 import com.bb.hbx.bean.MsgInfo;
 import com.bb.hbx.db.MyDBManagerSystemInfo;
+import com.bb.hbx.interfaces.OnDelBtnClickListener;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.RealmUtilsForMessage;
@@ -60,7 +63,6 @@ public class MyInfoFragment extends BaseFragment {
     private int pageIndex = 1;
 
     private int unReadCount;
-//    private MyDBManagerSystemInfo myDBManagerSystemInfo;
     private int unReadSysMsgNum = 0;
 
     @Override
@@ -73,7 +75,6 @@ public class MyInfoFragment extends BaseFragment {
     public int getLayoutId() {
         return R.layout.fragment_myinfo_layout;
     }
-
 
     @Override
     public void initView() {
@@ -106,8 +107,6 @@ public class MyInfoFragment extends BaseFragment {
 
     @Override
     protected void initdate(Bundle savedInstanceState) {
-//        RealmUtilsForMessage.deleteAll();
-//        myDBManagerSystemInfo = new MyDBManagerSystemInfo(mContext);
         manager = new GridLayoutManager(mContext, 1) {
             @Override
             public boolean canScrollVertically() {
@@ -152,6 +151,7 @@ public class MyInfoFragment extends BaseFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(mContext,"删除:"+position,Toast.LENGTH_SHORT).show();
                         totalList.remove(position);
+                        delMsg(totalList.get(position).getMsgId());
                         adapter.notifyDataSetChanged();
                         for (int i = 0; i < totalList.size(); i++) {
                             Log.e("===AA===" + totalList.size(), "=========" + totalList.get(i).getSts());
@@ -163,16 +163,25 @@ public class MyInfoFragment extends BaseFragment {
             }
         });
 
-        adapter.setOnDelBtnClickListener(new MyInfoAdapter.OnDelBtnClickListener() {
+        adapter.setOnDelBtnClickListener(new OnDelBtnClickListener() {
             @Override
             public void onDelBtnClick(View view, int position) {
+                delMsg(totalList.get(position).getMsgId());
                 adapter.removeData(position);
+                if (adapter.menuIsOpen()) {
+                    adapter.closeMenu();
+                }
+                adapter.notifyDataSetChanged();
             }
         });
 
         loadSysMsgData();
     }
 
+    /**
+     * 读消息
+     * @param msgId
+     */
     private void uploadServices(String msgId) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
         Call call = service.readMsg(MyApplication.user.getUserId(), "2", msgId);
@@ -191,7 +200,7 @@ public class MyInfoFragment extends BaseFragment {
 
     private void showMsgList(final int pageIndex) {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "2", "0","1");
+        Call call = service.getMsgsUser(MyApplication.user.getUserId(), "2", "0",pageIndex + "");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -221,23 +230,31 @@ public class MyInfoFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 删除消息
+     */
+    private void delMsg(String msgId) {
+        ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call = apiService.delMsg(MyApplication.user.getUserId(),"1","0",msgId);
+        call.enqueue(new PostCallback() {
+            @Override
+            public void successCallback(Result_Api api) {
+                Toast.makeText(mContext,"消息删除成功！",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failCallback() {
+
+            }
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mContext.unregisterReceiver(myInfoReceiver);
 //        myDBManagerSystemInfo.closeDaoSession();
     }
-
-//    @Override
-//    public void onItemClick(View view, int position) {
-//        showTip("点击了");
-//    }
-//
-//    @Override
-//    public void onDeleteBtnCilck(View view, int position) {
-//        showTip("删除");
-//        adapter.removeData(position);
-//    }
 
     class MyInfoReceiver extends BroadcastReceiver {
 

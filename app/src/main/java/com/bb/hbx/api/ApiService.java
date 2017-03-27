@@ -379,6 +379,14 @@ public interface ApiService {
     Call<Result_Api<MsgInfo>> getMsgs(@Field("userId") String userId, @Field("msgType") String msgType,
                                       @Field("sts") String sts, @Field("pageIndex") int pageIndex, @Field("pageSize") int pageSize);
 
+    //删除消息
+    @FormUrlEncoded
+    @POST("api.do?method=delMsg&type=post")
+    Call<Result_Api> delMsg(@Field("userId") String userId,
+                            @Field("msgType") String msgType,
+                            @Field("sts") String sts,
+                            @Field("msgId") String msgId);
+
     //获取产品详情
     @FormUrlEncoded
     @POST("api.do?method=getProductDetail&type=post")

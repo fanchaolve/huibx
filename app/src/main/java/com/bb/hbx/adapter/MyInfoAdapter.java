@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bb.hbx.R;
 import com.bb.hbx.bean.Message;
+import com.bb.hbx.interfaces.OnDelBtnClickListener;
 import com.bb.hbx.interfaces.OnItemChangeStateClickListener;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.DeleteItemUtils;
@@ -39,22 +39,16 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
     private OnItemClickListener onDeleteItemClickListener;
     private SlidingDeleteItemView mMenu = null;
     private OnDelBtnClickListener onDelBtnClickListener;
-//    private IonSlidingViewClickListener ionSlidingViewClickListener;
 
     public MyInfoAdapter(Context mContext, List<Message> list) {
         this.mContext = mContext;
         this.list = list;
         inflater=LayoutInflater.from(mContext);
-//        ionSlidingViewClickListener = (IonSlidingViewClickListener) mContext;
     }
 
     public void setOnMyItemClickListener(OnItemChangeStateClickListener onMyItemClickListener) {
         this.onMyItemClickListener = onMyItemClickListener;
     }
-
-//    public void setOnMyItemClickListener(onitem onMyItemClickListener) {
-//        this.onMyItemClickListener = onMyItemClickListener;
-//    }
 
     public void setOnDeleteItemClickListener(OnItemClickListener onDeleteItemClickListener) {
         this.onDeleteItemClickListener = onDeleteItemClickListener;
@@ -100,8 +94,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
                     closeMenu();//关闭菜单
                 } else {
                     onMyItemClickListener.onMyItemChangeStateClickListener(position,finalHolder.circle_tv);
-                    int n = holder.getLayoutPosition();
-//                    ionSlidingViewClickListener.onItemClick(v, n);
                 }
             }
         });
@@ -115,14 +107,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
             }
         });
 
-//        holder.btn_Delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int n = holder.getLayoutPosition();
-//                ionSlidingViewClickListener.onDeleteBtnCilck(v, n);
-//            }
-//        });
-
         holder.btn_Delete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,40 +119,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    class MyViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.rl_content)
-        RelativeLayout rl_content;
-
-        @BindView(R.id.tv_delete)
-        TextView btn_Delete;
-
-        @BindView(R.id.circle_tv)
-        TextView circle_tv;
-
-        @BindView(R.id.title_tv)
-        TextView title_tv;
-
-        @BindView(R.id.content_tv)
-        TextView content_tv;
-
-        @BindView(R.id.time_tv)
-        TextView time_tv;
-
-        @BindView(R.id.layout_content)
-        ViewGroup layout_content;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-            ((SlidingDeleteItemView) itemView).setSlidingDeleteListener(MyInfoAdapter.this);
-        }
-    }
-
-    public void removeData(int position){
-        list.remove(position);
-        notifyItemRemoved(position);
     }
 
     /**
@@ -211,12 +161,43 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
         return false;
     }
 
-//    public interface IonSlidingViewClickListener {
-//        void onItemClick(View view,int position);
-//        void onDeleteBtnCilck(View view,int position);
-//    }
+    class MyViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.rl_content)
+        RelativeLayout rl_content;
 
-    public interface OnDelBtnClickListener {
-        void onDelBtnClick(View view,int position);
+        @BindView(R.id.tv_delete)
+        TextView btn_Delete;
+
+        @BindView(R.id.circle_tv)
+        TextView circle_tv;
+
+        @BindView(R.id.title_tv)
+        TextView title_tv;
+
+        @BindView(R.id.content_tv)
+        TextView content_tv;
+
+        @BindView(R.id.time_tv)
+        TextView time_tv;
+
+        @BindView(R.id.layout_content)
+        ViewGroup layout_content;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+            ((SlidingDeleteItemView) itemView).setSlidingDeleteListener(MyInfoAdapter.this);
+        }
     }
+
+    public void removeData(int position){
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
+
+//    public interface OnDelBtnClickListener {
+//        void onDelBtnClick(View view,int position);
+//    }
 }
