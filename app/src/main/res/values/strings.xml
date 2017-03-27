@@ -150,6 +150,7 @@
     <string name="syr">受益人 : 法定受益人</string>
     <string name="qbsj2">起保时间</string>
     <string name="selectcar">选择车型</string>
+    <string name="paysuccess">支付成功</string>
     <string name="newcarprice">新车参考价 : </string>
     <string name="msgdetails">消息详情</string>
     <string name="realnameauth">实名认证</string>

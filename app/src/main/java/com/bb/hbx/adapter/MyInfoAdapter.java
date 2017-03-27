@@ -195,8 +195,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoAdapter.MyViewHold
         notifyItemRemoved(position);
     }
 
-
-
 //    public interface OnDelBtnClickListener {
 //        void onDelBtnClick(View view,int position);
 //    }

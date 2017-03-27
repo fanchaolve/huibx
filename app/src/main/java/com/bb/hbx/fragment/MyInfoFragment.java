@@ -151,7 +151,7 @@ public class MyInfoFragment extends BaseFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(mContext,"删除:"+position,Toast.LENGTH_SHORT).show();
                         totalList.remove(position);
-                        delMsg(totalList.get(position).getMsgId());
+                        delMsg(totalList.get(position).getSts(),totalList.get(position).getMsgId());
                         adapter.notifyDataSetChanged();
                         for (int i = 0; i < totalList.size(); i++) {
                             Log.e("===AA===" + totalList.size(), "=========" + totalList.get(i).getSts());
@@ -166,7 +166,7 @@ public class MyInfoFragment extends BaseFragment {
         adapter.setOnDelBtnClickListener(new OnDelBtnClickListener() {
             @Override
             public void onDelBtnClick(View view, int position) {
-                delMsg(totalList.get(position).getMsgId());
+                delMsg(totalList.get(position).getSts(),totalList.get(position).getMsgId());
                 adapter.removeData(position);
                 if (adapter.menuIsOpen()) {
                     adapter.closeMenu();
@@ -233,9 +233,9 @@ public class MyInfoFragment extends BaseFragment {
     /**
      * 删除消息
      */
-    private void delMsg(String msgId) {
+    private void delMsg(int sts, String msgId) {
         ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = apiService.delMsg(MyApplication.user.getUserId(),"1","0",msgId);
+        Call call = apiService.delMsg(MyApplication.user.getUserId(),"2",sts + "",msgId);
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {

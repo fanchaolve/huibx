@@ -11,7 +11,9 @@ import com.bb.hbx.adapter.MyInfoAdapter;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.fragment.MyInfoFragment;
 import com.bb.hbx.fragment.SystemInfoFragment;
-import com.bb.hbx.widget.SlidingDeleteItemView;
+import com.bb.hbx.interfaces.OnItemClickListener;
+import com.bb.hbx.widget.MsgEditDialog;
+
 
 import butterknife.BindView;
 
@@ -21,8 +23,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout back_layout;
     @BindView(R.id.content_layout)
     RelativeLayout content_layout;
-    @BindView(R.id.realAll_tv)
-    TextView realAll_tv;
+    @BindView(R.id.editAll_tv)
+    TextView editAll_tv;
     @BindView(R.id.myInfo_tv)
     TextView myInfo_tv;
     @BindView(R.id.systemInfo_tv)
@@ -31,9 +33,11 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     static TextView myInfoCount_tv;
     static TextView systemInfoCount_tv;
 
-    FragmentManager fragmentManager;
-    MyInfoFragment myInfoFragment;
-    SystemInfoFragment systemInfoFragment;
+    private FragmentManager fragmentManager;
+    private MyInfoFragment myInfoFragment;
+    private SystemInfoFragment systemInfoFragment;
+
+    private int framentFlag = 0;            //0:个人消息页面  1：系统消息页面
 
     @Override
     public int getLayoutId() {
@@ -79,7 +83,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initListener() {
         back_layout.setOnClickListener(this);
-        realAll_tv.setOnClickListener(this);
+        editAll_tv.setOnClickListener(this);
         myInfo_tv.setOnClickListener(this);
         systemInfo_tv.setOnClickListener(this);
     }
@@ -96,13 +100,27 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
             case R.id.back_layout:
                 finish();
                 break;
-            case R.id.realAll_tv:
-                showTip("全标已读");
-                Intent intent = new Intent();
-                intent.setAction("com.myinfo");
-                sendBroadcast(intent);
+            case R.id.editAll_tv:
+                final MsgEditDialog msgEditDialog = new MsgEditDialog(this);
+                msgEditDialog.show();
+                msgEditDialog.setItemFlagAllClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onMyItemClickListener(int position) {
+                        showTip("标记全部");
+                        msgEditDialog.dismiss();
+                    }
+                });
+
+                msgEditDialog.setItemClearAllListener(new OnItemClickListener() {
+                    @Override
+                    public void onMyItemClickListener(int position) {
+                        showTip("全部清除");
+                        msgEditDialog.dismiss();
+                    }
+                });
                 break;
             case R.id.myInfo_tv:
+                framentFlag = 0;
                 //showTip("我的消息");
                 myInfo_tv.setTextColor(getResources().getColor(R.color.white));
                 myInfo_tv.setBackgroundResource(R.drawable.shape_select_left_custom);
@@ -118,6 +136,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.systemInfo_tv:
+                framentFlag = 1;
                 //showTip("系统消息");
                 systemInfo_tv.setTextColor(getResources().getColor(R.color.white));
                 systemInfo_tv.setBackgroundResource(R.drawable.shape_select_right_custom);
@@ -135,5 +154,23 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    /**
+     * 点击编辑所有按钮后的业务逻辑
+     */
+    private void editAll(int flag) {
+        switch (flag) {
+            case 0:                     //个人消息页面
+
+                break;
+            case 1:                     //系统消息页面
+
+                break;
+        }
+    }
+
+    private void operationInfo() {
+
     }
 }

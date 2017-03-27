@@ -49,10 +49,10 @@
             android:gravity="center"
             android:layout_centerHorizontal="true"/>
         <TextView
-            android:id="@+id/realAll_tv"
+            android:id="@+id/editAll_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="全标已读"
+            android:text="编辑全部"
             android:textColor="@color/A1"
             android:textSize="14sp"
             android:gravity="center"

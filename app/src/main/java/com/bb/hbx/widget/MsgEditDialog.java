@@ -12,31 +12,34 @@ import com.bb.hbx.BaseDialog;
 import com.bb.hbx.R;
 import com.bb.hbx.interfaces.OnItemClickListener;
 
+import static com.bb.hbx.R.id.camera_tv;
+import static com.bb.hbx.R.id.mapstorage_tv;
+
 /**
  * Created by fancl.
  */
 
-public class ChangeIconDailog extends BaseDialog implements
+public class MsgEditDialog extends BaseDialog implements
         View.OnClickListener{
 
-    private TextView mapstorage_tv;
+    private TextView tv_flagAll;
 
-    private TextView camera_tv;
+    private TextView tv_clearAll;
 
     private TextView cancle_tv;
 
     private Context mContext;
 
-    OnItemClickListener mItemMapClickListener;
-    OnItemClickListener mItemCameralickListener;
+    OnItemClickListener mItemFlagAllClickListener;
+    OnItemClickListener mItemClearAllListener;
     OnItemClickListener mItemCancleClickListener;
 
-    public void setmItemMapClickListener(OnItemClickListener mItemMapClickListener) {
-        this.mItemMapClickListener = mItemMapClickListener;
+    public void setItemFlagAllClickListener(OnItemClickListener mItemMapClickListener) {
+        this.mItemFlagAllClickListener = mItemMapClickListener;
     }
 
-    public void setmItemCameralickListener(OnItemClickListener mItemCameralickListener) {
-        this.mItemCameralickListener = mItemCameralickListener;
+    public void setItemClearAllListener(OnItemClickListener mItemCameralickListener) {
+        this.mItemClearAllListener = mItemCameralickListener;
     }
 
     public void setmItemCancleClickListener(OnItemClickListener mItemCancleClickListener) {
@@ -47,8 +50,8 @@ public class ChangeIconDailog extends BaseDialog implements
      * @param context    上下文
      *
      */
-    public ChangeIconDailog(Context context) {
-        super(context, R.layout.layout_change_usericon);
+    public MsgEditDialog(Context context) {
+        super(context, R.layout.layout_edit_msg);
         mContext=context;
 
     }
@@ -64,11 +67,11 @@ public class ChangeIconDailog extends BaseDialog implements
     private void init() {
         setAnimation(R.style.AnimationBottomDialog);
         setGravity(Gravity.BOTTOM);
-        mapstorage_tv= (TextView) findViewById(R.id.mapstorage_tv);
-        camera_tv= (TextView) findViewById(R.id.camera_tv);
+        tv_flagAll= (TextView) findViewById(R.id.tv_flagAll);
+        tv_clearAll= (TextView) findViewById(R.id.tv_clearAll);
         cancle_tv= (TextView) findViewById(R.id.cancle_tv);
-        mapstorage_tv.setOnClickListener(this);
-        camera_tv.setOnClickListener(this);
+        tv_flagAll.setOnClickListener(this);
+        tv_clearAll.setOnClickListener(this);
         cancle_tv.setOnClickListener(this);
 
     }
@@ -87,13 +90,13 @@ public class ChangeIconDailog extends BaseDialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.mapstorage_tv:
+            case R.id.tv_flagAll:
                 //Toast.makeText(mContext,"wx",Toast.LENGTH_LONG).show();
-                mItemMapClickListener.onMyItemClickListener(0);
+                mItemFlagAllClickListener.onMyItemClickListener(0);
                 break;
-            case R.id.camera_tv:
+            case R.id.tv_clearAll:
                 //Toast.makeText(mContext,"pyq",Toast.LENGTH_LONG).show();
-                mItemCameralickListener.onMyItemClickListener(0);
+                mItemClearAllListener.onMyItemClickListener(0);
                 break;
             case R.id.cancle_tv:
                 this.dismiss();

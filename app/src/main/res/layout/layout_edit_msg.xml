@@ -6,11 +6,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/mapstorage_tv"
+        android:id="@+id/tv_flagAll"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center"
-        android:text="从相册选择"
+        android:text="全部标记已读"
         android:textColor="@color/A3"
         android:textSize="16sp" />
 
@@ -20,11 +20,11 @@
         android:background="@color/colorDivider" />
 
     <TextView
-        android:id="@+id/camera_tv"
+        android:id="@+id/tv_clearAll"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center"
-        android:text="拍照"
+        android:text="全部清除"
         android:textColor="@color/A3"
         android:textSize="16sp" />
 

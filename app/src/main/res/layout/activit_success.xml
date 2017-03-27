@@ -7,20 +7,57 @@
     android:background="@color/A7"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/fanhui"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/paysuccess"
+            android:textAppearance="@style/TextAppear.Theme.A1_Size17" />
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="208dp"
+        android:layout_height="152dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="58dp"
+        android:src="@drawable/zhuangtaiyangshi" />
 
     <TextView
-        android:layout_marginTop="40dp"
-        android:id="@+id/tv_success"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="成功"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36dp"
+        android:text="恭喜您成功投保"
+        android:textColor="@color/A3"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tv_msg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="@style/TextAppear.Theme.A1_Size13"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="11dp"
+        android:text="如有疑问，请联系客服：4006788618"
+        android:textColor="@color/A4"
+        android:textSize="12sp" />
+
+        <TextView
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="31dp"
+            android:id="@+id/tv_confim"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y98"
+            android:background="@drawable/shape_btn_a1"
+            android:gravity="center"
+            android:text="查看保单详情"
+            android:textAppearance="@style/TextAppear.Theme.white_Size18" />
 
 </LinearLayout>
