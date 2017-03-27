@@ -45,7 +45,8 @@ public class MyAssertDetailAdapter extends RecyclerView.Adapter<MyAssertDetailAd
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.title_tv.setText(list.get(position).getTradeDesc());
-        holder.time_tv.setText(TimeUtils.getDateNoHourToString(list.get(position).getLogTime()));
+//        holder.time_tv.setText(TimeUtils.getDateNoHourToString(list.get(position).getLogTime()));
+        holder.time_tv.setText(list.get(position).getLogTime());
         int tradeType = list.get(position).getTradeType();
         int tradeAmount = list.get(position).getTradeAmount();
         if (tradeType==10||tradeType==21||tradeType==31)//判断是收入还是支出

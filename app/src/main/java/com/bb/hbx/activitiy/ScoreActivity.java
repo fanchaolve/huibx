@@ -22,6 +22,7 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.bean.Account;
 import com.bb.hbx.bean.GetAccountDetailBean;
+import com.bb.hbx.bean.ScoreResultBean;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.ShareSPUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -75,7 +76,6 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
         /*Intent intent = getIntent();
         int accountScoreInt = intent.getIntExtra("accountScoreInt", 0);
         score_tv.setText((accountScoreInt/100)+"."+(accountScoreInt/10%10)+(accountScoreInt%10));*/
-        showScore();
         isSignedByScore();
         isSign = ShareSPUtils.readIsSign();
         if (isSign) {
@@ -98,7 +98,6 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 pageIndex = 1;
                 showScoreDetail(pageIndex);
-                showScore();
             }
 
             @Override
@@ -137,41 +136,13 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                         if (pageIndex == 1) {
                             totalList.clear();
                         }
+                        score_tv.setText(detailBean.getAcctBalance() + "");
                         totalList.addAll(detailBean.getAccountDetailList());
                         adapter.notifyDataSetChanged();
-
                     }
                 }
                 if (scrollView.isRefreshing()) {
                     scrollView.onRefreshComplete();
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-
-            }
-        });
-    }
-
-    //显示头部积分
-    private void showScore() {
-        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call = service.getAccount(MyApplication.user.getUserId(), "10");
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                Result_Api body = (Result_Api) response.body();
-                if (body != null) {
-                    Account account = (Account) body.getOutput();
-                    if (account != null) {
-                        String accountScore = account.getAccountScore();
-                        int accountScoreInt = 0;
-                        if (!TextUtils.isEmpty(accountScore)) {
-                            accountScoreInt = Integer.parseInt(accountScore);
-                        }
-                        score_tv.setText(TextUtils.isEmpty(accountScore) ? "0.00" : (accountScoreInt / 100) + "." + (accountScoreInt / 10 % 10) + (accountScoreInt % 10));
-                    }
                 }
             }
 
@@ -197,14 +168,18 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
+//                        Log.d("ttttt","-------------------jinlaile");
                         Result_Api result_api = (Result_Api) response.body();
+                        if (result_api.getOutput() != null) {
+                            String content = (String) result_api.getOutput();
+                            info_tv.setText(content);
+                        }
                         if (result_api.isSuccess()) {
                             showTip("恭喜你，签到成功！");
                             state_tv.setText("今日已签到");
                             state_tv.setClickable(false);
                             ShareSPUtils.writeIsSignToSp(false);
                             showScoreDetail(pageIndex);
-                            showScore();
                         } else {
                             state_tv.setText("今日已签到");
                             state_tv.setClickable(false);
@@ -226,18 +201,18 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
      * 判断当前是否可以积分签到
      */
     private void isSignedByScore() {
-        Log.d("tttttt","------------------------" + "laile");
+//        Log.d("tttttt","------------------------" + "laile");
         ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
         Call call = apiService.checkInFlag(MyApplication.user.getUserId(), "10");
-        call.enqueue(new PostCallback() {
+        call.enqueue(new Callback() {
             @Override
-            public void successCallback(Result_Api api) {
-                Log.d("tttttt","------------------------" + api.toString());
-//                showTip("success");
-                if (api != null) {
-                    isSign = api.isSuccess();
-                    Log.d("tttttt","-----------isSignedByScore-isSign------------" + isSign);
-                    if (isSign) {
+            public void onResponse(Call call, Response response) {
+                if (response != null) {
+                    ScoreResultBean scoreResultBean = (ScoreResultBean) response.body();
+                    String msg = scoreResultBean.getOutput();
+                    boolean flag = scoreResultBean.isSuccess();
+                    info_tv.setText(msg);
+                    if (flag) {
                         ShareSPUtils.writeIsSignToSp(isSign);
                         state_tv.setText("签 到");
                         state_tv.setClickable(true);
@@ -249,9 +224,8 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void failCallback() {
-//                showTip("fail");
-                Log.d("tttttt", "---------fail--------");
+            public void onFailure(Call call, Throwable t) {
+
             }
         });
     }

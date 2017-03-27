@@ -39,6 +39,7 @@ import com.bb.hbx.bean.ProductItem;
 import com.bb.hbx.bean.ProductParamDetail;
 import com.bb.hbx.bean.RecommendBean;
 import com.bb.hbx.bean.RequestProduct;
+import com.bb.hbx.bean.ScoreResultBean;
 import com.bb.hbx.bean.SingleCustomBean;
 import com.bb.hbx.bean.SingleCustomEditBean;
 import com.bb.hbx.bean.Special;
@@ -145,12 +146,12 @@ public interface ApiService {
     //积分签到--待测
     @FormUrlEncoded
     @POST("api.do?method=checkIn&type=post")
-    Call<Result_Api> checkIn(@Field("userId") String userId, @Field("acctType") String acctType);
+    Call<Result_Api<String>> checkIn(@Field("userId") String userId, @Field("acctType") String acctType);
 
     //判断是否可以积分签到
     @FormUrlEncoded
     @POST("api.do?method=checkInFlag&type=post")
-    Call<Result_Api> checkInFlag(@Field("userId") String userId, @Field("acctType") String acctType);
+    Call<ScoreResultBean> checkInFlag(@Field("userId") String userId, @Field("acctType") String acctType);
 
     //累计收入
     @FormUrlEncoded

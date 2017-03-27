@@ -500,40 +500,40 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
             }
         });
-        /*ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getAccount(userId);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                Result_Api body = (Result_Api) response.body();
-                if (body!=null)
-                {
-                    Account account = (Account) body.getOutput();
-                    if (account!=null)
-                    {
-                        String acctBalance = account.getAcctBalance();//可提现
-                        String acctSum = account.getAcctSum();//余额????收入,累计收入
-                        String accountScore = account.getAccountScore();//积分
-                        String bonusCount = account.getBonusCount();//红包个数
-                        String acctMonthSum = account.getAcctMonthSum();//本月收入
-                        String acctSettSum = account.getAcctSettSum();//结算中
-                        acctBalanceInt = Integer.parseInt(acctBalance);
-                        acctSumInt = Integer.parseInt(acctSum);
-                        accountScoreInt = Integer.parseInt(accountScore);
-                        acctMonthSumInt = Integer.parseInt(acctMonthSum);
-                        acctSettSumInt = Integer.parseInt(acctSettSum);
-                        canCash_tv.setText(TextUtils.isEmpty(acctBalance)?"0":(acctBalanceInt/100)+"."+(acctBalanceInt/10%10)+(acctBalanceInt%10));
-                        leftMoney_tv.setText(TextUtils.isEmpty(acctSum)?"0":(acctSumInt/100)+"."+(acctSumInt/10%10)+(acctSumInt%10));
-                        score_tv.setText(TextUtils.isEmpty(accountScore)?"0":(accountScoreInt/100)+"."+(accountScoreInt/10%10)+(accountScoreInt%10));
-                        redPacket_tv.setText(TextUtils.isEmpty(bonusCount)?"0":bonusCount);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                showTip("服务器返回出错啦!");
-            }
-        });*/
+//        /*ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+//        Call call=service.getAccount(userId);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                Result_Api body = (Result_Api) response.body();
+//                if (body!=null)
+//                {
+//                    Account account = (Account) body.getOutput();
+//                    if (account!=null)
+//                    {
+//                        String acctBalance = account.getAcctBalance();//可提现
+//                        String acctSum = account.getAcctSum();//余额????收入,累计收入
+//                        String accountScore = account.getAccountScore();//积分
+//                        String bonusCount = account.getBonusCount();//红包个数
+//                        String acctMonthSum = account.getAcctMonthSum();//本月收入
+//                        String acctSettSum = account.getAcctSettSum();//结算中
+//                        acctBalanceInt = Integer.parseInt(acctBalance);
+//                        acctSumInt = Integer.parseInt(acctSum);
+//                        accountScoreInt = Integer.parseInt(accountScore);
+//                        acctMonthSumInt = Integer.parseInt(acctMonthSum);
+//                        acctSettSumInt = Integer.parseInt(acctSettSum);
+//                        canCash_tv.setText(TextUtils.isEmpty(acctBalance)?"0":(acctBalanceInt/100)+"."+(acctBalanceInt/10%10)+(acctBalanceInt%10));
+//                        leftMoney_tv.setText(TextUtils.isEmpty(acctSum)?"0":(acctSumInt/100)+"."+(acctSumInt/10%10)+(acctSumInt%10));
+//                        score_tv.setText(TextUtils.isEmpty(accountScore)?"0":(accountScoreInt/100)+"."+(accountScoreInt/10%10)+(accountScoreInt%10));
+//                        redPacket_tv.setText(TextUtils.isEmpty(bonusCount)?"0":bonusCount);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//                showTip("服务器返回出错啦!");
+//            }
+//        });*/
     }
 }

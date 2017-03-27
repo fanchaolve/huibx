@@ -290,8 +290,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                MessageCodeBean bean = (MessageCodeBean) body.getOutput();
-                smsCode= bean.getSmsCode();
+                if (body.getOutput() != null) {
+                    MessageCodeBean bean = (MessageCodeBean) body.getOutput();
+                    smsCode= bean.getSmsCode();
+                }
+
                 //Toast.makeText(LoginActivity.this,"smsCode:"+smsCode,Toast.LENGTH_SHORT).show();
             }
 

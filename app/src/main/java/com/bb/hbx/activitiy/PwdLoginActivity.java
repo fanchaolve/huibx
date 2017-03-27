@@ -36,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bb.hbx.MyApplication.user;
+
 /**
  * 密码登录
  * fancl
@@ -69,8 +71,6 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
     LoginPswEdit et_psw;
 
 
-
-
     @BindView(R.id.tv_login)
     TextView tv_login;
 
@@ -98,6 +98,7 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
     Intent intentFromLogin;
 
     String respCode;
+
     @Override
     public void loginSuccess() {
 
@@ -196,73 +197,71 @@ public class PwdLoginActivity extends BaseActivity<LoginPresenter, LoginModel>
                     final String phone = et_phone.getText().toString();
                     final String pwd = et_psw.getText().toString();
 
-                    Toast.makeText(mContext,"phone:"+phone+"  pwd:"+pwd,Toast.LENGTH_SHORT);
+                    Toast.makeText(mContext, "phone:" + phone + "  pwd:" + pwd, Toast.LENGTH_SHORT);
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                    Call call=service.login(phone,pwd,1+"");
+                    Call call = service.login(phone, pwd, 1 + "");
                     call.enqueue(new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
                             //32 d5f1744756eca2250a22ae3d974d0794
                             Result_Api body = (Result_Api) response.body();
-                            User user = (User) body.getOutput();
-                            respCode = body.getRespCode();
-                            if (user!=null)
-                            {
-                                String userId = user.getUserId();
-                                String sessionId = user.getSessionId();
-                                String isBClient = user.getIsBClient()+"";
-                                String gender = user.getGender();
-                                String paymentPwd = user.getPaymentPwd();
-                                String userName = user.getNickName();
-                                String email = user.getEmail();
-                                String logo = user.getLogo();
-                                String userQrcode = user.getUserQrcode();
-                                if (TextUtils.isEmpty(gender))
-                                {
-                                    gender="0";
-                                }
-                                if (TextUtils.isEmpty(userName))
-                                {
-                                    userName=phone;
-                                }
-                                //Toast.makeText(mContext,"userId:"+userId+"  sessionId:"+sessionId,Toast.LENGTH_SHORT);
-                                ShareSPUtils.writeShareSp(true,userId,sessionId,"默认用户名",phone, pwd);
-                                //更新表数据
-                                SQLiteDatabase db=DatabaseImpl.getInstance().getReadableDatabase();
-                                db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
-                                        new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,"1"/*pwd*/,paymentPwd,logo,userQrcode});
-                                db.close();
-                                showTip(body.getRespMsg());
+                            if (body.isSuccess()) {
+                                User userInfo = (User) body.getOutput();
+                                respCode = body.getRespCode();
 
-                                MyApplication.user.setUserQrcode(userQrcode);
-                                MyApplication.user.setUserId(userId);
-                                MyApplication.user.setMobile(phone);
-                                MyApplication.user.setGender(gender);
-                                MyApplication.user.setLoginPwd("1");//1表示已经设置过登录密码
-                                MyApplication.user.setPaymentPwd(paymentPwd);
-                                MyApplication.user.setSessionId(sessionId);
-                                MyApplication.user.setIsBClient(isBClient.equals("true")?true:false);
+                                if (user != null) {
+                                    String userId = userInfo.getUserId();
+                                    String sessionId = userInfo.getSessionId();
+                                    String isBClient = userInfo.getIsBClient() + "";
+                                    String gender = userInfo.getGender();
+                                    String paymentPwd = userInfo.getPaymentPwd();
+                                    String userName = userInfo.getNickName();
+                                    String email = userInfo.getEmail();
+                                    String logo = userInfo.getLogo();
+                                    String userQrcode = userInfo.getUserQrcode();
+                                    if (TextUtils.isEmpty(gender)) {
+                                        gender = "0";
+                                    }
+                                    if (TextUtils.isEmpty(userName)) {
+                                        userName = phone;
+                                    }
+                                    //Toast.makeText(mContext,"userId:"+userId+"  sessionId:"+sessionId,Toast.LENGTH_SHORT);
+                                    ShareSPUtils.writeShareSp(true, userId, sessionId, "默认用户名", phone, pwd);
+                                    //更新表数据
+                                    SQLiteDatabase db = DatabaseImpl.getInstance().getReadableDatabase();
+                                    db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
+                                            new String[]{"true", userId, sessionId, isBClient, userName, gender, email, phone, "1"/*pwd*/, paymentPwd, logo, userQrcode});
+                                    db.close();
+                                    showTip(body.getRespMsg());
 
-                                //AppManager.getInstance().showActivity(HomeActivity.class, null);
-                                AppManager.getInstance().finishParticularActivity(LoginActivity.class);
-                                setResult(Can.FINISH_LOGIN,intentFromLogin);
-                                finish();
+                                    MyApplication.user.setUserQrcode(userQrcode);
+                                    MyApplication.user.setUserId(userId);
+                                    MyApplication.user.setMobile(phone);
+                                    MyApplication.user.setGender(gender);
+                                    MyApplication.user.setLoginPwd("1");//1表示已经设置过登录密码
+                                    MyApplication.user.setPaymentPwd(paymentPwd);
+                                    MyApplication.user.setSessionId(sessionId);
+                                    MyApplication.user.setIsBClient(isBClient.equals("true") ? true : false);
+
+                                    //AppManager.getInstance().showActivity(HomeActivity.class, null);
+                                    AppManager.getInstance().finishParticularActivity(LoginActivity.class);
+                                    setResult(Can.FINISH_LOGIN, intentFromLogin);
+                                    finish();
+                                } else {
+                                    showTip(body.getRespMsg());
+                                }
+                            } else {
+                                showTip("密码错误！");
                             }
-                            else
-                            {
-                                showTip(body.getRespMsg());
-                            }
+
                         }
 
                         @Override
                         public void onFailure(Call call, Throwable t) {
-                            if ("201031".equals(respCode))
-                            {
-                                Toast.makeText(mContext,"该用户未注册!",Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(mContext,"密码有误!",Toast.LENGTH_SHORT).show();
+                            if ("201031".equals(respCode)) {
+                                Toast.makeText(mContext, "该用户未注册!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(mContext, "密码有误!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
