@@ -36,7 +36,8 @@ public class Message extends RealmObject {
     private String msgTitle;
     private String msgType;
     private int sts;            //1:未读   2:已读
-    private boolean isRead;         //已读 未读
+//    private boolean isRead;         //已读 未读
+    private boolean isDelete;       //是否已经删除
 
     //    @Keep
 //    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts, boolean isRead) {
@@ -56,7 +57,7 @@ public class Message extends RealmObject {
     }
 
     //    @Generated(hash = 1171299826)
-    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts, boolean isRead) {
+    public Message(long id, String msgContent, String msgId, String msgLink, String msgTime, String msgTitle, String msgType, int sts, boolean isDelete) {
         this.id = id;
         this.msgContent = msgContent;
         this.msgId = msgId;
@@ -65,7 +66,7 @@ public class Message extends RealmObject {
         this.msgTitle = msgTitle;
         this.msgType = msgType;
         this.sts = sts;
-        this.isRead = isRead;
+        this.isDelete = isDelete;
     }
 
     public long getId() {
@@ -132,11 +133,19 @@ public class Message extends RealmObject {
         this.sts = sts;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
+
+    //    public boolean isRead() {
+//        return isRead;
+//    }
+//
+//    public void setRead(boolean read) {
+//        isRead = read;
+//    }
 }

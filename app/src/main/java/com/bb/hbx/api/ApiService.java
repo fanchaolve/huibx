@@ -371,7 +371,10 @@ public interface ApiService {
     //阅读消息
     @FormUrlEncoded
     @POST("api.do?method=readMsg&type=post")
-    Call<Result_Api> readMsg(@Field("userId") String userId, @Field("msgType") String msgType, @Field("msgId") String msgId);
+    Call<Result_Api> readMsg(@Field("userId") String userId,
+                             @Field("msgType") String msgType,
+                             @Field("sts") String sts,
+                             @Field("msgId") String msgId);
 
     //获取消息列表
     @FormUrlEncoded

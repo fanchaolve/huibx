@@ -81,14 +81,14 @@ public class RealmUtilsForMessage {
     }
 
     /**
-     * 改    修改读取状态
+     * 改    修改消息是否删除的状态
      */
-    public static void update(String msgId, boolean isRead) {
+    public static void update(String msgId, boolean isDelete) {
         Realm  mRealm=Realm.getDefaultInstance();
 
         Message message = mRealm.where(Message.class).equalTo("msgId", msgId).findFirst();
         mRealm.beginTransaction();
-        message.setRead(isRead);
+        message.setDelete(isDelete);
         mRealm.commitTransaction();
     }
 

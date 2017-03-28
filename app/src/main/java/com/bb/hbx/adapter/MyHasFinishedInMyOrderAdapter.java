@@ -56,9 +56,9 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
 
         classType = list.get(position).getClassType();
         String tradeDate = list.get(position).getTradeDate();
-        long logTime = TimeUtils.getStringToDateNoSpace(tradeDate);
-        String time = TimeUtils.getDateToString(logTime);
-        holder.time_tv.setText(time);
+//        long logTime = TimeUtils.getStringToDateNoSpace(tradeDate);
+//        String time = TimeUtils.getDateToString(logTime);
+        holder.time_tv.setText(tradeDate);
         holder.itemO_tv.setText(list.get(position).getProductName());
         holder.orderNumber_tv.setText(list.get(position).getTradeId());
         if (list.get(position).getInsuredList() != null && list.get(position).getInsuredList().size() > 0) {
@@ -66,14 +66,14 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
         }
         String startTime = list.get(position).getStartTime();
         String endTime = list.get(position).getEndTime();
-        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
-        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
-        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
-        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
+//        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
+//        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
+//        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
+//        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
         if (2 == classType)//2表示个险
         {
             holder.itemTh_tv.setText("投保人: " + list.get(position).getPolicyHolderName());
-            holder.itemF_tv.setText("保险期间: " + startTimeBuff + "至" + endTimeBuff);
+            holder.itemF_tv.setText("保险期间: " + startTime + "至" + endTime);
         } else {
             //holder.itemTh_tv.setText(list.get(position).getPolicyHolderName());
             String jqxStartTime = list.get(position).getJqxStartTime();
@@ -88,7 +88,7 @@ public class MyHasFinishedInMyOrderAdapter extends RecyclerView.Adapter<MyHasFin
                 jqxEndTimeBuff = TimeUtils.getDateNoHourToString(logJqxEndTime);
                 holder.itemTh_tv.setText("交强险起期: " + jqxStartTimeBuff + "至" + jqxEndTimeBuff);
             }
-            holder.itemF_tv.setText("商业险起期: " + startTimeBuff + "至" + endTimeBuff);
+            holder.itemF_tv.setText("商业险起期: " + startTime + "至" + endTime);
         }
         String payAmount = list.get(position).getPayAmount();
         if (!TextUtils.isEmpty(payAmount)) {
