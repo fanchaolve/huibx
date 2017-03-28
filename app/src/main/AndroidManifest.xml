@@ -269,6 +269,8 @@
         <activity
             android:name=".activitiy.ACameraActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".activitiy.HadRealNameIdentifyActivity" />
+        <activity android:name=".activitiy.RedPacketDeductionActivity"></activity>
     </application>
 
 </manifest>

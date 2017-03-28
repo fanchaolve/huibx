@@ -87,6 +87,7 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
     ArrayList<Product> totalList=new ArrayList<>();
     MySearchAdapter searchAdapter;
     String keyBuff="";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_search;

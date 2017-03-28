@@ -1,5 +1,7 @@
 package com.bb.hbx.activitiy;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,7 +12,7 @@ import android.widget.TextView;
 import com.bb.hbx.R;
 import com.bb.hbx.adapter.CardPagerAdapter;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.bean.BannerBean;
+import com.bb.hbx.bean.ComCarPropsBean;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.ShadowTransformer;
 import com.bb.hbx.widget.multitype.data.Item;
@@ -40,7 +42,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
 
     private List<Item> mlist = new ArrayList<>();
     ArrayList<View> dotList = new ArrayList<>();
-
+    List<ComCarPropsBean.PlanListBean> planList=new ArrayList<>();
     int prePosition=2;
     @Override
     public int getLayoutId() {
@@ -55,9 +57,19 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        for (int i = 0; i < 3; i++) {
-            Item item = new BannerBean();
-            mlist.add(item);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        int size = bundle.getInt("size", -1);
+        for (int i = 0; i < size; i++) {
+            List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = bundle.getParcelableArrayList("syxList" + i);
+            ComCarPropsBean.PlanListBean planListBean = new ComCarPropsBean.PlanListBean();
+            planListBean.setSyxList(syxList);
+            planList.add(planListBean);
+        }
+
+        for (int i = 0; i < planList.size(); i++) {
+            /*Item item = new BannerBean();
+            mlist.add(item);*/
 
             ImageView dotView = new ImageView(mContext);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(10, 10);
@@ -75,7 +87,8 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
             }
         }
 
-        mCardAdapter = new CardPagerAdapter(this, mlist);
+        //mCardAdapter = new CardPagerAdapter(this, mlist);
+        mCardAdapter = new CardPagerAdapter(this, planList);
         mCardShadowTransformer = new ShadowTransformer(vp_tb, mCardAdapter);
         mCardShadowTransformer.setCanAlpha(true);
         mCardAdapter.setTransformer(mCardShadowTransformer);
@@ -103,6 +116,9 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                 prePosition=position%3;*/
                 dotList.get(position).setAlpha(1);
                 prePosition=position;
+
+                //获得套餐价格
+                getPlanPrice();
             }
 
             @Override
@@ -110,6 +126,10 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
 
             }
         });
+    }
+
+    private void getPlanPrice() {
+
     }
 
     @Override

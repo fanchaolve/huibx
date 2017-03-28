@@ -1,5 +1,6 @@
 package com.bb.hbx.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class GetUserCouponsListBean {
             this.couponList = couponList;
         }
 
-        public static class CouponListBean {
+        public static class CouponListBean implements Serializable {
             /**
              * couponDesc :
              * couponId : 1
@@ -63,6 +64,7 @@ public class GetUserCouponsListBean {
              */
 
             private String couponDesc;
+            private String couponCode;
             private String couponId;
             private String couponName;
             private String couponType;
@@ -71,6 +73,14 @@ public class GetUserCouponsListBean {
             private String effTime;
             private String expTime;
             private String offUpto;
+
+            public String getCouponCode() {
+                return couponCode;
+            }
+
+            public void setCouponCode(String couponCode) {
+                this.couponCode = couponCode;
+            }
 
             public String getCouponDesc() {
                 return couponDesc;

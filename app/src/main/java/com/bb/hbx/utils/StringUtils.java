@@ -1,9 +1,9 @@
 package com.bb.hbx.utils;
 
 import android.text.TextUtils;
-import android.util.SparseArray;
 
 import com.bb.hbx.bean.Entry;
+import com.bb.hbx.bean.RelationShipBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,9 +12,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.bb.hbx.utils.Constants.idType_keys;
-import static com.bb.hbx.utils.Constants.idTypes;
 
 /**
  *
@@ -231,6 +228,8 @@ public class StringUtils {
                 final Entry entry = new Entry();
                 if (obj.has("name"))
                     entry.setName(obj.optString("name"));
+                if (obj.has("code"))
+                    entry.setCode(obj.optString("code"));
                 if (obj.has("option")) {
                     String opt = obj.optString("option");
                     if (opt.indexOf(",") > -1) {
@@ -247,5 +246,24 @@ public class StringUtils {
 
         return entries;
 
+    }
+
+    public static List<RelationShipBean> getJsonRelationList(String relationship)
+    {
+        List<RelationShipBean> list=new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(relationship);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                String code = object.getString("code");
+                String name = object.getString("name");
+                RelationShipBean bean = new RelationShipBean(code, name);
+                list.add(bean);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

@@ -1,7 +1,5 @@
 package com.bb.hbx.bean;
 
-import com.bb.hbx.base.BaseActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +54,20 @@ public class ProdectDetalRequest {
 
     private String classType="";//类型
 
+    private String selectedAge="";//code------------
+
     private int idType;
 
     private List<Insured> insuredList = new ArrayList<>();
 
+
+    public String getSelectedAge() {
+        return selectedAge;
+    }
+
+    public void setSelectedAge(String selectedAge) {
+        this.selectedAge = selectedAge;
+    }
 
     public String getUserId() {
         return userId;

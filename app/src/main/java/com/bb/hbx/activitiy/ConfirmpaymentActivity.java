@@ -1,13 +1,9 @@
 package com.bb.hbx.activitiy;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -23,6 +19,7 @@ import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.base.m.ConfimpaymentlModel;
 import com.bb.hbx.base.p.ConfimpaymentPresenter;
 import com.bb.hbx.base.v.ConfimpaymentContract;
+import com.bb.hbx.bean.GetUserCouponsListBean;
 import com.bb.hbx.bean.PayDetail;
 import com.bb.hbx.observable.PriceObservable;
 import com.bb.hbx.utils.AppManager;
@@ -35,9 +32,12 @@ import com.bb.hbx.widget.PasswordDailog;
 import com.bb.hbx.widget.TextviewObserver;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 
-import static com.bb.hbx.R.drawable.on;
+
 
 
 /**
@@ -121,7 +121,7 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
 
     private PasswordDailog dailog;
 
-
+    public static List<GetUserCouponsListBean.CouponListBean> couponListBuff;
     @Override
     public int getLayoutId() {
         return R.layout.activit_confirmpayment;
@@ -207,6 +207,14 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
         if (detail == null)
             return;
 
+        if (detail.getCouponList()==null)
+        {
+            tv_redenvelopes.setText("可用红包(0)");
+        }
+        else
+        {
+            tv_redenvelopes.setText("可用红包("+detail.getCouponList().size()+")");
+        }
         priceObservable = new PriceObservable();
         priceObservable.addObserver(tv_needprice);
         priceObservable.addObserver(tv_pay);
@@ -256,10 +264,14 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
                 detail2.setAcctBalanceJF(ck_jf.isChecked() ? detail.getAcctBalanceJF() : 0);
                 detail2.setUserId(MyApplication.user.getUserId());
                 detail2.setAcctBalanceYE(ck_ye.isChecked() ? detail.getAcctBalanceYE() : "0");
-                detail2.setCouponCode(detail.getCouponCode());
+                //detail2.setCouponCode(detail.getCouponCode());
                 detail2.setDeductible(detail.getDeductible());
                 detail2.setPayDeadline(detail.getPayDeadline());
-                detail2.setCouponList(detail.getCouponList());
+                //detail2.setCouponList(detail.getCouponList());
+                List<GetUserCouponsListBean.CouponListBean> listBeen=new ArrayList<>();
+                //listBeen.add(detail.getCouponList().get(0));
+                detail2.setCouponList(listBeen);
+                //detail2.setCouponCode(listBeen.get(0).getCouponCode());
                 detail2.setPayments(detail.getPayments());
                 detail2.setProductName(detail.getProductName());
                 detail2.setTradeId(detail.getTradeId());
@@ -283,7 +295,10 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
                 this.finish();
                 break;
             case R.id.lin_hb:
-                AppManager.getInstance().showActivityForResult(RedPacketActivity.class, null, REU_A);
+                //AppManager.getInstance().showActivityForResult(RedPacketActivity.class, null, REU_A);
+                couponListBuff = detail.getCouponList();
+                //bundle1.putParcelableArrayList("couponLise", (ArrayList<? extends Parcelable>) detail.getCouponList());
+                AppManager.getInstance().showActivityForResult(RedPacketDeductionActivity.class, null, REU_A);
                 break;
         }
     }
@@ -291,8 +306,14 @@ public class ConfirmpaymentActivity extends BaseActivity<ConfimpaymentPresenter,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REU_A && resultCode == RESULT_OK) {
-
+        if (requestCode == REU_A && resultCode == 110/*RESULT_OK*/) {
+            if (data==null)
+            {
+                return;
+            }
+            String price = data.getStringExtra("price");
+            String name = data.getStringExtra("name");
+            tv_redenvelopes.setText("省"+price+"元|"+name);
         }
     }
 

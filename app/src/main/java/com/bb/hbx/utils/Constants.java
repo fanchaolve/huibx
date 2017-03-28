@@ -1,5 +1,8 @@
 package com.bb.hbx.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/12/22.
  */
@@ -56,6 +59,10 @@ public final class Constants {
     public static final String[] beinsurer1_listvalue = {"父母", "子女", "配偶", "其他关系"};//关系
 
     public static final int[] beinsurer1_listkey = {1, 2, 3, 9};//关系键
+
+    public static final List<String> beinsurer1_ListValue = new ArrayList<>();//关系
+
+    public static final List<String> beinsurer1_ListKey = new ArrayList<>();//关系键
 
 
     public static final int  ZFBPAY = 10;

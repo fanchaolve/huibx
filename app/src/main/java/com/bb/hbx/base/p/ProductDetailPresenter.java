@@ -1,6 +1,7 @@
 package com.bb.hbx.base.p;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.activitiy.ConfirmpaymentActivity;
@@ -16,17 +17,18 @@ import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.PriceTag;
 import com.bb.hbx.bean.ProdectDetalRequest;
 import com.bb.hbx.bean.ProductParamDetail;
+import com.bb.hbx.bean.RelationShipBean;
 import com.bb.hbx.observable.KeyBeanObservable;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.StringUtils;
+import com.bb.hbx.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.bb.hbx.utils.Constants.beinsurer1_listkey;
-import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
+import static com.bb.hbx.utils.Constants.beinsurer1_ListKey;
 import static com.bb.hbx.utils.Constants.idType_keys;
 import static com.bb.hbx.utils.Constants.idTypes;
 
@@ -55,14 +57,15 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 
     private int beinsureridType = 1;//被保人的idtype;
 
-    private int beinsurer1key = 1;//被保人关系key
+    //private int beinsurer1key = 1;//被保人关系key
+    private String beinsurer1key = "";//被保人关系key
 
     private double singlePrice;//记价因子的求出的保额价格
 
     private ProductParamDetail detail;
     private Plan cruentPlan = new Plan();
-
-
+    ProdectDetalRequest request = new ProdectDetalRequest();
+    Insured insured = new Insured();
     @Override
     public void onAttached() {
 
@@ -72,8 +75,8 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         observable.addObserver(this);
         observable.add(" ");
 
-        beinsurer1key = beinsurer1_listkey[0];
-        mView.setReationShipValue(beinsurer1_listvalue[0]);
+        /*beinsurer1key = beinsurer1_listkey[0];
+        mView.setReationShipValue(beinsurer1_listvalue[0]);*/
 
 
         mView.setInsurerType(idTypes[0]);
@@ -115,6 +118,10 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                     {
                         mView.setOccupationGone();
                     }
+                    else
+                    {
+                        mView.setOccupationType(detail.getInsurerId());
+                    }
                     //-----显示日期 不能点击
                     if (detail.getEffectiveType() == 1) {
                         mView.setEffectiveTypewithButon(detail.getEffectDate());
@@ -125,7 +132,10 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                         mView.setlineGone();
                     }
 
-                    mView.IsBClientView(MyApplication.user.getIsBClient(), detail.getCommisionValue1());
+                    //做倒计时用
+                    long timeoutLast = TimeUtils.divlong(Long.parseLong(detail.getLastInsureTime()));
+                    //mView.IsBClientView(MyApplication.user.getIsBClient(), detail.getCommisionValue1());
+                    mView.IsBClientView(MyApplication.user.getIsBClient(), detail.getCommisionValue1(),detail.getPromotionCommisionValue1(),detail.getPromotionCommisionValue2(),timeoutLast);
 
 
                     //计划列表
@@ -159,6 +169,11 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
                     //perids[0]=perids[0].substring(0, perids[0].indexOf("_"));//-----------------我新加
                     //selectPerids = perids[0].substring(0, perids[0].indexOf("_"));//--------------我新加
 
+                    //mView.setRelationShipContent(detail.getRelationship());
+
+                    List<RelationShipBean> relationList = StringUtils.getJsonRelationList(detail.getRelationship());
+                    mView.setRelationShipContent(relationList);
+
                     List<Entry> entries = StringUtils.getJsonOpt(detail.getPriceElements());
                     int i = 0;
                     for (final Entry entry : entries) {
@@ -191,7 +206,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 
             @Override
             public void failCallback() {
-
+                Log.e("========","=====fail======");
             }
         };
 
@@ -274,17 +289,18 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 //            return;
 //        }
 
-        ProdectDetalRequest request = new ProdectDetalRequest();
+        //ProdectDetalRequest request = new ProdectDetalRequest();
         request.setUserId(MyApplication.user.getUserId());
         request.setProductId(detail.getProductId());
         request.setPriceKeyword(observable.toString());
         request.setPlanId(cruentPlan.getPlanId());
         request.setPeriod(selectPerids);
         request.setIsExpress("0");
+        //request.setSelectedAge(de);
         List<Insured> insuredList = new ArrayList<>();
-        Insured insured = new Insured();
+        //Insured insured = new Insured();
         insured.setNum(count);
-        insured.setOccupation(detail.getOccupation());
+        //insured.setOccupation(detail.getOccupation());
         insured.setRelationType(beinsurer1key + "");
 
         //------------------------------------------------------------
@@ -292,6 +308,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //insured.setIdNo(mView.getBBRIDEtValue());
         insured.setIdNo("330324199411075758");
         insured.setIdType(beinsureridType);
+        //insured.setIdType(mView.getBBRIdTypeEtValue());
         //insured.setInsuredName(mView.getBBRNameEtValue());
         insured.setInsuredName("范冰冰");
         insuredList.add(insured);
@@ -301,6 +318,7 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
         //request.setIdNo(mView.getTBRIDEtValue());
         request.setIdNo("330324199411075758");
         request.setIdType(insureridType);
+        insured.setIdType(mView.getBBRIdTypeEtValue());
         //request.setApplicant(mView.getTBRNameEtValue());
         request.setApplicant("范超略");
         request.setClassType("2");
@@ -342,7 +360,8 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
 
     @Override
     public void setKey(int index) {
-        beinsurer1key = beinsurer1_listkey[index];
+        //beinsurer1key = beinsurer1_listkey[index];
+        beinsurer1key = beinsurer1_ListKey.get(index);
     }
 
     @Override
@@ -377,6 +396,18 @@ public class ProductDetailPresenter extends ProductDetailContract.Presenter impl
     @Override
     public void setkeybeanOther(int tag, String value, int index) {
         observable.set(tag, value);
+    }
+
+    //赋值年龄                 传年龄
+    @Override
+    public void setSelectedAge(String age) {
+        request.setSelectedAge(age);
+    }
+
+    //赋值职业类型
+    @Override
+    public void setOccupation(String occupation) {
+        insured.setOccupation(occupation);
     }
 
     //遍历计价因子,,得出价格

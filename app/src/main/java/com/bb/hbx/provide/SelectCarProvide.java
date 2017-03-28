@@ -1,28 +1,26 @@
 package com.bb.hbx.provide;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bb.hbx.R;
-import com.bb.hbx.bean.CarModels;
+import com.bb.hbx.bean.ComCarPropsBean;
 import com.bb.hbx.widget.multitype.ItemViewProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.bb.hbx.R.drawable.holder;
-
 /**
  * Created by Administrator on 2016/12/21.
  */
 
-public class SelectCarProvide extends ItemViewProvider<CarModels, SelectCarProvide.ViewHolder> {
+public class SelectCarProvide extends ItemViewProvider<ComCarPropsBean.CarInfoListBean, SelectCarProvide.ViewHolder> {//CarModels
 
 
     private Context context;
@@ -36,7 +34,7 @@ public class SelectCarProvide extends ItemViewProvider<CarModels, SelectCarProvi
     }
 
     public interface OnitemClick {
-        void onItemClick(CarModels data, int position);
+        void onItemClick(ComCarPropsBean.CarInfoListBean data, int position);
     }
 
     private OnitemClick mOnItemClickListener;
@@ -53,7 +51,7 @@ public class SelectCarProvide extends ItemViewProvider<CarModels, SelectCarProvi
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull CarModels squareBean) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull ComCarPropsBean.CarInfoListBean squareBean) {//CarModels squareBean
         holder.setData(squareBean);
 
     }
@@ -68,19 +66,20 @@ public class SelectCarProvide extends ItemViewProvider<CarModels, SelectCarProvi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-//        @BindView(R.id.tv_price)
-//        TextView tv_price;
-//
-
-//
-//
-//        @BindView(R.id.tv_pro)
-//        TextView tv_pro;
-//
-//
-//
-//        @BindView(R.id.tv_sales)
-//        TextView tv_sales;
+        @BindView(R.id.tv_modelClass)
+        TextView tv_modelClass;
+        @BindView(R.id.tv_modelType)
+        TextView tv_modelType;
+        @BindView(R.id.tv_stalls)
+        TextView tv_stalls;
+        @BindView(R.id.tv_releaseYear)
+        TextView tv_releaseYear;
+        @BindView(R.id.tv_configName)
+        TextView tv_configName;
+        @BindView(R.id.tv_seats)
+        TextView tv_seats;
+        @BindView(R.id.tv_carPrice)
+        TextView tv_carPrice;
 
         @BindView(R.id.iv_select)
         ImageView iv_select;
@@ -91,7 +90,14 @@ public class SelectCarProvide extends ItemViewProvider<CarModels, SelectCarProvi
             ButterKnife.bind(this, itemView);
         }
 
-        void setData(@NonNull final CarModels squareBean) {
+        void setData(@NonNull final ComCarPropsBean.CarInfoListBean squareBean) {
+            tv_modelClass.setText(squareBean.getModelClass());
+            tv_modelType.setText(squareBean.getModelType());
+            tv_stalls.setText(squareBean.getStalls());
+            tv_releaseYear.setText(squareBean.getReleaseYear());
+            tv_configName.setText(squareBean.getConfigName());
+            tv_seats.setText(squareBean.getSeats());
+            tv_carPrice.setText(squareBean.getCarPrice()+"元");
             if (currentPos == layoutPosition) {
                 iv_select.setVisibility(View.VISIBLE);
             } else {

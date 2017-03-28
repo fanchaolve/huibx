@@ -14,39 +14,90 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tv_cartype"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_modelClass"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x36"
         android:layout_marginTop="@dimen/y42"
         android:paddingRight="@dimen/x36"
         android:singleLine="true"
-        android:text="@string/others"
+        android:text="君威"
         android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
 
     <TextView
-        android:id="@+id/tv_carparms"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_modelType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_cartype"
+        android:layout_toRightOf="@id/tv_modelClass"
+        android:layout_marginLeft="@dimen/x26"
+        android:layout_marginTop="@dimen/y42"
+        android:singleLine="true"
+        android:text="别克牌POLO1.6轿车"
+        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+    <TextView
+        android:id="@+id/tv_stalls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_modelType"
+        android:layout_marginLeft="@dimen/x26"
+        android:layout_marginTop="@dimen/y42"
+        android:singleLine="true"
+        android:text="手自一体"
+        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+    <TextView
+        android:id="@+id/tv_releaseYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_modelClass"
         android:layout_marginLeft="@dimen/x36"
         android:layout_marginTop="@dimen/y26"
         android:paddingRight="@dimen/x36"
         android:singleLine="true"
-        android:text="@string/others"
+        android:text="2014"
         android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
 
+    <TextView
+        android:id="@+id/tv_configName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_releaseYear"
+        android:layout_marginLeft="@dimen/x26"
+        android:layout_alignBottom="@+id/tv_releaseYear"
+        android:singleLine="true"
+        android:text="领先技术型"
+        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
+
+    <TextView
+        android:id="@+id/tv_seats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_configName"
+        android:layout_marginLeft="@dimen/x26"
+        android:layout_alignBottom="@+id/tv_releaseYear"
+        android:singleLine="true"
+        android:text="5座"
+        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
     <TextView
         android:id="@+id/tv_ckj_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_carparms"
+        android:layout_below="@+id/tv_releaseYear"
         android:layout_marginBottom="@dimen/y42"
         android:layout_marginLeft="@dimen/x36"
         android:layout_marginTop="@dimen/y26"
         android:text="@string/newcarprice"
         android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
 
+    <TextView
+        android:id="@+id/tv_carPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_ckj_format"
+        android:layout_marginLeft="@dimen/x26"
+        android:layout_alignBottom="@+id/tv_ckj_format"
+        android:singleLine="true"
+        android:text="0.00元"
+        android:textAppearance="@style/TextAppear.Theme.A2_Size14" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

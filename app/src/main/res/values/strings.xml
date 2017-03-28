@@ -123,6 +123,7 @@
     <string name="confimpay">确认支付</string>
     <string name="collection">收藏</string>
     <string name="confimpay1">请在%1$s时%2$s分%3$s秒内完成支付,逾期将自动取消订单</string>
+    <string name="deadline">%1$s天%2$s时%3$s分%4$s秒</string>
     <string name="orderprice">订单总价 : </string>
     <string name="hbdk">红包抵扣</string>
     <string name="rxzf">仍需支付</string>

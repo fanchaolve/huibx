@@ -92,11 +92,55 @@ public class ProductParamDetail {
     private String commisionValue1;
     private String commisionValue2;
     private String effectDate;
-
+    private String relationship;
+    private String promotionCommisionValue1="";
+    private String promotionCommisionValue2="";
+    private String promotionVehicleCommisionValue1="";
+    private String promotionVehicleCommisionValue2="";
     private int effectiveType;//1：即刻生效；2：次日生效；3：次月生效；10：指定天数后生效，天数存放在insure_windows字段中；99：指定日期生效；
 
     private List<Plan> planList;
     private List<PriceTag> priceList;
+
+    public String getPromotionCommisionValue1() {
+        return promotionCommisionValue1;
+    }
+
+    public void setPromotionCommisionValue1(String promotionCommisionValue1) {
+        this.promotionCommisionValue1 = promotionCommisionValue1;
+    }
+
+    public String getPromotionCommisionValue2() {
+        return promotionCommisionValue2;
+    }
+
+    public void setPromotionCommisionValue2(String promotionCommisionValue2) {
+        this.promotionCommisionValue2 = promotionCommisionValue2;
+    }
+
+    public String getPromotionVehicleCommisionValue1() {
+        return promotionVehicleCommisionValue1;
+    }
+
+    public void setPromotionVehicleCommisionValue1(String promotionVehicleCommisionValue1) {
+        this.promotionVehicleCommisionValue1 = promotionVehicleCommisionValue1;
+    }
+
+    public String getPromotionVehicleCommisionValue2() {
+        return promotionVehicleCommisionValue2;
+    }
+
+    public void setPromotionVehicleCommisionValue2(String promotionVehicleCommisionValue2) {
+        this.promotionVehicleCommisionValue2 = promotionVehicleCommisionValue2;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
 
     public String getBenNum() {
         return benNum;
@@ -457,4 +501,5 @@ public class ProductParamDetail {
     public void setEffectDate(String effectDate) {
         this.effectDate = effectDate;
     }
+
 }

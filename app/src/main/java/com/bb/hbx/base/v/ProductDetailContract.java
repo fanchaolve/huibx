@@ -7,6 +7,7 @@ import com.bb.hbx.bean.Entry;
 import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.ProdectDetalRequest;
 import com.bb.hbx.bean.ProductParamDetail;
+import com.bb.hbx.bean.RelationShipBean;
 
 import java.util.List;
 
@@ -58,7 +59,9 @@ public interface ProductDetailContract {
 
         void setOccupationGone();//隐藏职业类别条目
 
-        void IsBClientView(boolean isClient, String CommisionValue1);//是否显示推广费
+        void setOccupationType(String insurerId);//设置职业类型
+
+        void IsBClientView(boolean isClient, String CommisionValue1,String promotionCommisionValue1,String promotionCommisionValue2,long lastInsureTime);//是否显示推广费
 
         void setPlanView(List<Plan> list);//放入计划列表
 
@@ -70,6 +73,8 @@ public interface ProductDetailContract {
         void setil_up1Textvalue(String value);//设置值
 
         void setEntryView(Entry entry, int index);//取得entry 动态加载布局
+
+        void setRelationShipContent(List<RelationShipBean> list);//获取 与被保人关系 的数据
 
         void setReationShipValue(String value);
 
@@ -92,6 +97,8 @@ public interface ProductDetailContract {
         String getBBRIDEtValue();//被保人
 
         String getBBRNameEtValue();//被保人
+
+        int getBBRIdTypeEtValue();//被保人
     }
 
     abstract class Presenter extends BasePresenter<ProductDetailContract.Model, ProductDetailContract.View> {
@@ -120,6 +127,7 @@ public interface ProductDetailContract {
 
         public abstract void setkeybeanOther(int tag, String value, int index);//添加到keybean的计价因子里面（其他参数）
 
-
+        public abstract void setSelectedAge(String age);
+        public abstract void setOccupation(String occupation);
     }
 }

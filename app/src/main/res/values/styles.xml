@@ -32,6 +32,10 @@
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="TextAppear.Theme.white_Size13" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="TextAppear.Theme.A3_Size13" parent="android:TextAppearance.Theme">
         <item name="android:textSize">13sp</item>
@@ -76,6 +80,30 @@
     <style name="TextAppear.Theme.white_Size14" parent="android:TextAppearance.Theme">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppear.Theme.white_Size12" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppear.Theme.white_Size19" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppear.Theme.Z42_Size11" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/Z42</item>
+    </style>
+    <style name="TextAppear.Theme.Z42_Size12" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/Z42</item>
+    </style>
+
+    <style name="TextAppear.Theme.Z52_Size12" parent="android:TextAppearance.Theme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/Z52</item>
     </style>
 
     <style name="TextAppear.Theme.A3_Size19" parent="android:TextAppearance.Theme">
@@ -128,6 +156,7 @@
         <item name="android:textColor">@color/A3</item>
 
     </style>
+
 
     <style name="TextAppear.Theme.A2_Size17" parent="android:TextAppearance.Theme">
         <item name="android:textSize">17sp</item>

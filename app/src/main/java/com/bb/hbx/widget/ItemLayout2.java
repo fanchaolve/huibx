@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,10 +13,6 @@ import com.bb.hbx.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bb.hbx.R.attr.isEdit;
-import static com.bb.hbx.R.attr.isright_icon;
-import static com.bb.hbx.R.id.et_comm;
 
 /**
  * Created by Administrator on 2017/1/20.
@@ -159,6 +154,10 @@ public class ItemLayout2 extends LinearLayout {
 
     public void setdownImageResource() {
         iv_last.setImageResource(right_icon);
+    }
+
+    public void setMyDownImageResource() {
+        iv_last.setImageResource(right_butIcon);
     }
 
     public void setButtonGone() {

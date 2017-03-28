@@ -22,7 +22,7 @@ public class Insured {
 
     private String insuredName;//
 
-    private String occupation;//从事职业
+    private String occupation="";//从事职业
 
     private List<Ben> benList;//受益人列表
 

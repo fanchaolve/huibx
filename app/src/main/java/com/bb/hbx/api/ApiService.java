@@ -7,7 +7,10 @@ import com.bb.hbx.bean.AddInsured;
 import com.bb.hbx.bean.BannerBean;
 import com.bb.hbx.bean.BindingBankCard;
 import com.bb.hbx.bean.BobaoItem;
+import com.bb.hbx.bean.CarInsDetail;
+import com.bb.hbx.bean.CheckCarInsStateBean;
 import com.bb.hbx.bean.CollectionBean;
+import com.bb.hbx.bean.ComCarPropsBean;
 import com.bb.hbx.bean.Consignees;
 import com.bb.hbx.bean.DeleteConsignee;
 import com.bb.hbx.bean.FilterBean;
@@ -53,6 +56,7 @@ import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.bean.UserRegist;
 import com.bb.hbx.bean.VersionInfo;
 import com.bb.hbx.bean.address.AddressBean;
+import com.bb.hbx.bean.occupation.OccupationBean;
 import com.bb.hbx.pay.llianlianpay.utils.PayOrder;
 
 import retrofit2.Call;
@@ -460,10 +464,28 @@ public interface ApiService {
     Call<Result_Api<FilterBean>> getInsurers(@Field("parentId") String parentId, @Field("insurerId") String insurerId,
                                              @Field("insurerType") String insurerType);
 
-    //获取保险公司列表
+    //获取职业类型数据
     @FormUrlEncoded
     @POST("api.do?method=getOccupationType&type=post")
-    Call<Result_Api> getOccupationType(@Field("parentId") String parentId, @Field("insurerId") String insurerId);
+    Call<Result_Api<OccupationBean>> getOccupationType(@Field("parentId") String parentId, @Field("insurerId") String insurerId);
+
+    //查询车辆是否可以投保
+    @FormUrlEncoded
+    @POST("api.do?method=checkCarInsState&type=post")
+    Call<Result_Api<CheckCarInsStateBean>> checkCarInsState(@Field("companyCode") String companyCode, @Field("areaCode") String areaCode, @Field("licenseNo") String licenseNo);
+
+    //车辆信息填写
+    @FormUrlEncoded
+    @POST("api.do?method=compCarProps&type=post")
+    Call<Result_Api<ComCarPropsBean>> compCarProps(@Field("serialId") String serialId, @Field("extractComp") String extractComp, @Field("modelType") String modelType,
+                                                   @Field("vinNo") String vinNo, @Field("engineNo") String engineNo, @Field("firstRegDate") String firstRegDate,
+                                                   @Field("seats") String seats, @Field("syStartDate") String syStartDate, @Field("jqStartDate") String jqStartDate,
+                                                   @Field("transferFlag") String transferFlag, @Field("transferDate") String transferDate, @Field("driveName") String driveName,
+                                                   @Field("idNo") String idNo, @Field("mobile") String mobile, @Field("extractCarProps") String[] extractCarProps );
+
+    //车险保费计算
+    @POST("api.do?method=getCarInsCalc&type=post")
+    Call<Result_Api> getCarInsCalc(@Body CarInsDetail carInsDetail);
 
 
     //查看订单（保单）详情(getTradeDetail)

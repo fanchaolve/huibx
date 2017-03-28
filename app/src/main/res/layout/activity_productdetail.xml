@@ -112,6 +112,68 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_FLiToB"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/gexianhuodongbeijingtiao">
+
+                <TextView
+                    android:id="@+id/tv_tgf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="推广费"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size12"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x36"/>
+                <TextView
+                    android:id="@+id/tv_tgfPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14%"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_marginTop="9dp"
+                    android:layout_toRightOf="@id/tv_tgf"
+                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:id="@+id/tv_ptjl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+平台奖励"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size12"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_tgfPrice"
+                    android:layout_marginLeft="5dp"/>
+                <TextView
+                    android:id="@+id/tv_ptjlPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6%"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_marginTop="9dp"
+                    android:layout_toRightOf="@id/tv_ptjl"
+                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:id="@+id/tv_leftTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="距结束仅剩"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="48dp"
+                    android:layout_marginTop="5dp"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size11"/>
+                <com.bb.hbx.widget.ProductCountDownTextview
+                    android:id="@+id/pcdt_countDown"
+                    android:layout_width="133dp"
+                    android:layout_height="18dp"
+                    android:text="100天23时09分40秒"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_leftTime"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shape_z42"
+                    android:gravity="center"
+                    android:layout_marginTop="3dp"/>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -254,16 +316,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <com.bb.hbx.widget.ItemLayout2
+                    <RelativeLayout
                         android:id="@+id/il_occupationType"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:left_name2="@string/occupationtype"
-                        app:right_butIcon2="@drawable/xialaicon_xiangshang"
-                        app:right_icon2="@drawable/xialaicon"
-                        app:text2="请选择职业类别">
+                        android:layout_height="@dimen/y112"
+                        android:paddingRight="@dimen/x36">
+                        <TextView
+                            android:id="@+id/tv_occupationType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/x36"
+                            android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                            android:text="职业类别"/>
 
-                    </com.bb.hbx.widget.ItemLayout2>
+                        <ImageView
+                            android:id="@+id/iv_occupationLast"
+                            android:padding="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/xialaicon"/>
+
+
+
+                        <TextView
+                            android:id="@+id/tv_occupationComm"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="32dp"
+                            android:text="请选择职业类别"
+                            android:gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:textAppearance="@style/TextAppear.Theme.A3_Size14"/>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/lin_line"

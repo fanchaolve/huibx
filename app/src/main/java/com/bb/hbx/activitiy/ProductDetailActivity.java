@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +33,13 @@ import com.bb.hbx.bean.Entry;
 import com.bb.hbx.bean.InsuredInfolBean;
 import com.bb.hbx.bean.Plan;
 import com.bb.hbx.bean.ProductParamDetail;
+import com.bb.hbx.bean.RelationShipBean;
+import com.bb.hbx.bean.occupation.OccupationBean;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.Constants;
+import com.bb.hbx.utils.LogUtil;
+import com.bb.hbx.utils.OccupationTypeUtils;
 import com.bb.hbx.utils.Utils;
 import com.bb.hbx.widget.CardLayout;
 import com.bb.hbx.widget.ClickAble;
@@ -42,7 +47,11 @@ import com.bb.hbx.widget.ItemLayout;
 import com.bb.hbx.widget.ItemLayout2;
 import com.bb.hbx.widget.MyScrollView;
 import com.bb.hbx.widget.PickerDialogOneWheel;
+import com.bb.hbx.widget.ProductCountDownTextview;
 import com.bb.hbx.widget.ShareDailog;
+import com.bb.hbx.widget.occupation.BottomDialog;
+import com.bb.hbx.widget.occupation.OccupationSelector;
+import com.bb.hbx.widget.occupation.OnOccupationSelectedListener;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -62,7 +71,8 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Call;
 
-import static com.bb.hbx.utils.Constants.beinsurer1_listvalue;
+import static com.bb.hbx.utils.Constants.beinsurer1_ListKey;
+import static com.bb.hbx.utils.Constants.beinsurer1_ListValue;
 import static com.bb.hbx.utils.Constants.idTypes;
 
 
@@ -72,7 +82,7 @@ import static com.bb.hbx.utils.Constants.idTypes;
  */
 
 public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, ProductDetailModle> implements ProductDetailContract.View,
-        View.OnClickListener,MyScrollView.OnScrollChangedListener ,IWXAPIEventHandler {
+        View.OnClickListener,MyScrollView.OnScrollChangedListener ,IWXAPIEventHandler ,OnOccupationSelectedListener,OccupationSelector.OnDialogCloseListener{
 
 
     /*@BindView(R.id.sl)
@@ -130,8 +140,13 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @BindView(R.id.ll_occupationType)
     LinearLayout ll_occupationType;
     @BindView(R.id.il_occupationType)
-    ItemLayout2 il_occupationType;
-
+    RelativeLayout il_occupationType;
+    @BindView(R.id.iv_occupationLast)
+    ImageView iv_occupationLast;
+    @BindView(R.id.tv_occupationType)
+    TextView tv_occupationType;
+    @BindView(R.id.tv_occupationComm)
+    TextView tv_occupationComm;
 
     @BindView(R.id.il_insurer1)
     ItemLayout il_insurer1;
@@ -184,6 +199,14 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @BindView(R.id.lin_count)
     LinearLayout lin_count;//购买的份数
 
+    @BindView(R.id.rl_FLiToB)
+    RelativeLayout rl_FLiToB;
+    @BindView(R.id.tv_tgfPrice)
+    TextView tv_tgfPrice;
+    @BindView(R.id.tv_ptjlPrice)
+    TextView tv_ptjlPrice;
+    @BindView(R.id.pcdt_countDown)
+    ProductCountDownTextview pcdt_countDown;
 
     private ItemLayout2 layout2;
 
@@ -200,6 +223,13 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     private float headerHeight;//顶部高度
     private float minHeaderHeight;//顶部最低高度，即Bar的高度
 
+    private BottomDialog dialog;
+    private String provinceCode;
+    private String cityCode;
+    private String countyCode;
+
+    public String selectedAge="";
+    public boolean flagAge=false;
     Bundle bundle;
     // IWXAPI 是第三方app和微信通信的openapi接口
     public  IWXAPI api;
@@ -218,6 +248,11 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         public void onClick(View v, String value, int index) {
             if (v instanceof ItemLayout2) {
                 ((ItemLayout2) v).setText(value);
+                if (flagAge)
+                {
+                    selectedAge=value;
+                    mPresenter.setSelectedAge(selectedAge);
+                }
                 if ((int) (v.getTag()) == 0) {
                     mPresenter.setSelectPerids(index);
                 } else {
@@ -227,8 +262,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
             } else if (v instanceof ItemLayout) {
                 if ((int) (v.getTag()) == 11) {
-                    setReationShipValue(beinsurer1_listvalue[index]);
+                    /*setReationShipValue(beinsurer1_listvalue[index]);
+                    mPresenter.setKey(index);*/
+                    setReationShipValue(beinsurer1_ListValue.get(index));
                     mPresenter.setKey(index);
+                    if ("本人".equals(beinsurer1_ListValue.get(index)))
+                    {
+                        il_beinsurer2.setVisibility(View.GONE);
+                        il_beinsurer3.setVisibility(View.GONE);
+                        il_beinsurer4.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        il_beinsurer2.setVisibility(View.VISIBLE);
+                        il_beinsurer3.setVisibility(View.VISIBLE);
+                        il_beinsurer4.setVisibility(View.VISIBLE);
+                    }
                 } else if ((int) (v.getTag()) == 12) {
                     setInsurerType(idTypes[index]);
                     mPresenter.setInsureridType(index);
@@ -334,7 +383,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         });
 
 
-        il_beinsurer1.setListener(new ItemLayout.OnBtnListener() {
+        /*il_beinsurer1.setListener(new ItemLayout.OnBtnListener() {
 
             @Override
             public void onClick() {
@@ -344,7 +393,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
                 wheel.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
                 wheel.show();
             }
-        });
+        });*/
 
 
         il_insurer2.setTag(12);
@@ -361,19 +410,19 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
             }
         });
 
-        il_beinsurer3.setTag(13);
-        il_beinsurer3.setListener(new ItemLayout.OnBtnListener() {
-            @Override
-            public void onClick() {
-                if (idTypes != null && idTypes.length > 1) {
-                    PickerDialogOneWheel wheel_data = new PickerDialogOneWheel(mContext, Arrays.asList(idTypes), il_beinsurer3);
-                    wheel_data.setListener(textListener);
-                    wheel_data.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
-                    wheel_data.show();
+            il_beinsurer3.setTag(13);
+            il_beinsurer3.setListener(new ItemLayout.OnBtnListener() {
+                @Override
+                public void onClick() {
+                    if (idTypes != null && idTypes.length > 1) {
+                        PickerDialogOneWheel wheel_data = new PickerDialogOneWheel(mContext, Arrays.asList(idTypes), il_beinsurer3);
+                        wheel_data.setListener(textListener);
+                        wheel_data.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
+                        wheel_data.show();
 
+                    }
                 }
-            }
-        });
+            });
 
         il_insurer1.setListener(new ItemLayout.OnBtnListener() {
             @Override
@@ -610,12 +659,62 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     }
 
     @Override
-    public void IsBClientView(boolean isClient, String CommisionValue1) {
+    public void setOccupationType(String insurerId) {
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call=service.getOccupationType("0",insurerId);
+        call.enqueue(new PostCallback() {
+            @Override
+            public void successCallback(Result_Api api) {
+                if (api.getOutput() != null && api.getOutput() instanceof OccupationBean) {
+                    OccupationBean occupationBean = (OccupationBean) api.getOutput();
+                    OccupationTypeUtils.saveObject(mContext,"occupationBean",occupationBean);
+                }
+            }
+
+            @Override
+            public void failCallback() {
+                showTip("加载职业类型数据失败！");
+            }
+        });
+
+        il_occupationType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_occupationLast.setImageResource(R.drawable.xialaicon_xiangshang);
+                if (dialog != null) {
+                    dialog.show();
+                } else {
+                    dialog = new BottomDialog(ProductDetailActivity.this);
+                    dialog.setOnOccupationSelectedListener(ProductDetailActivity.this);
+                    dialog.setDialogDismisListener(ProductDetailActivity.this);
+                    dialog.setTextSize(14);//设置字体的大小
+                    dialog.setIndicatorBackgroundColor(android.R.color.holo_orange_light);//设置指示器的颜色
+                    dialog.setTextSelectedColor(android.R.color.holo_orange_light);//设置字体获得焦点的颜色
+                    dialog.setTextUnSelectedColor(android.R.color.holo_blue_light);//设置字体没有获得焦点的颜色
+                    dialog.show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void IsBClientView(boolean isClient, String CommisionValue1,String promotionCommisionValue1,String promotionCommisionValue2,long lastInsureTime) {
         if (isClient) {
             tv_pro.setVisibility(View.VISIBLE);
             tv_pro.setText(CommisionValue1 + "%推广费");
+            //----------
+            tv_tgfPrice.setText(promotionCommisionValue1+"%");
+            tv_ptjlPrice.setText(promotionCommisionValue2+"%");
+            if (lastInsureTime <= 0) {
+                pcdt_countDown.setText("暂无此活动");
+            } else {
+                pcdt_countDown.setTime(lastInsureTime);
+                pcdt_countDown.startTime();
+            }
         } else {
             tv_pro.setVisibility(View.GONE);
+            //-----------
+            rl_FLiToB.setVisibility(View.GONE);//我新加
         }
     }
 
@@ -652,9 +751,22 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         if (entry.getOption() != null && !entry.getOption().isEmpty()) {
             if (entry.getOption().size() > 1) {
                 up.setText(entry.getOption().get(0));
+                if ("age".equals(entry.getCode()))
+                {
+                    //selectedAge=entry.getOption().get(0);
+                    mPresenter.setSelectedAge(entry.getOption().get(0));
+                }
                 up.setListener(new ItemLayout2.OnUpListener() {
                     @Override
                     public void onClick() {
+                        if ("age".equals(entry.getCode()))
+                        {
+                            flagAge=true;
+                        }
+                        else
+                        {
+                            flagAge=false;
+                        }
                         PickerDialogOneWheel wheel = new PickerDialogOneWheel(mContext, entry.getOption(), up);
                         wheel.setListener(textListener);
                         wheel.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
@@ -670,13 +782,55 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     }
 
     @Override
+    public void setRelationShipContent(List<RelationShipBean> list) {
+        if (list==null||list.size()==0)
+        {
+            il_beinsurer1.setVisibility(View.GONE);
+        }
+        else
+        {
+            il_beinsurer1.setVisibility(View.VISIBLE);
+            for (int i = 0; i < list.size(); i++) {
+                beinsurer1_ListKey.add(list.get(i).getCode());
+                beinsurer1_ListValue.add(list.get(i).getName());
+            }
+            il_beinsurer1.setText(list.get(0).getName());
+            mPresenter.setKey(0);
+            if ("本人".equals(list.get(0).getName()))
+            {
+                il_beinsurer2.setVisibility(View.GONE);
+                il_beinsurer3.setVisibility(View.GONE);
+                il_beinsurer4.setVisibility(View.GONE);
+            }
+            il_beinsurer1.setListener(new ItemLayout.OnBtnListener() {
+
+                @Override
+                public void onClick() {
+                    il_beinsurer1.setTag(11);
+                    PickerDialogOneWheel wheel = new PickerDialogOneWheel(mContext, beinsurer1_ListValue, il_beinsurer1);
+                    wheel.setListener(textListener);
+                    wheel.setDialogMode(PickerDialogOneWheel.DIALOG_MODE_BOTTOM);
+                    wheel.show();
+                }
+            });
+        }
+    }
+
+
+    @Override
     public void setReationShipValue(String value) {
-        il_beinsurer1.setText(value);
+        if (il_beinsurer1.getVisibility()==View.VISIBLE)
+        {
+            il_beinsurer1.setText(value);
+        }
     }
 
     @Override
     public void setInsuredIdType(String idTypeValue) {
-        il_beinsurer3.setText(idTypeValue);
+        if (il_beinsurer3.getVisibility()==View.VISIBLE)
+        {
+            il_beinsurer3.setText(idTypeValue);
+        }
     }
 
     @Override
@@ -709,27 +863,69 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
     @Override
     public String getTBRIDEtValue() {
-        return il_insurer3.getEtValue();
+        return il_insurer3.getTextValue();
     }
 
     @Override
     public String getTBRMobileEtValue() {
-        return il_insurer4.getEtValue();
+        return il_insurer4.getTextValue();
     }
 
     @Override
     public String getTBRNameEtValue() {
-        return il_insurer1.getEtValue();
+        return il_insurer1.getTextValue();
     }
 
     @Override
     public String getBBRIDEtValue() {
-        return il_beinsurer4.getEtValue();
+        if (il_beinsurer4.getVisibility()==View.VISIBLE)
+        {
+            return il_beinsurer4.getTextValue();
+        }
+        else
+        {
+            return il_insurer3.getTextValue();
+        }
     }
 
     @Override
     public String getBBRNameEtValue() {
-        return il_beinsurer2.getEtValue();
+        if (il_beinsurer2.getVisibility()==View.VISIBLE)
+        {
+            return il_beinsurer2.getTextValue();
+        }
+        else
+        {
+            return il_insurer1.getTextValue();
+        }
+    }
+
+    @Override
+    public int getBBRIdTypeEtValue() {
+        int index=-1;
+        if (il_beinsurer3.getVisibility()==View.VISIBLE)
+        {
+            String etValue = il_beinsurer3.getTextValue();
+            for (int i = 0; i < idTypes.length; i++) {
+                if (etValue.equals(idTypes[i]))
+                {
+                    index= i+1;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            String etValue = il_insurer2.getTextValue();
+            for (int i = 0; i < idTypes.length; i++) {
+                if (etValue.equals(idTypes[i]))
+                {
+                    index= i+1;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 
 
@@ -823,5 +1019,36 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
         }
 
         Toast.makeText(this,"result"+ result, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void dialogclose() {
+        if(dialog!=null){
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onOccupationSelected(OccupationBean.TypeListBean province, OccupationBean.TypeListBean.SubTypeBeanX city, OccupationBean.TypeListBean.SubTypeBeanX.SubTypeBean county) {
+        provinceCode = (province == null ? "" : province.getTypeId() + "");
+        cityCode = (city == null ? "" : city.getTypeId() + "");
+        countyCode = (county == null ? "" : county.getTypeId() + "");
+//        streetCode = (street == null ? "" : street.code);
+        LogUtil.d("数据", "省份id=" + provinceCode);
+        LogUtil.d("数据", "城市id=" + cityCode);
+        LogUtil.d("数据", "乡镇id=" + countyCode);
+//        LogUtil.d("数据", "街道id=" + streetCode);
+        String s = (province == null ? "" : province.getTypeName())
+                + (city == null ? "" : city.getTypeName())
+                + (county == null ? "" : county.getTypeName());
+        /*address=s;
+        areaId=city.getAreaId()+"";*/
+        tv_occupationComm.setText(s);
+        iv_occupationLast.setImageResource(R.drawable.xialaicon);
+        mPresenter.setOccupation(countyCode.substring(cityCode.length(),countyCode.length()));
+        //il_occupationType.setTextColor(getResources().getColor(R.color.A3));
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 }

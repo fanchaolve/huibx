@@ -1,5 +1,8 @@
 package com.bb.hbx.activitiy;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -8,7 +11,7 @@ import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.bean.CarModels;
+import com.bb.hbx.bean.ComCarPropsBean;
 import com.bb.hbx.bean.NomatchCarModels;
 import com.bb.hbx.provide.NomatchCarProvide;
 import com.bb.hbx.provide.SelectCarProvide;
@@ -44,6 +47,13 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
 
     private SelectCarProvide provide;
 
+    List<ComCarPropsBean.PlanListBean> planList=new ArrayList<>();
+    int size;
+    Bundle bundleFromCarInfo;
+    String serialId="";
+    String carExtras="";
+    String carPrice="";
+    String modelCode="";
 
     @Override
     public int getLayoutId() {
@@ -53,6 +63,9 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rl_view.setLayoutManager(manager);
         adapter = new MultiTypeAdapter();
@@ -60,11 +73,14 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
         provide = new SelectCarProvide(this);
         provide.setmOnItemClickListener(new SelectCarProvide.OnitemClick() {
             @Override
-            public void onItemClick(CarModels data, int position) {
+            public void onItemClick(ComCarPropsBean.CarInfoListBean data, int position) {
                 adapter.notifyDataSetChanged();
+                carPrice = data.getCarPrice();
+                modelCode = data.getModelCode();
+                showTip("carPrice:"+carPrice+"----modelCode:"+modelCode);
             }
         });
-        adapter.register(CarModels.class, provide);
+        adapter.register(ComCarPropsBean.CarInfoListBean.class, provide);
         adapter.register(NomatchCarModels.class, new NomatchCarProvide(this));
         rl_view.setAdapter(adapter);
     }
@@ -82,9 +98,18 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initdata() {
+        Intent intent = getIntent();
+        bundleFromCarInfo = intent.getExtras();
+        serialId = bundleFromCarInfo.getString("serialId");
+        carExtras = bundleFromCarInfo.getString("carExtras");
+        size = bundleFromCarInfo.getInt("size", -1);
+        List<ComCarPropsBean.CarInfoListBean> carInfoList = bundleFromCarInfo.getParcelableArrayList("carinfoList");
         items = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        /*for (int i = 0; i < 30; i++) {
             items.add(new CarModels());
+        }*/
+        for (int i = 0; i < carInfoList.size(); i++) {
+            items.add(carInfoList.get(i));
         }
         items.add(new NomatchCarModels());
         adapter.setItems(items);
@@ -96,7 +121,13 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.tv_confim:
-                AppManager.getInstance().showActivity(InsurancePlanActivity.class, null);
+                Bundle bundle = new Bundle();
+                bundle.putInt("size",size);
+                for (int i = 0; i < size; i++) {
+                    List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = bundleFromCarInfo.getParcelableArrayList("syxList" + i);
+                    bundle.putParcelableArrayList("syxList"+i, (ArrayList<? extends Parcelable>) syxList);
+                }
+                AppManager.getInstance().showActivity(InsurancePlanActivity.class, bundle);
                 break;
             default:
                 break;

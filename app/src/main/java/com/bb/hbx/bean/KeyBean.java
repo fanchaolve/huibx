@@ -40,6 +40,6 @@ public class KeyBean extends ArrayList<String> {
             }
             builder.deleteCharAt(builder.length() - 1);
         }
-        return builder.toString();
+        return builder.toString()+";";
     }
 }

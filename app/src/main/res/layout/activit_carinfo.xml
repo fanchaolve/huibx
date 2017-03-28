@@ -38,6 +38,117 @@
             android:scaleType="centerCrop"
             android:src="@drawable/banner" />
 
+        <RelativeLayout
+            android:id="@+id/rl_FLiToB"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginLeft="@dimen/x26"
+            android:layout_marginRight="@dimen/x26"
+            android:layout_marginTop="@dimen/x36">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/chelianghuodongbeijing"
+                android:scaleType="centerCrop"/>
+            <RelativeLayout
+                android:id="@+id/rl_HDTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tv_HDTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全民315限时抢购"
+                    android:layout_centerHorizontal="true"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/tv_syx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商业险"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size12"
+                    android:visibility="visible"
+                    android:layout_marginTop="18dp"/>
+                <TextView
+                    android:id="@+id/tv_syxPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5%"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_toRightOf="@id/tv_syx"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="12dp"
+                    android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/tv_jqx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+交强险"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size12"
+                    android:layout_toRightOf="@id/tv_syxPrice"
+                    android:layout_marginLeft="3dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="18dp"/>
+                <TextView
+                    android:id="@+id/tv_jqxPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5%"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_toRightOf="@id/tv_jqx"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="12dp"
+                    android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/tv_ptjl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+平台奖励"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size12"
+                    android:layout_toRightOf="@id/tv_jqxPrice"
+                    android:layout_marginLeft="3dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="18dp"/>
+                <TextView
+                    android:id="@+id/tv_ptjlPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5%"
+                    android:textAppearance="@style/TextAppear.Theme.white_Size19"
+                    android:layout_toRightOf="@id/tv_ptjl"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="12dp"
+                    android:visibility="visible"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rl_HDTitle"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="距结束仅剩"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppear.Theme.Z42_Size11"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="100天23时09分40秒"
+                    android:layout_toRightOf="@id/tv_left"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:textAppearance="@style/TextAppear.Theme.Z42_Size12"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,14 +250,60 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_FLiToBAtottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y60"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:id="@+id/iv_qianbi"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/qianbi"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="1dp"/>
+        <TextView
+            android:id="@+id/tv_syxBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商业险"
+            android:textAppearance="@style/TextAppear.Theme.Z52_Size12"
+            android:layout_toRightOf="@id/iv_qianbi"
+            android:layout_marginLeft="5dp" />
 
+        <TextView
+            android:id="@+id/tv_syxBottomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15%"
+            android:textAppearance="@style/TextAppear.Theme.Z52_Size12"
+            android:layout_toRightOf="@id/tv_syxBottom"
+            android:layout_marginLeft="2dp" />
+        <TextView
+            android:id="@+id/tv_jqxBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+交强险"
+            android:textAppearance="@style/TextAppear.Theme.Z52_Size12"
+            android:layout_toRightOf="@id/tv_syxBottomPrice"
+            android:layout_marginLeft="5dp" />
+        <TextView
+            android:id="@+id/tv_jqxBottomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3%"
+            android:textAppearance="@style/TextAppear.Theme.Z52_Size12"
+            android:layout_toRightOf="@id/tv_jqxBottom"
+            android:layout_marginLeft="2dp" />
+    </RelativeLayout>
     <TextView
         android:id="@+id/tv_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y88"
         android:layout_marginLeft="@dimen/x36"
         android:layout_marginRight="@dimen/x36"
-        android:layout_marginTop="@dimen/y62"
+        android:layout_marginTop="@dimen/y26"
         android:background="@drawable/shape_btn_a1"
         android:gravity="center"
         android:text="@string/search"

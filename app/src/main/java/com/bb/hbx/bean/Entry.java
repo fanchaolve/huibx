@@ -9,6 +9,7 @@ import java.util.List;
 public class Entry {
 
     private String name;
+    private String code;
 
     private List<String> option;
 
@@ -18,6 +19,14 @@ public class Entry {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<String> getOption() {

@@ -72,13 +72,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/modelType_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入车辆型号"
+                    android:text="奇瑞SQR7246"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -113,13 +116,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/vinNo_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入识别代码"
+                    android:text="LSV875904H5435479"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -146,13 +152,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/engineNo_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入发动机号"
+                    android:text="43564379"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -178,14 +187,16 @@
                     android:textColor="@color/A4"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/registTime_tv"
+                <EditText
+                    android:id="@+id/registTime_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:hint="请选择"
+                    android:background="@null"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -223,6 +234,7 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/seats_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -230,6 +242,7 @@
                     android:background="@null"
                     android:hint="5"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -255,14 +268,16 @@
                     android:textColor="@color/A4"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/jqxTime_tv"
+                <EditText
+                    android:id="@+id/jqxTime_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:hint="请选择"
+                    android:background="@null"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -299,14 +314,16 @@
                     android:textColor="@color/A4"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/syxTime_tv"
+                <EditText
+                    android:id="@+id/syxTime_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:hint="请选择"
+                    android:background="@null"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -335,6 +352,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/transferCar_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -343,6 +361,59 @@
                     android:text="   过户车辆首次投保"
                     android:textColor="@color/A1"
                     android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/transferDate_rl"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#fff"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/line_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="18dp"
+                    android:background="#eee" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="18dp"
+                    android:text="过户日期"
+                    android:textColor="@color/A4"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/transferDate_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="131dp"
+                    android:background="@null"
+                    android:hint="请输入过户日期"
+                    android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/transferDate_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="18dp"
+                    android:background="#fff"
+                    android:src="@drawable/xialaicon"
+                    android:scaleType="centerCrop"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="18dp"
+                    android:background="#eee" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -359,6 +430,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/businessCar_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -386,13 +458,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/driveName_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入车主姓名"
+                    android:text="王"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -419,13 +494,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/idNo_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入证件号"
+                    android:text="330324199411075758"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
 
                 <ImageView
@@ -436,52 +514,6 @@
                     android:background="#eee" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="43dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginTop="18dp"
-                    android:text="联系人信息"
-                    android:textColor="@color/A4"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="#fff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="18dp"
-                    android:text="联系人"
-                    android:textColor="@color/A4"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="131dp"
-                    android:background="@null"
-                    android:hint="请输入姓名"
-                    android:textColorHint="@color/A5"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="18dp"
-                    android:background="#eee" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -499,13 +531,16 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/mobile_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="131dp"
                     android:background="@null"
                     android:hint="请输入电话号码"
+                    android:text="15735926343"
                     android:textColorHint="@color/A5"
+                    android:textColor="@color/A3"
                     android:textSize="13sp" />
             </RelativeLayout>
 
