@@ -488,11 +488,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         identify_tv.setText(0 == realNameStatus ? "未认证" : "已认证");
                         String userLogo = bean.getUserLogo();
                         Log.d("========fragmetn","=========="+userLogo);
-                        ShareSPUtils.edit.putString("userIcon", userLogo);
-                        ShareSPUtils.edit.commit();
+
                         //ImageCatchUtil.getInstance().clearImageMemoryCache();
                         //GlideUtil.getInstance().clearMemory(mContext);
-                        GlideUtil.getInstance().loadImageWithNoCache(mContext,userIcon_civ, userLogo);
+                        if (TextUtils.isEmpty(userLogo)) {
+                            userIcon_civ.setImageResource(R.drawable.defult_icon);
+                        } else {
+                            ShareSPUtils.edit.putString("userIcon", userLogo);
+                            ShareSPUtils.edit.commit();
+                            GlideUtil.getInstance().loadImageWithNoCache(mContext,userIcon_civ, userLogo);
+                        }
                     }
                 }
             }
