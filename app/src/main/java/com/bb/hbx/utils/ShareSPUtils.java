@@ -23,16 +23,15 @@ public class ShareSPUtils {
     public static SharedPreferences.Editor edit;
     public static Context mContext;
 
-    public static void initShareSP(Context context)
-    {
-        mContext=context;
+    public static void initShareSP(Context context) {
+        mContext = context;
         sp = context.getSharedPreferences("usersinfo", Context.MODE_PRIVATE);
         edit = sp.edit();
     }
+
     public static void readShareSP(ViewGroup notLogin, ImageView userIcon, /*TextView hasLogin,*/Context context) {
-        if (sp!=null)
-        {
-            Can.hasLogined=sp.getBoolean("hasLogined",false);
+        if (sp != null) {
+            Can.hasLogined = sp.getBoolean("hasLogined", false);
             if (!Can.hasLogined)//用户未登录执行的逻辑
             {
                 String parentPath = Can.getDefaultUsersIconFile();
@@ -41,23 +40,21 @@ public class ShareSPUtils {
                     file.mkdirs();
                 }
                 String usersIconPath = new File(file, Can.userIconDefault.substring(Can.userIconDefault.lastIndexOf("/") + 1)).getAbsolutePath();
-                if (notLogin.getVisibility()== View.GONE)
-                {
+                if (notLogin.getVisibility() == View.GONE) {
                     notLogin.setVisibility(View.VISIBLE);
                     //hasLogin.setVisibility(View.GONE);
                 }
                 userIcon.setImageResource(R.drawable.defult_icon);
                 //userIcon.setImageBitmap(BitmapFactory.decodeFile(usersIconPath));//默认头像的下载是在downloadService中实现,此时可能未下载完成,,所以先用glide吧
                 //Glide.with(mContext).load(Can.userIconDefault).into(userIcon);
-            }
-            else //用户已登录执行的逻辑
+            } else //用户已登录执行的逻辑
             {
-                Can.userName=sp.getString("userName",null);
-                Can.userPwd=sp.getString("userPwd",null);
-                Can.userIcon= sp.getString("userIcon", null);
+                Can.userName = sp.getString("userName", null);
+                Can.userPwd = sp.getString("userPwd", null);
+                Can.userIcon = sp.getString("userIcon", null);
                 /*if (hasLogin.getVisibility()==View.GONE)
                 {*/
-                    notLogin.setVisibility(View.GONE);
+                notLogin.setVisibility(View.GONE);
                    /* hasLogin.setVisibility(View.VISIBLE);
                 }*/
                 //Bitmap bitmap = BitmapFactory.decodeFile(Can.userIcon);------------------
@@ -67,43 +64,43 @@ public class ShareSPUtils {
                 //hasLogin.setText(Can.userName);
 
             }
-        }
-        else
-        {
-            Toast.makeText(context,"sharePreference建立失败",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "sharePreference建立失败", Toast.LENGTH_SHORT).show();
 
         }
     }
-    public static String writeShareSp(boolean loginFlag,String userId,String sessionId,String userName,String phone,String pwd)
-    {
+
+    public static String writeShareSp(boolean loginFlag, String userId, String sessionId, String userName, String phone, String pwd) {
         String parentPath = Can.getDefaultUsersIconFile();
         File file = new File(parentPath);
         String usersIconPath = new File(file, Can.userIconDefault.substring(Can.userIconDefault.lastIndexOf("/") + 1)).getAbsolutePath();
-        edit.putBoolean("hasLogined",loginFlag);
-        edit.putString("userId",userId);
-        edit.putString("sessionId",sessionId);
-        edit.putString("userName",userName);
-        edit.putString("userPhone",phone);
-        edit.putString("userPwd",pwd);
-        edit.putString("userIcon",usersIconPath);
+        edit.putBoolean("hasLogined", loginFlag);
+        edit.putString("userId", userId);
+        edit.putString("sessionId", sessionId);
+        edit.putString("userName", userName);
+        edit.putString("userPhone", phone);
+        edit.putString("userPwd", pwd);
+        edit.putString("userIcon", usersIconPath);
         edit.commit();
         return usersIconPath;
     }
 
     /**
-     * 记录是否已签到
-     * @param isSign
+     * 记录签到后返回的信息
+     *
+     * @param content
      */
-    public static void writeIsSignToSp(boolean isSign) {
-        edit.putBoolean("isSign",isSign);
+    public static void writeContent(String content) {
+        edit.putString("content", content);
         edit.commit();
     }
 
     /**
-     * 读取签到状态
+     * 读取签到后返回的信息
+     *
      * @return
      */
-    public static boolean readIsSign() {
-        return sp.getBoolean("isSign",false);
+    public static String readContent() {
+        return sp.getString("content", "");
     }
 }

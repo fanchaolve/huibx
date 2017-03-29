@@ -2,10 +2,12 @@ package com.bb.hbx.activitiy;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
@@ -36,7 +38,6 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.menu_iv)
     ImageView menu_iv;
 
-
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
 
@@ -60,9 +61,17 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.et_price)
     LoginTelEdit et_price;
 
-    String bankName="";
-    String lastDigits="";
-    String cardType="";
+    @BindView(R.id.tv_getAllMoney)
+    TextView tv_getAllMoney;
+
+    @BindView(R.id.tv_other_detail)
+    TextView tv_other_detail;
+
+    private int acctBalanceInt = 0;
+    String bankName = "";
+    String lastDigits = "";
+    String cardType = "";
+
     @Override
     public void onClick(View v) {
 
@@ -82,51 +91,52 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_withdraw:
                 final String price = et_price.getText().toString().trim();
-                if (!TextUtils.isEmpty(price))
-                {
+                float getCashNum = Float.parseFloat(price);
+                float canGetMaxCash = (float) acctBalanceInt / 100;
+//                Log.d("tttttt", "-------------------------------" + canGetMaxCash);
+                if (!TextUtils.isEmpty(price)) {
+                    if (getCashNum > canGetMaxCash) {
+                        showTip("您的余额不足！");
+                        return;
+                    }
                     final PasswordDailog dialog = new PasswordDailog(this);
                     dialog.setListener(new PasswordDailog.GetPasswordListener() {
                         @Override
                         public void getPassword(String password) {
                             ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                            Call call=service.verifyPayPwd(MyApplication.user.getUserId(),password);
+                            Call call = service.verifyPayPwd(MyApplication.user.getUserId(), password);
                             call.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(Call call, Response response) {
                                     Result_Api body = (Result_Api) response.body();
-                                    if (body!=null)
-                                    {
-                                        if (body.isSuccess())
-                                        {
-                                            ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                                            Call callCash=service.applyCash(MyApplication.user.getUserId(),price);
-                                            callCash.enqueue(new Callback() {
-                                                @Override
-                                                public void onResponse(Call call, Response response) {
-                                                    Result_Api body = (Result_Api) response.body();
-                                                    if (body!=null)
-                                                    {
-                                                        if (body.isSuccess())
-                                                        {
-                                                            showTip("提现成功,3-5个工作日到账");
-                                                            AppManager.getInstance().finishParticularActivity(AddBankCardActivity.class);
-                                                            finish();
-                                                        }
-                                                        else
-                                                        {
-                                                            showTip(body.getRespMsg());
-                                                        }
-                                                    }
-                                                    dialog.dismiss();
-                                                }
 
-                                                @Override
-                                                public void onFailure(Call call, Throwable t) {
-                                                    showTip("提现失败");
+                                    if (body.isSuccess()) {
+                                        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+                                        Call callCash = service.applyCash(MyApplication.user.getUserId(), price);
+                                        callCash.enqueue(new Callback() {
+                                            @Override
+                                            public void onResponse(Call call, Response response) {
+                                                Result_Api body = (Result_Api) response.body();
+                                                if (body != null) {
+                                                    if (body.isSuccess()) {
+                                                        showTip("提现成功,3-5个工作日到账");
+                                                        AppManager.getInstance().finishParticularActivity(AddBankCardActivity.class);
+                                                    } else {
+                                                        showTip(body.getRespMsg());
+                                                    }
                                                 }
-                                            });
-                                        }
+                                                dialog.dismiss();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call call, Throwable t) {
+                                                showTip("提现失败");
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(mContext, "支付密码错误，请重新输入！", Toast.LENGTH_SHORT).show();
                                     }
+
                                 }
 
                                 @Override
@@ -138,6 +148,9 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
                     });
                     dialog.show();
                 }
+                break;
+            case R.id.tv_getAllMoney:
+                et_price.setText((acctBalanceInt / 100) + "." + (acctBalanceInt / 10 % 10) + (acctBalanceInt % 10));
                 break;
             default:
                 break;
@@ -151,22 +164,17 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-        /*Intent intent = getIntent();
-        bankName = intent.getStringExtra("bankName");
-        lastDigits = intent.getStringExtra("lastDigits");
-        cardType = intent.getStringExtra("cardType");*/
-
+        Intent intent = getIntent();
+        acctBalanceInt = intent.getIntExtra("acctBalanceInt", 0);
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getBankCardList(MyApplication.user.getUserId());
+        Call call = service.getBankCardList(MyApplication.user.getUserId());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                if (body!=null)
-                {
+                if (body != null) {
                     GetBankCardList cardBean = (GetBankCardList) body.getOutput();
-                    if (cardBean!=null)
-                    {
+                    if (cardBean != null) {
                         String bankName = cardBean.getBankName();
                         String lastDigits = cardBean.getLastDigits();
                         String cardType = cardBean.getCardType();
@@ -194,12 +202,36 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
         tv_withdraw.setOnClickListener(this);
         back_layout.setOnClickListener(this);
         tv_bankstatus.setOnClickListener(this);
-
+        tv_getAllMoney.setOnClickListener(this);
         et_price.addTextChangedListener(new PointTextWatcher(et_price, tv_withdraw));
     }
 
     @Override
     public void initdata() {
+        setWithdrawCount();
+    }
 
+    /**
+     * 设置可提现次数
+     */
+    private void setWithdrawCount() {
+        ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+        Call call = service.getWithdrawCount(MyApplication.user.getUserId());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Result_Api api = (Result_Api) response.body();
+                if (api != null) {
+                    String count = (String) api.getOutput();
+                    tv_other_detail.setText("可提现" + ((acctBalanceInt / 100) + "." + (acctBalanceInt / 10 % 10) + (acctBalanceInt % 10))
+                            + "元      " + "本月还可以免费提现" + count + "次");
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 }

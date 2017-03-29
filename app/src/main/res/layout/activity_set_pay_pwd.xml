@@ -83,8 +83,9 @@
             android:layout_centerVertical="true"/>
         <EditText
             android:id="@+id/pwd_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberPassword"
             android:hint="请输入密码"
             android:textSize="13sp"
             android:textColorHint="@color/A5"
@@ -117,9 +118,10 @@
             android:layout_centerVertical="true"/>
         <EditText
             android:id="@+id/checkPwd_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:hint="请再次输入"
+            android:inputType="numberPassword"
             android:textSize="13sp"
             android:textColorHint="@color/A5"
             android:textColor="@color/A3"

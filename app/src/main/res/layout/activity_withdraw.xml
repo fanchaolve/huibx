@@ -16,36 +16,40 @@
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
+
         <RelativeLayout
             android:id="@+id/back_layout"
             android:layout_width="40dp"
             android:layout_height="match_parent">
+
             <ImageView
+                android:id="@+id/back_iv"
                 android:layout_width="10dp"
                 android:layout_height="17dp"
-                android:id="@+id/back_iv"
-                android:src="@drawable/fanhui"
-                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="18dp"
-                android:layout_centerVertical="true"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/fanhui" />
         </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="提现"
-            android:textSize="17sp"
-            android:textColor="@color/A1"
             android:layout_centerHorizontal="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="提现"
+            android:textColor="@color/A1"
+            android:textSize="17sp" />
+
         <ImageView
             android:id="@+id/menu_iv"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/lvwenhao"
-            android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="18dp"/>
+            android:layout_marginRight="18dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/lvwenhao" />
     </RelativeLayout>
 
 
@@ -61,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="18dp"
-            android:src="@drawable/yinhangbiaozhi"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/yinhangbiaozhi" />
 
         <TextView
             android:id="@+id/tv_banktitle"
@@ -83,8 +87,8 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/shape_c3_a6"
             android:gravity="center"
-            android:textAppearance="@style/TextAppear.Theme.A5_Size12"
-            android:text="已绑定" />
+            android:text="已绑定"
+            android:textAppearance="@style/TextAppear.Theme.A5_Size12" />
 
         <ImageView
             android:id="@+id/iv_cardNoHead"
@@ -94,28 +98,30 @@
             android:layout_marginBottom="18dp"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="18dp"
-            android:src="@drawable/yinhangkahao_hui"/>
+            android:src="@drawable/yinhangkahao_hui" />
+
         <TextView
             android:id="@+id/tv_cardNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_cardNoHead"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/iv_bankicon"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/iv_cardNoHead"
+            android:text="11"
             android:textColor="@color/A5"
-            android:textSize="14sp"
-            android:text="11"/>
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tv_cardType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_cardNo"
-            android:layout_marginLeft="10dp"
             android:layout_alignBottom="@id/tv_cardNo"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_cardNo"
+            android:text="银行"
             android:textColor="@color/A5"
-            android:textSize="14sp"
-            android:text="银行"/>
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -184,11 +190,12 @@
 
 
             <TextView
+                android:id="@+id/tv_getAllMoney"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/x26"
                 android:layout_marginRight="@dimen/x36"
+                android:gravity="center_vertical"
                 android:text="@string/all_withdraw"
                 android:textAppearance="@style/TextAppear.Theme.A1_Size14" />
 

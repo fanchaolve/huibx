@@ -53,7 +53,10 @@ public class FixPwdActivity extends BaseActivity implements View.OnClickListener
         pwd_et.setHintString("新密码(6-20位数字、字母组合)");
         //pwd_et.invalidate();
         mobile = MyApplication.user.getMobile();
-        warn_tv.setText("验证码将发送已绑定手机号"+mobile);
+
+        //使用正则匹配将电话号码的4-7位替换成*
+        String displayPhoneNum = mobile.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        warn_tv.setText("验证码将发送已绑定手机号"+displayPhoneNum);
     }
 
     @Override

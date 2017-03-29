@@ -51,7 +51,9 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initView() {
         oldPhoneNum = MyApplication.user.getMobile();
-        phone_tv.setText(oldPhoneNum);
+        //使用正则匹配将电话号码的4-7位替换成*
+        String displayPhoneNum = oldPhoneNum.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        phone_tv.setText(displayPhoneNum);
     }
 
     @Override

@@ -53,7 +53,9 @@ public class SetPayPwdActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
         mobile = MyApplication.user.getMobile();
-        phone_tv.setText(mobile);
+        //使用正则匹配将电话号码的4-7位替换成*
+        String displayPhoneNum = mobile.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        phone_tv.setText(displayPhoneNum);
     }
 
     @Override

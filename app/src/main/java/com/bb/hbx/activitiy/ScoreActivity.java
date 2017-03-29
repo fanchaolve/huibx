@@ -162,18 +162,19 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                     public void onResponse(Call call, Response response) {
 //                        Log.d("ttttt","-------------------jinlaile");
                         Result_Api result_api = (Result_Api) response.body();
-                        if (result_api.getOutput() != null) {
-                            String content = (String) result_api.getOutput();
-                            info_tv.setText(content);
-                        }
+
                         if (result_api.isSuccess()) {
                             showScoreDetail(1);
                             showTip("恭喜你，签到成功！");
                             state_tv.setText("签到成功");
                             state_tv.getBackground().setAlpha(125);
                             state_tv.setClickable(false);
-//                            ShareSPUtils.writeIsSignToSp(false);
-//                            showScoreDetail(pageIndex);
+                            if (result_api.getOutput() != null) {
+                                String content = (String) result_api.getOutput();
+                                info_tv.setText(content);
+//                                ShareSPUtils.writeContent(content);
+                            }
+                            showScoreDetail(pageIndex);
                         } else {
                             state_tv.setText("签到成功");
                             state_tv.getBackground().setAlpha(125);
@@ -208,13 +209,22 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                     boolean flag = scoreResultBean.isSuccess();
                     info_tv.setText(msg);
                     if (flag) {
-                        ShareSPUtils.writeIsSignToSp(isSign);
+//                        ShareSPUtils.writeIsSignToSp(isSign);
                         state_tv.setText("签 到");
                         state_tv.setClickable(true);
                     } else {
                         state_tv.setText("签到成功");
                         state_tv.getBackground().setAlpha(125);
                         state_tv.setClickable(false);
+                        if (scoreResultBean.getOutput() != null) {
+                            info_tv.setText(scoreResultBean.getOutput());
+                        }
+//                        info_tv.setText(ShareSPUtils.readContent());
+//                        if (result_api.getOutput() != null) {
+//                            String content = (String) result_api.getOutput();
+//                            info_tv.setText(content);
+//                            ShareSPUtils.writeContent(false);
+//                        }
                     }
                 }
             }

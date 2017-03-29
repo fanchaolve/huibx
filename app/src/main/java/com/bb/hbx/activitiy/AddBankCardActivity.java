@@ -21,7 +21,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddBankCardActivity extends BaseActivity implements View.OnClickListener{
+import static com.yintong.secure.c.ae.j.bo;
+
+public class AddBankCardActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -36,6 +38,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
 
     @BindView(R.id.verify_tv)
     TextView verify_tv;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_add_bank_card;
@@ -60,32 +63,29 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
             case R.id.nameInfo_iv:
-                Toast.makeText(this,"请输入真实姓名",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "请输入真实姓名", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.verify_tv:
 
                 String name = name_et.getText().toString();
                 String idCard = idCard_et.getText().toString();
                 String bankCard = bankCard_et.getText().toString();
-                if (!TextUtils.isEmpty(name)&& !TextUtils.isEmpty(idCard)&&!TextUtils.isEmpty(bankCard))
-                {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(idCard) && !TextUtils.isEmpty(bankCard)) {
 
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                    Call call=service.bindingBankCard(MyApplication.user.getUserId(),name,idCard,bankCard);
+                    Call call = service.bindingBankCard(MyApplication.user.getUserId(), name, idCard, bankCard);
                     call.enqueue(new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
                             Result_Api body = (Result_Api) response.body();
                             boolean success = body.isSuccess();
                             String paymentPwd = MyApplication.user.getPaymentPwd();
-                            if (success)
-                            {
+                            if (success) {
                                 if ("1".equals(paymentPwd))//已经设置过支付密码
                                 {
                                     Intent intent = new Intent(AddBankCardActivity.this, WithdrawActivity.class);
@@ -97,12 +97,14 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
                                 intent.putExtra("lastDigits",lastDigits);
                                 intent.putExtra("cardType",cardType);*/
                                     startActivity(intent);
-                                }
-                                else
-                                {
+                                    finish();
+                                } else {
                                     Intent intent = new Intent(AddBankCardActivity.this, SetPayPwdActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 }
+                            } else {
+                                showTip(body.getRespMsg() + "!");
                             }
                         }
 
@@ -111,9 +113,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
 
                         }
                     });
-                }
-                else
-                {
+                } else {
                     showTip("请核对信息!");
                 }
                 break;

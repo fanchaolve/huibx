@@ -577,4 +577,9 @@ public interface ApiService {
                                             @Field("objType") String objType,
                                             @Field("objId") String objId,
                                             @Field("objStatus") String objStatus);
+
+    //获取可提现次数
+    @FormUrlEncoded
+    @POST("api.do?method=getWithdrawCount&type=post")
+    Call<Result_Api<String>> getWithdrawCount(@Field("userId") String userId);
 }

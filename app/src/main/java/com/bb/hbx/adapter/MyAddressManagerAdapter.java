@@ -2,6 +2,7 @@ package com.bb.hbx.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,14 @@ public class MyAddressManagerAdapter extends RecyclerView.Adapter<MyAddressManag
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.name_tv.setText(list.get(position).getCneeName());
-        holder.phone_tv.setText(list.get(position).getMobile());
+        String mobile = list.get(position).getMobile();
+        if (!TextUtils.isEmpty(mobile)) {
+            //使用正则匹配将电话号码的4-7位替换成*
+            String displayPhoneNum = mobile.trim().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+            holder.phone_tv.setText(displayPhoneNum);
+        } else {
+            holder.phone_tv.setText(mobile);
+        }
         holder.address_tv.setText(list.get(position).getAddress());
         holder.select_iv.setTag(position);
         isDefaultFlag=map.get(position);
