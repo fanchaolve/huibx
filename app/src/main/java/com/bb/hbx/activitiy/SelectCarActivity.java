@@ -52,6 +52,12 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
     int size;
     Bundle bundleFromCarInfo;
     String serialId="";
+    String city;
+    String licenseNo;
+    String insureName;
+    String driveName="";
+    String idNo="";
+    String mobile="";
     String carExtras="";
     String carPrice="";
     String modelCode="";
@@ -102,6 +108,13 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         bundleFromCarInfo = intent.getExtras();
         serialId = bundleFromCarInfo.getString("serialId");
+        city = bundleFromCarInfo.getString("city");
+        licenseNo = bundleFromCarInfo.getString("licenseNo");
+        insureName = bundleFromCarInfo.getString("insureName");
+        driveName = bundleFromCarInfo.getString("driveName");
+        idNo = bundleFromCarInfo.getString("idNo");
+        mobile = bundleFromCarInfo.getString("mobile");
+
         carExtras = bundleFromCarInfo.getString("carExtras");
         size = bundleFromCarInfo.getInt("size", -1);
         List<ComCarPropsBean.CarInfoListBean> carInfoList = bundleFromCarInfo.getParcelableArrayList("carinfoList");
@@ -124,6 +137,13 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_confim:
                 Bundle bundle = new Bundle();
                 bundle.putString("serialId",serialId);
+                bundle.putString("licenseNo",licenseNo);
+                bundle.putString("driveName",driveName);
+                bundle.putString("idNo",idNo);
+                bundle.putString("mobile",mobile);
+                bundle.putString("insureName",insureName);
+                bundle.putString("city",city);
+
                 bundle.putString("carExtras",carExtras);
                 bundle.putString("carPrice",carPrice);
                 bundle.putString("modelCode",modelCode);

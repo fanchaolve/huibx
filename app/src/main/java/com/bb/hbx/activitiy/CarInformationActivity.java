@@ -122,6 +122,12 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
                 //AppManager.getInstance().showActivity(SelectCarActivity.class, null);
 //                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, null);
                 final String licenseNo = et_carid.getText().toString().trim();
+                final String city = tv_city.getText().toString().trim();
+                if (TextUtils.isEmpty(city))
+                {
+                    showTip("请选择投保城市!");
+                    return;
+                }
                 if (TextUtils.isEmpty(licenseNo))
                 {
                     showTip("请输入车牌号码!");
@@ -135,13 +141,16 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
                     public void onResponse(Call call, Response response) {
                         Result_Api body = (Result_Api) response.body();
                         CheckCarInsStateBean bean = (CheckCarInsStateBean) body.getOutput();
-                        if (bean!=null)
+                        if (body.isSuccess())
                         {
                             String state = bean.getState();
                             if ("0".equals(state))
                             {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("serialId",bean.getSerialId());
+                                bundle.putString("city",city);
+                                bundle.putString("licenseNo",licenseNo);
+                                bundle.putString("insureName",tv_title.getText().toString().trim());
                                 //bundle.putString("licenseNo",licenseNo);
                                 AppManager.getInstance().showActivity(CarInformationFillInActivity.class, bundle);
                             }

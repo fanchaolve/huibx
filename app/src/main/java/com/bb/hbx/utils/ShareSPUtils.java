@@ -2,12 +2,12 @@ package com.bb.hbx.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bb.hbx.R;
 import com.bb.hbx.cans.Can;
 
 import java.io.File;
@@ -46,7 +46,8 @@ public class ShareSPUtils {
                     notLogin.setVisibility(View.VISIBLE);
                     //hasLogin.setVisibility(View.GONE);
                 }
-                userIcon.setImageBitmap(BitmapFactory.decodeFile(usersIconPath));//默认头像的下载是在downloadService中实现,此时可能未下载完成,,所以先用glide吧
+                userIcon.setImageResource(R.drawable.defult_icon);
+                //userIcon.setImageBitmap(BitmapFactory.decodeFile(usersIconPath));//默认头像的下载是在downloadService中实现,此时可能未下载完成,,所以先用glide吧
                 //Glide.with(mContext).load(Can.userIconDefault).into(userIcon);
             }
             else //用户已登录执行的逻辑

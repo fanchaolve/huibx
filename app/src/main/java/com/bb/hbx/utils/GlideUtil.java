@@ -100,7 +100,7 @@ public class GlideUtil {
                           String imgUrl) {
             Glide.with(context)
                     .load(imgUrl)
-                    .error(R.mipmap.ic_launcher)
+                    .error(R.drawable.defult_icon)
                     .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //缓存策略
                     .into(imageView);

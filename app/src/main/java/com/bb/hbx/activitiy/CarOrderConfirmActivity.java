@@ -45,8 +45,22 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     TextView tv_cardNo;
     @BindView(R.id.tv_carMobile)
     TextView tv_carMobile;
+    @BindView(R.id.tv_cpxq)
+    TextView tv_cpxq;
+    @BindView(R.id.tv_tbcs)
+    TextView tv_tbcs;
     @BindView(R.id.tv_buy)
     TextView tv_buy;
+    @BindView(R.id.tv_price)
+    TextView tv_price;
+
+    String city;
+    String licenseNo;
+    String insureName;
+    String driveName="";
+    String idNo="";
+    String mobile="";
+    String carPrice="";
 
     @Override
     public int getLayoutId() {
@@ -75,6 +89,20 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     public void initdata() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        city = bundle.getString("city");
+        licenseNo = bundle.getString("licenseNo");
+        insureName = bundle.getString("insureName");
+        driveName = bundle.getString("driveName");
+        idNo = bundle.getString("idNo");
+        mobile = bundle.getString("mobile");
+        carPrice = bundle.getString("carPrice");
+        cardLicense_tv.setText(licenseNo);
+        tv_carHolder.setText(driveName);
+        tv_cardNo.setText(idNo);
+        tv_carMobile.setText(mobile);
+        tv_cpxq.setText(insureName);
+        tv_tbcs.setText(city);
+        tv_price.setText("¥"+carPrice);
         GetCarInsCalcBean getCarInsCalcBean = bundle.getParcelable("GetCarInsCalcBean");//其中的benefitList需要单独传,,为null
         ArrayList<GetCarInsCalcBean.BenefitListBean> benefitList = bundle.getParcelableArrayList("benefitList");
         for (int i = 0; i < benefitList.size(); i++) {
@@ -128,6 +156,33 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
         beanSYXTitle.setItemBuJiMiam("不计免赔");
         itemsSYX.add(beanSYXTitle);
 
+        for (int i = 0; i < benefitList.size(); i++) {
+            if ("商业险".equals(benefitList.get(i).getType()))
+            {
+                CarOrderConfirmTableSYXBean beanSYXItem = new CarOrderConfirmTableSYXBean();
+                beanSYXItem.setItemBaoF("--");
+                beanSYXItem.setItemName(benefitList.get(i).getItemName());
+                if ("1".equals(benefitList.get(i).getChooseAmount())||"0".equals(benefitList.get(i).getChooseAmount()))
+                {
+                    beanSYXItem.setItemBaoE(benefitList.get(i).getChooseAmountName());
+                }
+                else
+                {
+                    beanSYXItem.setItemBaoE(benefitList.get(i).getChooseAmount());
+                }
+                if ("1".equals(benefitList.get(i).getFranchiseFlag()))
+                {
+                    beanSYXItem.setItemBuJiMiam("是");
+                }
+                else
+                {
+                    beanSYXItem.setItemBuJiMiam("否");
+                }
+                itemsSYX.add(beanSYXItem);
+            }
+
+        }
+        adapterSYX.setItems(itemsSYX);
     }
 
     @Override

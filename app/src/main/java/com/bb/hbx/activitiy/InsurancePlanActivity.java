@@ -58,6 +58,12 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
     int prePosition=0;//2---------------
 
     String serialId="";
+    String city;
+    String licenseNo;
+    String insureName;
+    String driveName="";
+    String idNo="";
+    String mobile="";
     String carExtras="";
     String carPrice="";
     String modelCode="";
@@ -77,6 +83,13 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         serialId = bundle.getString("serialId");
+        city = bundle.getString("city");
+        licenseNo = bundle.getString("licenseNo");
+        insureName = bundle.getString("insureName");
+        driveName = bundle.getString("driveName");
+        idNo = bundle.getString("idNo");
+        mobile = bundle.getString("mobile");
+
         carExtras = bundle.getString("carExtras");
         carPrice = bundle.getString("carPrice");
         modelCode = bundle.getString("modelCode");
@@ -233,6 +246,13 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                     showTip("正在准备套餐信息");
                     return;
                 }
+                bundle.putString("licenseNo",licenseNo);
+                bundle.putString("driveName",driveName);
+                bundle.putString("idNo",idNo);
+                bundle.putString("mobile",mobile);
+                bundle.putString("insureName",insureName);
+                bundle.putString("city",city);
+                bundle.putString("carPrice",carPrice);
                 AppManager.getInstance().showActivity(CarOrderConfirmActivity.class, bundle);
                 break;
             default:

@@ -81,7 +81,12 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
     EditText transferDate_et;
 
     String serialId;
+    String city;
     String licenseNo;
+    String insureName;
+    String driveName="";
+    String idNo="";
+    String mobile="";
     String registTime;
     String jqxTime;
     String syxTime;
@@ -126,7 +131,9 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         serialId = bundle.getString("serialId");
-
+        city = bundle.getString("city");
+        licenseNo = bundle.getString("licenseNo");
+        insureName = bundle.getString("insureName");
     }
 
     @Override
@@ -140,9 +147,9 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
                 String vinNo = vinNo_et.getText().toString().trim();
                 String engineNo = engineNo_et.getText().toString().trim();
                 String seats = seats_et.getText().toString().trim();
-                String driveName = driveName_et.getText().toString().trim();
-                String idNo = idNo_et.getText().toString().trim();
-                String mobile = mobile_et.getText().toString().trim();
+                driveName = driveName_et.getText().toString().trim();
+                idNo = idNo_et.getText().toString().trim();
+                mobile = mobile_et.getText().toString().trim();
                 if (TextUtils.isEmpty(modelType))
                 {
                     showTip("请填写品牌型号");
@@ -225,6 +232,12 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
                                 //bundle.putParcelable("carBean",bean);
                                 bundle.putString("serialId",serialId);
                                 bundle.putString("carExtras",bean.getExtraJson());
+                                bundle.putString("licenseNo",licenseNo);
+                                bundle.putString("driveName",driveName);
+                                bundle.putString("idNo",idNo);
+                                bundle.putString("mobile",mobile);
+                                bundle.putString("insureName",insureName);
+                                bundle.putString("city",city);
                                 AppManager.getInstance().showActivity(SelectCarActivity.class, bundle);
                             }
                         }

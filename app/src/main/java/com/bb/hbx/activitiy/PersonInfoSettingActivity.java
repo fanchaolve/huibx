@@ -125,7 +125,14 @@ public class PersonInfoSettingActivity extends BaseActivity implements View.OnCl
             //userIcon_civ.setImageBitmap(BitmapFactory.decodeFile(Can.userIcon));---------------
             //Glide.with(this).load(Can.userIcon).placeholder(R.mipmap.ic_launcher).into(userIcon_civ);
             //ImageCatchUtil.getInstance().clearImageAllCache();
-            GlideUtil.getInstance().loadImageWithNoCache(this, userIcon_civ, Can.userIcon);
+            if (TextUtils.isEmpty(Can.userIcon))
+            {
+                userIcon_civ.setImageResource(R.drawable.defult_icon);
+            }
+            else
+            {
+                GlideUtil.getInstance().loadImageWithNoCache(this, userIcon_civ, Can.userIcon);
+            }
         }
 //        /*if (ShareSPUtils.sp.getBoolean("isChangeUserIcon",false))
 //        {
