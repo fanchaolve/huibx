@@ -150,6 +150,7 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.search_iv:
                 showTip("搜索");
+
                 break;
             case R.id.customers_tv:
                 //showTip("客户管理");
