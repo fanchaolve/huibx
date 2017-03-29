@@ -124,7 +124,7 @@ public class UnderSendInCarInsuFragment extends BaseFragment{
                         {
                             totalList.clear();
                         }
-                        Toast.makeText(mContext,"size:"+totalList.size(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext,"size:"+totalList.size(),Toast.LENGTH_SHORT).show();
                         totalList.addAll(bean.getPolicyList());
                         adapter.notifyDataSetChanged();
                     }

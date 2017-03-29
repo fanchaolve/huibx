@@ -123,6 +123,9 @@ public class HasUsedInPreInsuFragment extends BaseFragment {
                         adapter.notifyDataSetChanged();
                     }
                 }
+                if (scrollView.isRefreshing()) {
+                    scrollView.onRefreshComplete();
+                }
             }
 
             @Override

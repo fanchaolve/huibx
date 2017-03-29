@@ -66,9 +66,9 @@ public class MyAllInPIOAdapter extends RecyclerView.Adapter<MyAllInPIOAdapter.My
         }
         //classType = list.get(position).getClassType();
         String tradeDate = list.get(position).getTradeDate();
-        long logTime = TimeUtils.getStringToDateNoSpace(tradeDate);
-        String time = TimeUtils.getDateToString(logTime);
-        holder.time_tv.setText(time);
+//        long logTime = TimeUtils.getStringToDateNoSpace(tradeDate);
+//        String time = TimeUtils.getDateToString(logTime);
+        holder.time_tv.setText(tradeDate);
         holder.title_tv.setText(list.get(position).getProductName());
         holder.orderNumber_tv.setText("订单号: "+list.get(position).getTradeId());
         if (list.get(position).getInsuredList()!=null&&list.get(position).getInsuredList().size()>0)
@@ -78,11 +78,11 @@ public class MyAllInPIOAdapter extends RecyclerView.Adapter<MyAllInPIOAdapter.My
         holder.holder_tv.setText("投保人: "+list.get(position).getApplicant());
         String startTime = list.get(position).getStartTime();
         String endTime = list.get(position).getEndTime();
-        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
-        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
-        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
-        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
-        holder.timeLimit_tv.setText("保险期间: "+startTimeBuff+"至"+endTimeBuff);
+//        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
+//        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
+//        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
+//        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
+        holder.timeLimit_tv.setText("保险期间: "+startTime+"至"+endTime);
         int payAmount = list.get(position).getPayAmount();
         holder.price_tv.setText((payAmount/100)+"."+(payAmount/10%10)+(payAmount%10));
         /*int commisionValue1 = list.get(position).getCommisionValue1();

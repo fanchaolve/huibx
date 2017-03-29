@@ -1,6 +1,7 @@
 package com.bb.hbx.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,15 @@ public class InviteFriendsListviewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.serialNumber.setText("#" + (position + 4));
-        GlideUtil glideUtil = GlideUtil.getInstance();
-        glideUtil.loadImage(MyApplication.getAppContext(),holder.item_civ_icon,dataList.get(position).getUserLogo(),true);
+        String iconPath = "";
+        iconPath = dataList.get(position).getUserLogo();
+        if (TextUtils.isEmpty(iconPath)) {
+            holder.item_civ_icon.setImageResource(R.drawable.defult_icon);
+        } else {
+            GlideUtil glideUtil = GlideUtil.getInstance();
+            glideUtil.loadImage(MyApplication.getAppContext(),holder.item_civ_icon,iconPath,true);
+        }
+
 //        holder.item_civ_icon.setImageResource(R.drawable.defult6);
         holder.item_tv_name.setText(dataList.get(position).getUserNickname());
         holder.item_tv_money.setText(dataList.get(position).getAcctSum() + "");

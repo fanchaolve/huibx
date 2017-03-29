@@ -52,6 +52,7 @@ import retrofit2.Response;
 
 /**
  * Created by Administrator on 2016/12/20.
+ * 个人中心页面
  */
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -434,12 +435,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 hasLogin_tv.setLayoutParams(params);
                 identify_layout.addView(hasLogin_tv);
                 isOnce = false;
-                hasLogin_tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(mContext, "点了我", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                hasLogin_tv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(mContext, "点了我", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
             }
             if (!TextUtils.isEmpty(userName)) {
                 hasLogin_tv.setText(userName);
@@ -481,7 +482,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         cCount_tv.setText(carPolicyCount + "份保单");
                         canCash_tv.setText((acctBalance / 100) + "." + (acctBalance / 10 % 10) + (acctBalance % 10));
                         leftMoney_tv.setText((acctSum / 100) + "." + (acctSum / 10 % 10) + (acctSum % 10));
-                        score_tv.setText((score / 100) + "." + (score / 10 % 10) + (score % 10));
+//                        score_tv.setText((score / 100) + "." + (score / 10 % 10) + (score % 10));
+                        score_tv.setText(score + "");
                         redPacket_tv.setText(couponCount + "");
                         identify_tv.setText(0 == realNameStatus ? "未认证" : "已认证");
                         String userLogo = bean.getUserLogo();

@@ -1,6 +1,7 @@
 package com.bb.hbx.activitiy;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.bean.MessageCodeBean;
 import com.bb.hbx.interfaces.LoginTextWatcher;
+import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.widget.CountDownTextView;
 import com.bb.hbx.widget.LoginPswEdit;
 
@@ -117,6 +119,7 @@ public class FixPwdActivity extends BaseActivity implements View.OnClickListener
                                     if (body.isSuccess())
                                     {
                                         finish();
+                                        AppManager.getInstance().finishParticularActivity(CountSecurityActivity.class);
                                     }
                                 }
                             }

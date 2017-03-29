@@ -89,19 +89,19 @@ public class MyAllInCarInsuAdapter extends RecyclerView.Adapter<MyAllInCarInsuAd
         else
         {
             holder.holder_tv.setVisibility(View.VISIBLE);
-            logJqxStartTime = TimeUtils.getStringToDateNoSpace(jqxStartTime);
-            jqxStartTimeBuff = TimeUtils.getDateNoHourToString(logJqxStartTime);
-            logJqxEndTime = TimeUtils.getStringToDateNoSpace(jqxEndTime);
-            jqxEndTimeBuff = TimeUtils.getDateNoHourToString(logJqxEndTime);
-            holder.holder_tv.setText("交强险起期: "+jqxStartTimeBuff+"至"+jqxEndTimeBuff);
+//            logJqxStartTime = TimeUtils.getStringToDateNoSpace(jqxStartTime);
+//            jqxStartTimeBuff = TimeUtils.getDateNoHourToString(logJqxStartTime);
+//            logJqxEndTime = TimeUtils.getStringToDateNoSpace(jqxEndTime);
+//            jqxEndTimeBuff = TimeUtils.getDateNoHourToString(logJqxEndTime);
+            holder.holder_tv.setText("交强险起期: "+jqxStartTime+"至"+jqxEndTime);
         }
         String startTime = list.get(position).getStartTime();
         String endTime = list.get(position).getEndTime();
-        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
-        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
-        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
-        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
-        holder.timeLimit_tv.setText("商业险起期: "+startTimeBuff+"至"+endTimeBuff);
+//        long logStartTime = TimeUtils.getStringToDateNoSpace(startTime);
+//        String startTimeBuff = TimeUtils.getDateNoHourToString(logStartTime);
+//        long logEndTime = TimeUtils.getStringToDateNoSpace(endTime);
+//        String endTimeBuff = TimeUtils.getDateNoHourToString(logEndTime);
+        holder.timeLimit_tv.setText("商业险起期: "+startTime+"至"+endTime);
         int payAmount = list.get(position).getPayAmount();
         holder.price_tv.setText((payAmount/100)+"."+(payAmount/10%10)+(payAmount%10));
         /*int commisionValue1 = list.get(position).getCommisionValue1();

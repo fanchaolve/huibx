@@ -23,6 +23,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 设置页面
+ */
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
@@ -102,11 +105,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 showTip("关于汇保险");
                 break;
             case R.id.exits_layout:
-//                if (TextUtils.isEmpty(MyApplication.user.getUserId())) {
-//                    Toast.makeText(mContext, "您还未登录！", Toast.LENGTH_SHORT).show();
-//
-//                    return;
-//                }
+                if (TextUtils.isEmpty(MyApplication.user.getUserId())) {
+                    Toast.makeText(mContext, "您还未登录！", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
                 //showTip("退出登录");
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("确认退出登录?");

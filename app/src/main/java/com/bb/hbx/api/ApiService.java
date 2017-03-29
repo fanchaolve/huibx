@@ -524,7 +524,13 @@ public interface ApiService {
     @POST("api.do?method=getPaySign&type=post")
     Call<Result_Api<PayOrder>> getPaymentInfo(@Body PayDetail detail);
 
-    //修改手机号
+    //修改手机号（提交第二个手机验证码）
+    @FormUrlEncoded
+    @POST("api.do?method=verifyMobile&type=post")
+    Call<Result_Api> verifyMobile(@Field("userId") String userId,
+                                  @Field("smsCode") String smsCode);
+
+    //修改手机号（提交第二个手机验证码）
     @FormUrlEncoded
     @POST("api.do?method=updateMobile&type=post")
     Call<Result_Api> updateMobile(@Field("userId") String userId,

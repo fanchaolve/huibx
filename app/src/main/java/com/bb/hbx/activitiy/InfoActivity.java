@@ -25,6 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Call;
 
+/**
+ * 消息页面
+ */
 public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
@@ -54,37 +57,29 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
-        myInfoCount_tv= (TextView) findViewById(R.id.myInfoCount_tv);
-        systemInfoCount_tv= (TextView) findViewById(R.id.systemInfoCount_tv);
+        myInfoCount_tv = (TextView) findViewById(R.id.myInfoCount_tv);
+        systemInfoCount_tv = (TextView) findViewById(R.id.systemInfoCount_tv);
         fragmentManager = getSupportFragmentManager();
-        myInfoFragment=new MyInfoFragment();
-        systemInfoFragment=new SystemInfoFragment();
+        myInfoFragment = new MyInfoFragment();
+        systemInfoFragment = new SystemInfoFragment();
 
     }
 
-    public static void resetLabMine(int count)
-    {
-        if (count==0)
-        {
+    public static void resetLabMine(int count) {
+        if (count == 0) {
             myInfoCount_tv.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             myInfoCount_tv.setVisibility(View.VISIBLE);
-            myInfoCount_tv.setText(count+"");
+            myInfoCount_tv.setText(count + "");
         }
     }
 
-    public static void resetLabSystem(int count)
-    {
-        if (count==0)
-        {
+    public static void resetLabSystem(int count) {
+        if (count == 0) {
             systemInfoCount_tv.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             systemInfoCount_tv.setVisibility(View.VISIBLE);
-            systemInfoCount_tv.setText(count+"");
+            systemInfoCount_tv.setText(count + "");
         }
     }
 
@@ -98,13 +93,12 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initdata() {
-        fragmentManager.beginTransaction().add(R.id.content_layout,myInfoFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.content_layout, myInfoFragment).commit();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
@@ -155,13 +149,10 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 myInfo_tv.setBackgroundResource(R.drawable.shape_select_left_custom);
                 systemInfo_tv.setTextColor(getResources().getColor(R.color.A1));
                 systemInfo_tv.setBackgroundResource(R.drawable.shape_unselect_right_custom);
-                if (myInfoFragment.isAdded())
-                {
+                if (myInfoFragment.isAdded()) {
                     fragmentManager.beginTransaction().hide(systemInfoFragment).show(myInfoFragment).commit();
-                }
-                else
-                {
-                    fragmentManager.beginTransaction().add(R.id.content_layout,myInfoFragment).commit();
+                } else {
+                    fragmentManager.beginTransaction().add(R.id.content_layout, myInfoFragment).commit();
                 }
                 break;
             case R.id.systemInfo_tv:
@@ -171,13 +162,10 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 systemInfo_tv.setBackgroundResource(R.drawable.shape_select_right_custom);
                 myInfo_tv.setTextColor(getResources().getColor(R.color.A1));
                 myInfo_tv.setBackgroundResource(R.drawable.shape_unselect_left_custom);
-                if (systemInfoFragment.isAdded())
-                {
+                if (systemInfoFragment.isAdded()) {
                     fragmentManager.beginTransaction().hide(myInfoFragment).show(systemInfoFragment).commit();
-                }
-                else
-                {
-                    fragmentManager.beginTransaction().add(R.id.content_layout,systemInfoFragment).commit();
+                } else {
+                    fragmentManager.beginTransaction().add(R.id.content_layout, systemInfoFragment).commit();
                 }
                 break;
             default:
@@ -207,7 +195,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     *将个人消息全部标记为已读
+     * 将个人消息全部标记为已读
      */
     private void readAllPerSonInfos() {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
@@ -238,7 +226,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         for (int i = 0; i < delList.size(); i++) {
             msg = delList.get(i);
             if (RealmUtilsForMessage.queryMessageById(msg.getMsgId()) != null) {        //已读消息
-                RealmUtilsForMessage.update(msg.getMsgId(),true);
+                RealmUtilsForMessage.update(msg.getMsgId(), true);
             } else {                                                                    //未读消息
                 msg.setDelete(true);
                 RealmUtilsForMessage.add(msg);

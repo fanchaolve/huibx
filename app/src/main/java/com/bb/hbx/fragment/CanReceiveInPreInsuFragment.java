@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -123,6 +124,7 @@ public class CanReceiveInPreInsuFragment extends BaseFragment {
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {
+//                Log.d("ttttt","-------come-------");
                 if (api.getOutput() != null && api.getOutput() instanceof PresentInsuBean) {
                     PresentInsuBean presentInsuBean = (PresentInsuBean) api.getOutput();
                     List<PresentInsuBean.PresentProductsRspBean> out_list = presentInsuBean.getPresentProductsRsp();

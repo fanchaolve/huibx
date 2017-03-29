@@ -1,6 +1,7 @@
 package com.bb.hbx.activitiy;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,10 +32,13 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 
+import static com.bb.hbx.R.id.back_layout;
+
 public class RecommendRewardActivity extends BaseActivity implements View.OnClickListener {
 
     private InviteFriendsListviewAdapter mAdapter;
     private List<UserAccountDetailRecordBean> listViewList = new ArrayList<UserAccountDetailRecordBean>();
+    private String userLogo = "";
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -172,53 +176,98 @@ public class RecommendRewardActivity extends BaseActivity implements View.OnClic
         switch(list.size()) {
             case 1:
                 if (list.get(0) != null) {
-                    glideUtil.loadImage(mContext, civ_person1, list.get(0).getUserLogo(), true);
+                    userLogo = list.get(0).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person1, userLogo, true);
+                    }
                     tv_name_01.setText(list.get(0).getUserNickname());
                     tv_money01.setText(list.get(0).getAcctSum() + "");
                 }
                 break;
             case 2:
                 if (list.get(0) != null) {
-                    glideUtil.loadImage(mContext, civ_person1, list.get(0).getUserLogo(), true);
+                    userLogo = list.get(0).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person1, userLogo, true);
+                    }
                     tv_name_01.setText(list.get(0).getUserNickname());
                     tv_money01.setText(list.get(0).getAcctSum() + "");
                 }
                 if (list.get(1) != null) {
-                    glideUtil.loadImage(mContext, civ_person2, list.get(1).getUserLogo(), true);
+                    userLogo = list.get(1).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person2, userLogo, true);
+                    }
                     tv_name_02.setText(list.get(1).getUserNickname());
                     tv_money02.setText(list.get(1).getAcctSum() + "");
                 }
                 break;
             default:
                 if (list.get(0) != null) {
-                    glideUtil.loadImage(mContext, civ_person1, list.get(0).getUserLogo(), true);
+                    userLogo = list.get(0).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person1, userLogo, true);
+                    }
                     tv_name_01.setText(list.get(0).getUserNickname());
                     tv_money01.setText(list.get(0).getAcctSum() + "");
                 }
                 if (list.get(1) != null) {
-                    glideUtil.loadImage(mContext, civ_person2, list.get(1).getUserLogo(), true);
+                    userLogo = list.get(1).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person2, userLogo, true);
+                    }
                     tv_name_02.setText(list.get(1).getUserNickname());
                     tv_money02.setText(list.get(1).getAcctSum() + "");
                 }
                 if (list.get(2) != null) {
-                    glideUtil.loadImage(mContext, civ_person3, list.get(2).getUserLogo(), true);
+                    userLogo = list.get(2).getUserLogo();
+                    if (TextUtils.isEmpty(userLogo)) {
+                        civ_person1.setImageResource(R.drawable.defult_icon);
+                    } else {
+                        glideUtil.loadImage(mContext, civ_person3, userLogo, true);
+                    }
                     tv_name_03.setText(list.get(2).getUserNickname());
                     tv_money03.setText(list.get(2).getAcctSum() + "");
                 }
                 break;
         }
         if (list.get(0) != null) {
-            glideUtil.loadImage(mContext, civ_person1, list.get(0).getUserLogo(), true);
+            userLogo = list.get(0).getUserLogo();
+            if (TextUtils.isEmpty(userLogo)) {
+                civ_person1.setImageResource(R.drawable.defult_icon);
+            } else {
+                glideUtil.loadImage(mContext, civ_person1, userLogo, true);
+            }
             tv_name_01.setText(list.get(0).getUserNickname());
             tv_money01.setText(list.get(0).getAcctSum() + "");
         }
         if (list.get(1) != null) {
-            glideUtil.loadImage(mContext, civ_person2, list.get(1).getUserLogo(), true);
+            userLogo = list.get(1).getUserLogo();
+            if (TextUtils.isEmpty(userLogo)) {
+                civ_person1.setImageResource(R.drawable.defult_icon);
+            } else {
+                glideUtil.loadImage(mContext, civ_person2, userLogo, true);
+            }
             tv_name_02.setText(list.get(1).getUserNickname());
             tv_money02.setText(list.get(1).getAcctSum() + "");
         }
         if (list.get(2) != null) {
-            glideUtil.loadImage(mContext, civ_person3, list.get(2).getUserLogo(), true);
+            userLogo = list.get(2).getUserLogo();
+            if (TextUtils.isEmpty(userLogo)) {
+                civ_person1.setImageResource(R.drawable.defult_icon);
+            } else {
+                glideUtil.loadImage(mContext, civ_person3, userLogo, true);
+            }
             tv_name_03.setText(list.get(2).getUserNickname());
             tv_money03.setText(list.get(2).getAcctSum() + "");
         }

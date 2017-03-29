@@ -83,30 +83,52 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.verify_tv:
                 //showTip("确定");
-                String verifyCode = code_et.getText().toString().trim();
-                String oldSmsCode;
-                if (codeBean != null) {
-                    oldSmsCode = codeBean.getSmsCode();
-                    if (verifyCode != null && verifyCode.equals(oldSmsCode)) {
-                        intent.putExtra("oldSmsCode", oldSmsCode);
-                        intent.setClass(MyApplication.getAppContext(), BindPhoneActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "验证码错误！", Toast.LENGTH_SHORT).show();
+//                String verifyCode = code_et.getText().toString().trim();
+//                String oldSmsCode;
+//                if (codeBean != null) {
+//                    oldSmsCode = codeBean.getSmsCode();
+//                    if (verifyCode != null && verifyCode.equals(oldSmsCode)) {
+//                        intent.putExtra("oldSmsCode", oldSmsCode);
+//                        intent.setClass(MyApplication.getAppContext(), BindPhoneActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "验证码错误！", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+                String smsCode = "";
+                smsCode = code_et.getText().toString().trim();
+                ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
+                Call call = service.verifyMobile(MyApplication.user.getUserId(), smsCode);
+                call.enqueue(new PostCallback() {
+                    @Override
+                    public void successCallback(Result_Api api) {
+                        if (api != null) {
+                            if (api.isSuccess()) {
+                                startActivity(new Intent(mContext,BindPhoneActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(mContext,"验证码错误！",Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
-                }
+
+                    @Override
+                    public void failCallback() {
+                        Toast.makeText(mContext,"网络加载失败，请稍后再试！",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case R.id.info_tv:
                 //showTip("提示");
                 intent.setClass(this, CheckIdentifyUnderPwdActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
         }
     }
-
 
     /**
      * 获取短信验证码 老手机号，验证类型 13
@@ -118,9 +140,9 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
         call.enqueue(new PostCallback() {
             @Override
             public void successCallback(Result_Api api) {
-                if (api.getOutput() instanceof MessageCodeBean) {
-                    codeBean = (MessageCodeBean) api.getOutput();
-                }
+//                if (api.getOutput() instanceof MessageCodeBean) {
+//                    codeBean = (MessageCodeBean) api.getOutput();
+//                }
             }
 
             @Override

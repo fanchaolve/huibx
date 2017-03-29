@@ -124,7 +124,7 @@ public class HadSentInCarInsuFragment extends BaseFragment{
                         {
                             totalList.clear();
                         }
-                        Toast.makeText(mContext,"size:"+totalList.size(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext,"size:"+totalList.size(),Toast.LENGTH_SHORT).show();
                         totalList.addAll(bean.getPolicyList());
                         adapter.notifyDataSetChanged();
                     }
@@ -137,7 +137,7 @@ public class HadSentInCarInsuFragment extends BaseFragment{
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(mContext,"走了这shibai",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"网络异常！",Toast.LENGTH_SHORT).show();
             }
         });
     }

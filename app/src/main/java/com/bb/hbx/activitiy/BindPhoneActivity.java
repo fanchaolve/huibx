@@ -104,13 +104,13 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
     }
 
     /**
-     * 提交并验证新老验证码
+     * 提交并验证新验证码
      */
     public void pushAndCheckVerify() {
         String newSmsCode = code_et.getText().toString().trim();
         if (newPhoneNum != null && newSmsCode != null) {
             ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-            Call call = service.updateMobile(MyApplication.user.getUserId(), oldSmsCode, pwd, newPhoneNum, newSmsCode);
+            Call call = service.updateMobile(MyApplication.user.getUserId(), null, pwd, newPhoneNum, newSmsCode);
             call.enqueue(new PostCallback() {
                 @Override
                 public void successCallback(Result_Api api) {
@@ -119,6 +119,7 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
                         db.execSQL("update userstb set phone=? where currentUser=currentUser ",
                                 new String[]{newPhoneNum});
                         db.close();
+                        MyApplication.user.setMobile(newPhoneNum);
                         Toast.makeText(getApplicationContext(),"绑定新手机成功！",Toast.LENGTH_SHORT).show();
                         finish();
                         AppManager.getInstance().finishParticularActivity(CountSecurityActivity.class);

@@ -77,14 +77,15 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
         int accountScoreInt = intent.getIntExtra("accountScoreInt", 0);
         score_tv.setText((accountScoreInt/100)+"."+(accountScoreInt/10%10)+(accountScoreInt%10));*/
         isSignedByScore();
-        isSign = ShareSPUtils.readIsSign();
-        if (isSign) {
-            state_tv.setText("签 到");
-            state_tv.setClickable(true);
-        } else {
-            state_tv.setText("今日已签到");
-            state_tv.setClickable(false);
-        }
+//        isSign = ShareSPUtils.readIsSign();
+//        if (isSign) {
+//            state_tv.setText("签 到");
+//            state_tv.setClickable(true);
+//        } else {
+//            state_tv.setText("签到成功");
+//            state_tv.getBackground().setAlpha(125);
+//            state_tv.setClickable(false);
+//        }
     }
 
     @Override
@@ -176,12 +177,14 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                         }
                         if (result_api.isSuccess()) {
                             showTip("恭喜你，签到成功！");
-                            state_tv.setText("今日已签到");
+                            state_tv.setText("签到成功");
+                            state_tv.getBackground().setAlpha(125);
                             state_tv.setClickable(false);
-                            ShareSPUtils.writeIsSignToSp(false);
-                            showScoreDetail(pageIndex);
+//                            ShareSPUtils.writeIsSignToSp(false);
+//                            showScoreDetail(pageIndex);
                         } else {
-                            state_tv.setText("今日已签到");
+                            state_tv.setText("签到成功");
+                            state_tv.getBackground().setAlpha(125);
                             state_tv.setClickable(false);
                         }
                     }
@@ -201,7 +204,7 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
      * 判断当前是否可以积分签到
      */
     private void isSignedByScore() {
-//        Log.d("tttttt","------------------------" + "laile");
+        Log.d("tttttt","------------------------" + "laile");
         ApiService apiService = RetrofitFactory.getINSTANCE().create(ApiService.class);
         Call call = apiService.checkInFlag(MyApplication.user.getUserId(), "10");
         call.enqueue(new Callback() {
@@ -217,7 +220,8 @@ public class ScoreActivity extends BaseActivity implements View.OnClickListener 
                         state_tv.setText("签 到");
                         state_tv.setClickable(true);
                     } else {
-                        state_tv.setText("今日已签到");
+                        state_tv.setText("签到成功");
+                        state_tv.getBackground().setAlpha(125);
                         state_tv.setClickable(false);
                     }
                 }
