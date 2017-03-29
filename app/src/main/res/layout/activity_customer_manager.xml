@@ -11,102 +11,111 @@
         android:id="@+id/topbar_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:background="@color/white"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:background="@color/white">
+        android:paddingTop="10dp">
+
         <RelativeLayout
             android:id="@+id/back_layout"
             android:layout_width="40dp"
             android:layout_height="match_parent">
+
             <ImageView
+                android:id="@+id/back_iv"
                 android:layout_width="10dp"
                 android:layout_height="17dp"
-                android:id="@+id/back_iv"
-                android:src="@drawable/fanhui"
-                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="18dp"
-                android:layout_centerVertical="true"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/fanhui" />
         </RelativeLayout>
-
+        <!--android:background="@drawable/shape_select_left_custom"-->
         <RelativeLayout
             android:id="@+id/complex_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:visibility="gone">
+
             <TextView
                 android:id="@+id/customers_tv"
                 android:layout_width="74dp"
                 android:layout_height="27dp"
-                android:text="客户管理"
-                android:textSize="17sp"
-                android:textColor="@color/white"
+
                 android:gravity="center"
-                android:background="@drawable/shape_select_left_custom"/>
+                android:text="客户管理"
+                android:textColor="@color/A1"
+                android:textSize="17sp" />
+
             <TextView
                 android:id="@+id/reminding_tv"
                 android:layout_width="74dp"
                 android:layout_height="27dp"
-                android:text="事件提醒"
-                android:textSize="17sp"
-                android:textColor="@color/A1"
-                android:gravity="center"
                 android:layout_toRightOf="@id/customers_tv"
-                android:background="@drawable/shape_unselect_right_custom"/>
+                android:background="@drawable/shape_unselect_right_custom"
+                android:gravity="center"
+                android:text="事件提醒"
+                android:textColor="@color/A1"
+                android:textSize="17sp" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/singleTitle_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="客户管理"
-            android:textSize="17sp"
-            android:textColor="@color/A1"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_centerHorizontal="true"/>
+            android:text="客户管理"
+            android:textColor="@color/A1"
+            android:textSize="17sp" />
+
         <ImageView
             android:id="@+id/search_iv"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/sousuo_shancgheng"
-            android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
-            android:visibility="gone"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/sousuo_shancgheng"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_below="@id/topbar_layout"></RelativeLayout>
+        android:layout_below="@id/topbar_layout"
+        android:background="@color/white"></RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/null_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/kehuguanli"
         android:layout_below="@id/topbar_layout"
+        android:background="@drawable/kehuguanli"
         android:paddingLeft="35dp"
         android:paddingRight="35dp">
+
         <TextView
             android:id="@+id/nullFromContact_tv"
             android:layout_width="140dp"
             android:layout_height="44dp"
+            android:layout_marginTop="380dp"
+            android:gravity="center"
             android:text="通讯录录入"
             android:textColor="@color/A1"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:layout_marginTop="380dp"/>
+            android:textSize="17sp" />
+
         <TextView
             android:id="@+id/nullFromManual_tv"
             android:layout_width="140dp"
             android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="380dp"
+            android:gravity="center"
             android:text="手动添加"
             android:textColor="@color/A1"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:layout_marginTop="380dp"
-            android:layout_alignParentRight="true"/>
+            android:textSize="17sp" />
     </RelativeLayout>
 </RelativeLayout>

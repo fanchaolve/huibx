@@ -110,7 +110,7 @@ public class BindPhoneActivity extends BaseActivity implements View.OnClickListe
         String newSmsCode = code_et.getText().toString().trim();
         if (newPhoneNum != null && newSmsCode != null) {
             ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-            Call call = service.updateMobile(MyApplication.user.getUserId(), null, pwd, newPhoneNum, newSmsCode);
+            Call call = service.updateMobile(MyApplication.user.getUserId(), newPhoneNum, newSmsCode);
             call.enqueue(new PostCallback() {
                 @Override
                 public void successCallback(Result_Api api) {

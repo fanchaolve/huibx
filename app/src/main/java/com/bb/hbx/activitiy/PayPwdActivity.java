@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
+import com.bb.hbx.cans.Can;
 
 import butterknife.BindView;
 

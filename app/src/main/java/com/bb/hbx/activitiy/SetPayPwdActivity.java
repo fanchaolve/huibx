@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
@@ -51,7 +52,7 @@ public class SetPayPwdActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
-        String mobile = MyApplication.user.getMobile();
+        mobile = MyApplication.user.getMobile();
         phone_tv.setText(mobile);
     }
 
@@ -77,9 +78,13 @@ public class SetPayPwdActivity extends BaseActivity implements View.OnClickListe
             case R.id.getCode_tv:
                 //Toast.makeText(this,"获取验证码",Toast.LENGTH_SHORT).show();
                 getCode_tv.startTime();
-                /*String phone = phone_tv.getText().toString().trim();
-                if (!TextUtils.isEmpty(phone)&&phone.length()==11)
-                {*/
+//                String phone = phone_tv.getText().toString().trim();
+//                if (!TextUtils.isEmpty(phone)&&phone.length()==11)
+//                {
+                if (TextUtils.isEmpty(mobile)) {
+                    Toast.makeText(mContext,"输入的手机号码错误！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                     ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
                     Call call=service.getVerifyCode("1",mobile,"14");//14
                     call.enqueue(new Callback() {
@@ -135,8 +140,8 @@ public class SetPayPwdActivity extends BaseActivity implements View.OnClickListe
                                                     new String[]{"1"});
                                             db.close();
                                             MyApplication.user.setPaymentPwd("1");
-                                            Intent intent = new Intent(SetPayPwdActivity.this, WithdrawActivity.class);
-                                            startActivity(intent);
+//                                            Intent intent = new Intent(SetPayPwdActivity.this, WithdrawActivity.class);
+//                                            startActivity(intent);
                                             finish();
                                         }
                                         showTip(body.getRespMsg());

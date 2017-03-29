@@ -110,8 +110,10 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
                     {
                         complex_layout.setVisibility(View.VISIBLE);
                         search_iv.setVisibility(View.VISIBLE);
+                        customers_tv.setVisibility(View.VISIBLE);           //始终显示客户管理
                         singleTitle_tv.setVisibility(View.GONE);
                         null_layout.setVisibility(View.GONE);
+                        reminding_tv.setVisibility(View.GONE);              //隐藏事件提醒按钮
                         isEmpty=false;
                     }
                     else

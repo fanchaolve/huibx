@@ -249,11 +249,15 @@ public interface ApiService {
     @POST("api.do?method=modPayPwd&type=post")
     Call<Result_Api> modPayPwd(@Field("userId") String userId, @Field("oldPayPwd") String oldPayPwd, @Field("newPayPwd") String newPayPwd);
 
+    //忘记支付密码(验证验证码)
+//    @FormUrlEncoded
+//    @POST("api.do?method=verifyMobile&type=post")
+//    Call<Result_Api> verifyMobile(@Field("userId") String userId, @Field("payPwd") String payPwd, @Field("smsCode") String smsCode);
 
     //忘记支付密码
     @FormUrlEncoded
     @POST("api.do?method=forgetPayPwd&type=post")
-    Call<Result_Api> forgetPayPwd(@Field("userId") String userId, @Field("payPwd") String payPwd, @Field("smsCode") String smsCode);
+    Call<Result_Api> forgetPayPwd(@Field("userId") String userId, @Field("payPwd") String payPwd);
 
     //设置支付密码--已测
     @FormUrlEncoded
@@ -524,7 +528,7 @@ public interface ApiService {
     @POST("api.do?method=getPaySign&type=post")
     Call<Result_Api<PayOrder>> getPaymentInfo(@Body PayDetail detail);
 
-    //修改手机号（提交第二个手机验证码）
+    //修改手机号（提交第一个手机验证码）
     @FormUrlEncoded
     @POST("api.do?method=verifyMobile&type=post")
     Call<Result_Api> verifyMobile(@Field("userId") String userId,
@@ -534,8 +538,6 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api.do?method=updateMobile&type=post")
     Call<Result_Api> updateMobile(@Field("userId") String userId,
-                                  @Field("smsCode") String smsCode,
-                                  @Field("loginPwd") String loginPwd,
                                   @Field("mobile") String mobile,
                                   @Field("smsCodeNew") String smsCodeNew);
 

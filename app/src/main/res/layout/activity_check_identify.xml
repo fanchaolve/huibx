@@ -73,9 +73,10 @@
         <EditText
             android:id="@+id/pwd_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@null"
             android:hint="原支付密码"
+            android:inputType="numberPassword"
             android:textColorHint="@color/A5"
             android:textColor="@color/A3"
             android:textSize="14sp"

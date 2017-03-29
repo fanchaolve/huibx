@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FixPayPwdActivity extends BaseActivity implements View.OnClickListener{
+public class FixPayPwdActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.back_layout)
     RelativeLayout back_layout;
@@ -34,9 +34,9 @@ public class FixPayPwdActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.verify_tv)
     TextView verify_tv;
 
-    String oldPwd="";
+    String oldPwd = "";
     int flag;
-    String code="";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_fix_pay_pwd;
@@ -46,7 +46,6 @@ public class FixPayPwdActivity extends BaseActivity implements View.OnClickListe
     public void initView() {
         Intent intent = getIntent();
         oldPwd = intent.getStringExtra("oldPwd");
-        code = intent.getStringExtra("code");
         flag = intent.getIntExtra("flag", -1);
     }
 
@@ -63,30 +62,24 @@ public class FixPayPwdActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.back_layout:
                 finish();
                 break;
             case R.id.verify_tv:
                 String pwd = pwd_et.getText().toString().trim();
                 String checkPwd = checkPwd_et.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd))
-                {
-                    if (pwd.equals(checkPwd))
-                    {
-                        if (Can.FORGET_PWD==flag)
-                        {
+                if (!TextUtils.isEmpty(pwd)) {
+                    if (pwd.equals(checkPwd)) {
+                        if (Can.FORGET_PWD == flag) {
                             ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                            Call call=service.forgetPayPwd(MyApplication.user.getUserId(),pwd,code);
+                            Call call = service.forgetPayPwd(MyApplication.user.getUserId(), pwd);
                             call.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(Call call, Response response) {
                                     Result_Api body = (Result_Api) response.body();
-                                    if (body!=null)
-                                    {
-                                        if (body.isSuccess())
-                                        {
+                                    if (body != null) {
+                                        if (body.isSuccess()) {
                                             //更新表数据
                                             SQLiteDatabase db = DatabaseImpl.getInstance().getReadableDatabase();
                                             db.execSQL("update userstb set paymentPwd=? where currentUser=currentUser ",
@@ -105,19 +98,15 @@ public class FixPayPwdActivity extends BaseActivity implements View.OnClickListe
 
                                 }
                             });
-                        }
-                        else if (Can.FIX_PWD==flag)
-                        {
+                        } else if (Can.FIX_PWD == flag) {
                             ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-                            Call call=service.modPayPwd(MyApplication.user.getUserId(),oldPwd,pwd);
+                            Call call = service.modPayPwd(MyApplication.user.getUserId(), oldPwd, pwd);
                             call.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(Call call, Response response) {
                                     Result_Api body = (Result_Api) response.body();
-                                    if (body!=null)
-                                    {
-                                        if (body.isSuccess())
-                                        {
+                                    if (body != null) {
+                                        if (body.isSuccess()) {
                                             SQLiteDatabase db = DatabaseImpl.getInstance().getReadableDatabase();
                                             //更新表数据
                                             db.execSQL("update userstb set paymentPwd=? where currentUser=currentUser ",
@@ -137,14 +126,10 @@ public class FixPayPwdActivity extends BaseActivity implements View.OnClickListe
                                 }
                             });
                         }
-                    }
-                    else
-                    {
+                    } else {
                         showTip("密码不一致,请重新输入");
                     }
-                }
-                else
-                {
+                } else {
                     showTip("密码不能为空");
                 }
                 break;
