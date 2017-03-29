@@ -12,7 +12,6 @@ import com.bb.hbx.R;
 import com.bb.hbx.bean.GetPolicies;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.TimeUtils;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -87,7 +86,7 @@ public class MyAllInPIOAdapter extends RecyclerView.Adapter<MyAllInPIOAdapter.My
         holder.price_tv.setText((payAmount/100)+"."+(payAmount/10%10)+(payAmount%10));
         /*int commisionValue1 = list.get(position).getCommisionValue1();
         holder.income_tv.setText((commisionValue1/100)+"."+(commisionValue1/10%10)+(commisionValue1%10));*/
-        Glide.with(mContext).load(list.get(position).getInsurerLogo()).placeholder(R.drawable.shangcheng).into(holder.logo_iv);
+        //Glide.with(mContext).load(list.get(position).getInsurerLogo()).placeholder(R.drawable.shangcheng).into(holder.logo_iv);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

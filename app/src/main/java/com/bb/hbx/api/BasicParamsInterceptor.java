@@ -49,7 +49,14 @@ public class BasicParamsInterceptor implements Interceptor {
         requestBuilder.addHeader("deviceNo", MyApplication.DUID);
         requestBuilder.addHeader("deviceName", "10");
         requestBuilder.addHeader("domainId", "10");
-        requestBuilder.addHeader("sessionId", MyApplication.user.getSessionId());
+        if (MyApplication.user==null)
+        {
+            requestBuilder.addHeader("sessionId", "");
+        }
+        else
+        {
+            requestBuilder.addHeader("sessionId", MyApplication.user.getSessionId());
+        }
 
 
         JSONObject jsonObject = new JSONObject();

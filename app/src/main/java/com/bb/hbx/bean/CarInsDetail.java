@@ -12,7 +12,15 @@ public class CarInsDetail {
     private String modelCode;
     private String carPrice;
     private String carExtras;
-    private List<BenefitInCarIns> list;
+    private List<BenefitInCarIns> benefitList;
+
+    public CarInsDetail(String serialId, String modelCode, String carPrice, String carExtras, List<BenefitInCarIns> list) {
+        this.serialId = serialId;
+        this.modelCode = modelCode;
+        this.carPrice = carPrice;
+        this.carExtras = carExtras;
+        this.benefitList = list;
+    }
 
     public String getSerialId() {
         return serialId;
@@ -47,11 +55,11 @@ public class CarInsDetail {
     }
 
     public List<BenefitInCarIns> getList() {
-        return list;
+        return benefitList;
     }
 
     public void setList(List<BenefitInCarIns> list) {
-        this.list = list;
+        this.benefitList = list;
     }
 
     public static class BenefitInCarIns {
@@ -59,6 +67,12 @@ public class CarInsDetail {
         private String itemCode;
         private String franchiseFlag;
         private String chooseAmount;
+
+        public BenefitInCarIns(String itemCode, String franchiseFlag, String chooseAmount) {
+            this.itemCode = itemCode;
+            this.franchiseFlag = franchiseFlag;
+            this.chooseAmount = chooseAmount;
+        }
 
         public String getItemCode() {
             return itemCode;

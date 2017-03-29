@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -122,7 +123,16 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
         {
             case R.id.tv_confim:
                 Bundle bundle = new Bundle();
+                bundle.putString("serialId",serialId);
+                bundle.putString("carExtras",carExtras);
+                bundle.putString("carPrice",carPrice);
+                bundle.putString("modelCode",modelCode);
                 bundle.putInt("size",size);
+                if (TextUtils.isEmpty(carPrice)||TextUtils.isEmpty(modelCode))
+                {
+                    showTip("请选择车型");
+                    return;
+                }
                 for (int i = 0; i < size; i++) {
                     List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = bundleFromCarInfo.getParcelableArrayList("syxList" + i);
                     bundle.putParcelableArrayList("syxList"+i, (ArrayList<? extends Parcelable>) syxList);

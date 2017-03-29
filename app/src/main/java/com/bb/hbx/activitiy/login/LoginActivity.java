@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.PwdLoginActivity;
 import com.bb.hbx.activitiy.RegisteActivity;
@@ -315,47 +314,54 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                User user = (User) body.getOutput();
-                if (user!=null)
+                if (body.isSuccess())
                 {
-                    String userId = user.getUserId();
-                    String sessionId = user.getSessionId();
-                    String isBClient = user.getIsBClient()+"";
-                    String loginPwd = user.getLoginPwd();
-                    String paymentPwd = user.getPaymentPwd();
-                    String gender = user.getGender();
-                    String userName = user.getNickName();
-                    String email = user.getEmail();
-                    String logo = user.getLogo();
-                    String userQrcode = user.getUserQrcode();
-                    if (TextUtils.isEmpty(gender))
+                    User user = (User) body.getOutput();
+                    if (user!=null)
                     {
-                        gender="0";
+                        String userId = user.getUserId();
+                        String sessionId = user.getSessionId();
+                        String isBClient = user.getIsBClient()+"";
+                        String loginPwd = user.getLoginPwd();
+                        String paymentPwd = user.getPaymentPwd();
+                        String gender = user.getGender();
+                        String userName = user.getNickName();
+                        String email = user.getEmail();
+                        String logo = user.getLogo();
+                        String userQrcode = user.getUserQrcode();
+                        if (TextUtils.isEmpty(gender))
+                        {
+                            gender="0";
+                        }
+                        if (TextUtils.isEmpty(userName))
+                        {
+                            userName=phone;
+                        }
+                        ShareSPUtils.writeShareSp(true,userId,sessionId,"默认用户名",phone, null);
+                        //更新表数据
+                        //MyUsersSqlite.db
+                        SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
+                        db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
+                                new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,loginPwd,paymentPwd,logo,userQrcode});
+                        db.close();
+                        showTip(body.getRespMsg());
+
+                        user.setUserQrcode(userQrcode);
+                        user.setUserId(userId);
+                        user.setMobile(phone);
+                        user.setGender(gender);
+                        user.setLoginPwd(loginPwd);
+                        user.setPaymentPwd(paymentPwd);
+                        user.setSessionId(sessionId);
+                        user.setIsBClient(isBClient.equals("true")?true:false);
+
+                        //AppManager.getInstance().showActivity(HomeActivity.class, null);
+                        finish();
                     }
-                    if (TextUtils.isEmpty(userName))
+                    else
                     {
-                        userName=phone;
+                        showTip(body.getRespMsg());
                     }
-                    ShareSPUtils.writeShareSp(true,userId,sessionId,"默认用户名",phone, null);
-                    //更新表数据
-                    //MyUsersSqlite.db
-                    SQLiteDatabase db= DatabaseImpl.getInstance().getReadableDatabase();
-                    db.execSQL("update userstb set hasLogined=?,userId=?,sessionId=?,isBClient=?,name=?,gender=?,email=?,phone=?,pwd=?,paymentPwd=?,usericon=? ,userQrcode=? where currentUser=currentUser ",
-                            new String[]{"true",userId,sessionId,isBClient,userName,gender,email,phone,loginPwd,paymentPwd,logo,userQrcode});
-                    db.close();
-                    showTip(body.getRespMsg());
-
-                    MyApplication.user.setUserQrcode(userQrcode);
-                    MyApplication.user.setUserId(userId);
-                    MyApplication.user.setMobile(phone);
-                    MyApplication.user.setGender(gender);
-                    MyApplication.user.setLoginPwd(loginPwd);
-                    MyApplication.user.setPaymentPwd(paymentPwd);
-                    MyApplication.user.setSessionId(sessionId);
-                    MyApplication.user.setIsBClient(isBClient.equals("true")?true:false);
-
-                    //AppManager.getInstance().showActivity(HomeActivity.class, null);
-                    finish();
                 }
                 else
                 {

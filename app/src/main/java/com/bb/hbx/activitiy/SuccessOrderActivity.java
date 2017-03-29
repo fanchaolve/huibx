@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
-import com.bb.hbx.bean.PayDetail;
 
 import butterknife.BindView;
 
@@ -21,11 +20,11 @@ public class SuccessOrderActivity extends BaseActivity {
     private String msg = "";
     private int flag = 0;
 
-//    @BindView(R.id.tv_success)
-//    TextView tv_success;
-//
-//    @BindView(R.id.tv_msg)
-//    TextView tv_msg;
+    @BindView(R.id.tv_success)
+    TextView tv_success;
+
+    @BindView(R.id.tv_msg)
+    TextView tv_msg;
 
     @Override
     public int getLayoutId() {
@@ -56,7 +55,7 @@ public class SuccessOrderActivity extends BaseActivity {
             }
         }
 
-//        tv_msg.setText(msg + "");
-//        tv_success.setText(flag == 1 ? "成功" : "失败");
+        tv_msg.setText(msg + "");
+        tv_success.setText(flag == 1 ? "成功" : "失败");
     }
 }

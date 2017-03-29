@@ -108,7 +108,7 @@
                     android:id="@+id/cash_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="368.98"
+                    android:text="0.00"
                     android:textSize="16sp"
                     android:textColor="@color/A3"
                     android:layout_centerHorizontal="true" />
@@ -170,7 +170,7 @@
                     android:id="@+id/allIncome_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="368.98"
+                    android:text="0.00"
                     android:textSize="16sp"
                     android:textColor="@color/A3"
                     android:layout_centerHorizontal="true"

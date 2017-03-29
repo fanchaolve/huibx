@@ -17,10 +17,12 @@ import com.bb.hbx.base.v.RecommendContract;
 import com.bb.hbx.bean.ProductListBean;
 import com.bb.hbx.emus.DataLoadDirection;
 import com.bb.hbx.provide.RecommendProvide;
+import com.bb.hbx.utils.TimeUtils;
 import com.bb.hbx.widget.DottedLineItemDecoration;
 import com.bb.hbx.widget.multitype.MultiTypeAdapter;
 import com.bb.hbx.widget.multitype.data.Item;
 import com.bumptech.glide.Glide;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
@@ -60,6 +62,8 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter,Recommend
     Context mContext;
     boolean isFirst=true;
 
+    ILoadingLayout layoutProxy;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -74,6 +78,8 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter,Recommend
     @Override
     public void initView() {
 
+        //显示时间
+        layoutProxy = refresh.getLoadingLayoutProxy(true, true);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity()){
             @Override
             public boolean canScrollVertically() {
@@ -101,6 +107,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter,Recommend
         refresh.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                layoutProxy.setLastUpdatedLabel(TimeUtils.getLastTime());
                 mPresenter.getSpecialProductList(DataLoadDirection.Refresh);
             }
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
+
     private ShadowTransformer transformer;
 
     private List<CardView> mViews;
@@ -30,6 +31,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     private ViewPager pager;
     String totalPrice;
+    List<TextView> textViewList=new ArrayList<>();
 
     public ViewPager getPager() {
         return pager;
@@ -39,13 +41,14 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         this.pager = pager;
     }
 
-    public String getTotalPrice() {
-        return totalPrice;
+    public List<TextView> getTextViewList() {
+        return textViewList;
     }
 
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTextViewList(List<TextView> textViewList) {
+        this.textViewList = textViewList;
     }
+
 
     public CardPagerAdapter(Context context, List<ComCarPropsBean.PlanListBean> list) {
         mContext = context;
@@ -99,7 +102,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         CardView cardView = (CardView) view.findViewById(R.id.cardView);
 
         TextView tv_price= (TextView) view.findViewById(R.id.tv_price);
-
+        textViewList.add(tv_price);
         LinearLayout ll_item1 = (LinearLayout) view.findViewById(R.id.ll_item1);
         TextView tv_itemName1 = (TextView) view.findViewById(R.id.tv_itemName1);
         TextView tv_chooseAmount1 = (TextView) view.findViewById(R.id.tv_chooseAmount1);
@@ -259,7 +262,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 tv_franchiseFlag5.setVisibility(View.GONE);
             }
         }
-        tv_price.setText("¥"+totalPrice);
+        //tv_price.setText("¥"+totalPrice);
         TextView tv_changePlan= (TextView) view.findViewById(R.id.tv_changePlan);
         tv_changePlan.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -99,7 +99,7 @@ public class MyAssertActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
-                if (body!=null)
+                if (body.isSuccess())
                 {
                     Account account = (Account) body.getOutput();
                     if (account!=null)
@@ -125,14 +125,6 @@ public class MyAssertActivity extends BaseActivity implements View.OnClickListen
 
             }
         });
-        /*for (int i = 0; i < xValues.length; i++) {
-            xValues[i]= i+"";
-        }
-        income_itv.setXValues(xValues);
-        for (int i = 0; i < yValues.length; i++) {
-            yValues[i]= 1+i*100;
-        }
-        income_itv.setYValues(yValues);*/
 
     }
 

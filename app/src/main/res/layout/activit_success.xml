@@ -60,4 +60,18 @@
             android:text="查看保单详情"
             android:textAppearance="@style/TextAppear.Theme.white_Size18" />
 
+    <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/tv_success"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="成功"/>
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="@style/TextAppear.Theme.A1_Size13"/>
 </LinearLayout>

@@ -38,6 +38,7 @@ import com.bb.hbx.bean.occupation.OccupationBean;
 import com.bb.hbx.interfaces.OnItemClickListener;
 import com.bb.hbx.utils.AppManager;
 import com.bb.hbx.utils.Constants;
+import com.bb.hbx.utils.GlideUtil;
 import com.bb.hbx.utils.LogUtil;
 import com.bb.hbx.utils.OccupationTypeUtils;
 import com.bb.hbx.utils.Utils;
@@ -301,7 +302,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
     @Override
     public int getLayoutId() {
         //沉浸状态栏
-        //initState();
+        initState();
         return R.layout.activity_productdetail;
     }
 
@@ -617,7 +618,7 @@ public class ProductDetailActivity extends BaseActivity<ProductDetailPresenter, 
 
     @Override
     public void loadimage(String logo) {
-        //GlideUtil.getInstance().loadImage(this, iv_pic, logo, true);
+        GlideUtil.getInstance().loadImage(this, iv_pic, logo, true);
     }
 
     @Override

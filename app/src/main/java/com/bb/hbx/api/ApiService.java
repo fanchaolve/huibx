@@ -18,6 +18,7 @@ import com.bb.hbx.bean.GetAccountDetailBean;
 import com.bb.hbx.bean.GetAcctSettSumBean;
 import com.bb.hbx.bean.GetApplyCertificationInfoBean;
 import com.bb.hbx.bean.GetBankCardList;
+import com.bb.hbx.bean.GetCarInsCalcBean;
 import com.bb.hbx.bean.GetInsured;
 import com.bb.hbx.bean.GetMyPageInfoBean;
 import com.bb.hbx.bean.GetPolicies;
@@ -489,7 +490,7 @@ public interface ApiService {
 
     //车险保费计算
     @POST("api.do?method=getCarInsCalc&type=post")
-    Call<Result_Api> getCarInsCalc(@Body CarInsDetail carInsDetail);
+    Call<Result_Api<GetCarInsCalcBean>> getCarInsCalc(@Body CarInsDetail carInsDetail);
 
 
     //查看订单（保单）详情(getTradeDetail)

@@ -188,4 +188,12 @@ public class TimeUtils {
         String m = String.format("%02dm", min);
         return m;
     }
+
+    public static String getLastTime() {
+        long time=System.currentTimeMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        Date date = new Date(time);
+        String string = formatter.format(date);
+        return string;
+    }
 }
