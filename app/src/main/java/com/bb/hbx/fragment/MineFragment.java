@@ -143,6 +143,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.leftMoney_layout)
     RelativeLayout leftMoney_layout;
 
+    @BindView(R.id.iv_erweima)
+    ImageView iv_erweima;
+
     Context mContext;
 
     boolean isOnce = true;
@@ -213,6 +216,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         collect_layout.setOnClickListener(this);
         invite_layout.setOnClickListener(this);
         service_layout.setOnClickListener(this);
+        iv_erweima.setOnClickListener(this);
     }
 
     @Override
@@ -374,6 +378,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.service_layout:
                 intent.setClass(mContext, CustomServiceActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.iv_erweima:
+
                 break;
             default:
                 break;

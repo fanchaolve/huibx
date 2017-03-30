@@ -31,6 +31,7 @@ import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/1/23.
+ * 全部车险保单
  */
 
 public class AllInCarInsuFragment extends BaseFragment{
@@ -103,6 +104,8 @@ public class AllInCarInsuFragment extends BaseFragment{
             public void onMyItemClickListener(int position) {
                 //Toast.makeText(mContext,"position:"+position,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, CarOrderDetailActivity.class);
+                intent.putExtra("detailId", totalList.get(position).getDetailId());
+                intent.putExtra("tradeId", totalList.get(position).getTradeId());
                 startActivity(intent);
             }
         });

@@ -8,6 +8,7 @@ import com.bb.hbx.bean.BannerBean;
 import com.bb.hbx.bean.BindingBankCard;
 import com.bb.hbx.bean.BobaoItem;
 import com.bb.hbx.bean.CarInsDetail;
+import com.bb.hbx.bean.CarOrderBean;
 import com.bb.hbx.bean.CheckCarInsStateBean;
 import com.bb.hbx.bean.CollectionBean;
 import com.bb.hbx.bean.ComCarPropsBean;
@@ -493,11 +494,21 @@ public interface ApiService {
     Call<Result_Api<GetCarInsCalcBean>> getCarInsCalc(@Body CarInsDetail carInsDetail);
 
 
-    //查看订单（保单）详情(getTradeDetail)
+    //查看订单（保单）详情(getTradeDetail)(个险)
     @FormUrlEncoded
     @POST("api.do?method=getTradeDetail&type=post")
-    Call<Result_Api<TradeDetail>> getTradeDetail(@Field("userId") String userId, @Field("tradeId") String tradeId,
-                                                 @Field("detailId") String detailId, @Field("classType") String classType);
+    Call<Result_Api<TradeDetail>> getTradeDetail(@Field("userId") String userId,
+                                                 @Field("tradeId") String tradeId,
+                                                 @Field("detailId") String detailId,
+                                                 @Field("classType") String classType);
+
+    //查看订单（保单）详情(getTradeDetail)(车险)
+    @FormUrlEncoded
+    @POST("api.do?method=getTradeDetail&type=post")
+    Call<Result_Api<CarOrderBean>> getCarTradeDetail(@Field("userId") String userId,
+                                                  @Field("tradeId") String tradeId,
+                                                  @Field("detailId") String detailId,
+                                                  @Field("classType") String classType);
 
     //6.1.6.获取支付签名信息
 

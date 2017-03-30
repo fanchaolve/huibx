@@ -31,6 +31,7 @@ import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/1/23.
+ * 已终止车险保单
  */
 
 public class HadStopInCarInsuFragment extends BaseFragment{
@@ -102,6 +103,8 @@ public class HadStopInCarInsuFragment extends BaseFragment{
             @Override
             public void onMyItemClickListener(int position) {
                 Intent intent = new Intent(mContext, CarOrderDetailActivity.class);
+                intent.putExtra("detailId", totalList.get(position).getDetailId());
+                intent.putExtra("tradeId", totalList.get(position).getTradeId());
                 startActivity(intent);
             }
         });

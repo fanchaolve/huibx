@@ -105,6 +105,8 @@ public class UnPayInPIOFragment extends BaseFragment{
             @Override
             public void onMyItemClickListener(int position) {
                 Intent intent = new Intent(mContext, PerOrderDetailActivity.class);
+                intent.putExtra("detailId", totalList.get(position).getDetailId());
+                intent.putExtra("tradeId", totalList.get(position).getTradeId());
                 startActivity(intent);
             }
         });

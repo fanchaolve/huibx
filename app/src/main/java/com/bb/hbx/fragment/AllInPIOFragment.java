@@ -105,7 +105,9 @@ public class AllInPIOFragment extends BaseFragment {
                 //showTip("position:"+position);
                 Intent intent = new Intent(mContext, PerOrderDetailActivity.class);
                 String detailId = totalList.get(position).getDetailId();
+                String tradeId = totalList.get(position).getTradeId();
                 intent.putExtra("detailId", detailId);
+                intent.putExtra("tradeId", tradeId);
                 startActivity(intent);
             }
         });

@@ -20,14 +20,14 @@ public class GenApiHashUrl {
     //public static final String apiUrl = "http://wg.bettapharma.cn/api/";//正式环境
     //public static final String apiUrl = "http://192.168.32.95:8080/api/";//环境,啊亮
     public static final String apiUrl = "http://192.168.32.95:8080/api/";//环境,啊亮
-      //public static final String apiUrl = "http://192.168.32.185:8080/";//环境,张海
-    //public static final String apiUrl = "http://192.168.32.95:8079/api/";//环境
+//      public static final String apiUrl = "http://192.168.32.185:8080/";//环境,张海
+//    public static final String apiUrl = "http://192.168.32.95:8079/api/";//环境
    // public static final String apiUrl = "http://192.168.32.210:18080/seaway-ebao-api-server/";//环境
     //http://192.168.32.176:8080/api.do
     //public static final String apiUrl = "http://192.168.32.176:8080/";//环境,杜文文
 
-    //public static final String apiUrl = "http://192.168.32.144:8080/api/";//环境
-    //public static final String apiUrl = "http://192.168.32.68:8082/api/";//环境
+    //public static final String apiUrl = "http://192.168.32.144:8080/";//环境
+//    public static final String apiUrl = "http://192.168.32.68:8082/api/";//环境
     //public static final String apiUrl = "http://192.168.32.66:8080/";//环境
 
     public static final String apiUrl2 = "http://192.168.32.95:8080/api/payNotify/alipay.do";//

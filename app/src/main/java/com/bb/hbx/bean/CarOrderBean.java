@@ -3,71 +3,80 @@ package com.bb.hbx.bean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/2/23.
- * 个险保单详情
+ * Created by Administrator on 2017/3/29.
+ * 车险保单详情类
  */
 
-public class TradeDetail {
-
+public class CarOrderBean {
 
     /**
-     * applicant : 唐僧
-     * applicantIdNo : 41234123
-     * applicantMobile : 532523523
+     * applicant : 1111
+     * applicantIdNo : 411424199306122870
+     * applicantMobile : 111111
+     * applicantType : 1
      * claimsURL :
-     * classId : 210001
-     * discountAmount : -2000
-     * endTime : 20170131201755
-     * insureAmount : null
-     * insuredList : [{"benList":[{"benId":"1","benName":"测试","idNo":"330621198903134672","idType":"1","mobile":"13989857704","relation":""}],"birthday":"20170222143949","detailId":"1","email":"","gender":"男","idNo":"330621198903134672","idType":"1","insureCount":0,"insuredId":"1","insuredName":"","insuredNamePinyin":"","mobile":"","policyURL":""}]
+     * classId : 103249
+     * classType : 1
+     * discountAmount : 0
+     * endTime : 2018-02-22 19:33:52
+     * insureAmount : 0
+     * insuredList : [{"benList":[],"birthday":"2017-02-28","carInfo":{"cityName":"杭州","engineNo":"123123","fuelType":"","licenseNo":"浙12345","noLicenseFlag":0,"registerDate":"2017-02-21","specialCarDate":"2017-02-28","specialCarFlag":1,"vehicleFrameNo":"12345","vehicleModel":"宝马"},"detailId":"156","email":"","gender":"男","idNo":"20170227192800743493","idType":"1","insureCount":1,"insuredId":"156","insuredName":"222","insuredNamePinyin":"222","mobile":"","policyURL":"","relation":1}]
      * insurerId : 1
      * insurerLogo :
      * insurerName : 人保财险
-     * orderURL : http://ebao.seaway.net.cn:18100/product_details.html#productDetails/100
-     * payAmount : 2000
+     * insurerTels : 010-88888888
+     * jqxEndTime : 2017-03-06
+     * jqxStartTime : 2017-03-06
+     * orderURL : http://ebao.seaway.net.cn:18100/product_details.html#productDetails/1092
+     * payAmount : 64700
      * paymentList : []
      * policyId :
-     * productId : 100
-     * productName : 航空意外保障
-     * productProp : 0
-     * policySts : 20
+     * policySts : 10
+     * productId : 1092
+     * productName : 车险测试产品
+     * productProp : 528
      * sex : 1
-     * startTime : 20170112201752
-     * sts : 20
-     * sumAmount : 1000
-     * sumPremium : 0
-     * tradeAmount : 0
-     * tradeId : 20170112194801003
-     * tradePeriod : 1个月;1年
-     * tradePremium : 0
-     * tradeTime : 20170114201749
-     * typeList : []
+     * shippingAddress : 杭州西湖区
+     * startTime : 2017-02-27 19:33:52
+     * sts : -11
+     * sumAmount : 100000
+     * sumPremium : 64700
+     * tradeAmount : 1
+     * tradeId : 20170227193252677649
+     * tradePeriod : 1年_1_4
+     * tradePremium : 64700
+     * tradeTime : 2017-02-27 19:32:52
+     * typeList : [{"insureList":[{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"600,000","insureName":"交强险"},{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"600,000","insureName":"车船险"}],"sumInsureAmount":"0","typeId":0,"typeName":"强制保险"},{"insureList":[{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"100,000","insureName":"车辆保障"},{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"600,000","insureName":"乘客座位险"},{"amountUnit":"","desc":"","extraInsureList":[{"extraDesc":"","extraInsureAmount":"600,000","extraInsureName":"车辆不计免赔"},{"extraDesc":"","extraInsureAmount":"600,000","extraInsureName":"司机座位不计免赔"}],"insureAmount":"","insureName":"附加不计免赔"}],"sumInsureAmount":"0","typeId":0,"typeName":"商业保险"}]
      * userId :
      */
 
     private String applicant;
     private String applicantIdNo;
     private String applicantMobile;
+    private String applicantType;
     private String claimsURL;
     private String classId;
+    private int classType;
     private String discountAmount;
     private String endTime;
     private String insureAmount;
-    private String insurerTels;
     private String insurerId;
     private String insurerLogo;
     private String insurerName;
+    private String insurerTels;
+    private String jqxEndTime;
+    private String jqxStartTime;
     private String orderURL;
     private String payAmount;
     private String policyId;
+    private String policySts;
     private String productId;
     private String productName;
-    private int applicantType;
     private int productProp;
     private String sex;
+    private String shippingAddress;
     private String startTime;
-    private int sts;
-    private String policySts;
+    private String sts;
     private String sumAmount;
     private String sumPremium;
     private String tradeAmount;
@@ -77,32 +86,8 @@ public class TradeDetail {
     private String tradeTime;
     private String userId;
     private List<InsuredListBean> insuredList;
-    private List<InsuredListBean.Payment> paymentList;
-    private List<TradeDetailType> typeList;
-
-    public String getPolicySts() {
-        return policySts;
-    }
-
-    public void setPolicySts(String policySts) {
-        this.policySts = policySts;
-    }
-
-    public String getInsurerTels() {
-        return insurerTels;
-    }
-
-    public void setInsurerTels(String insurerTels) {
-        this.insurerTels = insurerTels;
-    }
-
-    public int getApplicantType() {
-        return applicantType;
-    }
-
-    public void setApplicantType(int applicantType) {
-        this.applicantType = applicantType;
-    }
+    private List<?> paymentList;
+    private List<TypeListBean> typeList;
 
     public String getApplicant() {
         return applicant;
@@ -128,6 +113,14 @@ public class TradeDetail {
         this.applicantMobile = applicantMobile;
     }
 
+    public String getApplicantType() {
+        return applicantType;
+    }
+
+    public void setApplicantType(String applicantType) {
+        this.applicantType = applicantType;
+    }
+
     public String getClaimsURL() {
         return claimsURL;
     }
@@ -142,6 +135,14 @@ public class TradeDetail {
 
     public void setClassId(String classId) {
         this.classId = classId;
+    }
+
+    public int getClassType() {
+        return classType;
+    }
+
+    public void setClassType(int classType) {
+        this.classType = classType;
     }
 
     public String getDiscountAmount() {
@@ -192,6 +193,30 @@ public class TradeDetail {
         this.insurerName = insurerName;
     }
 
+    public String getInsurerTels() {
+        return insurerTels;
+    }
+
+    public void setInsurerTels(String insurerTels) {
+        this.insurerTels = insurerTels;
+    }
+
+    public String getJqxEndTime() {
+        return jqxEndTime;
+    }
+
+    public void setJqxEndTime(String jqxEndTime) {
+        this.jqxEndTime = jqxEndTime;
+    }
+
+    public String getJqxStartTime() {
+        return jqxStartTime;
+    }
+
+    public void setJqxStartTime(String jqxStartTime) {
+        this.jqxStartTime = jqxStartTime;
+    }
+
     public String getOrderURL() {
         return orderURL;
     }
@@ -214,6 +239,14 @@ public class TradeDetail {
 
     public void setPolicyId(String policyId) {
         this.policyId = policyId;
+    }
+
+    public String getPolicySts() {
+        return policySts;
+    }
+
+    public void setPolicySts(String policySts) {
+        this.policySts = policySts;
     }
 
     public String getProductId() {
@@ -248,6 +281,14 @@ public class TradeDetail {
         this.sex = sex;
     }
 
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
     public String getStartTime() {
         return startTime;
     }
@@ -256,11 +297,11 @@ public class TradeDetail {
         this.startTime = startTime;
     }
 
-    public int getSts() {
+    public String getSts() {
         return sts;
     }
 
-    public void setSts(int sts) {
+    public void setSts(String sts) {
         this.sts = sts;
     }
 
@@ -336,40 +377,41 @@ public class TradeDetail {
         this.insuredList = insuredList;
     }
 
-    public List<InsuredListBean.Payment> getPaymentList() {
+    public List<?> getPaymentList() {
         return paymentList;
     }
 
-    public void setPaymentList(List<InsuredListBean.Payment> paymentList) {
+    public void setPaymentList(List<?> paymentList) {
         this.paymentList = paymentList;
     }
 
-    public List<TradeDetailType> getTypeList() {
+    public List<TypeListBean> getTypeList() {
         return typeList;
     }
 
-    public void setTypeList(List<TradeDetailType> typeList) {
+    public void setTypeList(List<TypeListBean> typeList) {
         this.typeList = typeList;
     }
 
     public static class InsuredListBean {
         /**
-         * benList : [{"benId":"1","benName":"测试","idNo":"330621198903134672","idType":"1","mobile":"13989857704","relation":""}]
-         * birthday : 20170222143949
-         * detailId : 1
+         * benList : []
+         * birthday : 2017-02-28
+         * carInfo : {"cityName":"杭州","engineNo":"123123","fuelType":"","licenseNo":"浙12345","noLicenseFlag":0,"registerDate":"2017-02-21","specialCarDate":"2017-02-28","specialCarFlag":1,"vehicleFrameNo":"12345","vehicleModel":"宝马"}
+         * detailId : 156
          * email :
          * gender : 男
-         * idNo : 330621198903134672
+         * idNo : 20170227192800743493
          * idType : 1
-         * insureCount : 0
-         * insuredId : 1
-         * insuredName :
-         * insuredNamePinyin :
+         * insureCount : 1
+         * insuredId : 156
+         * insuredName : 222
+         * insuredNamePinyin : 222
          * mobile :
          * policyURL :
+         * relation : 1
          */
 
-        //"carInfo":{"cityName":"杭州","engineNo":"123123","fuelType":"","licenseNo":"浙12345","noLicenseFlag":0,"registerDate":"20170221000000","specialCarDate":"20170228000000","specialCarFlag":1,"vehicleFrameNo":"12345","vehicleModel":"宝马"},"detailId":"156"
         private String birthday;
         private CarInfoBean carInfo;
         private String detailId;
@@ -384,7 +426,7 @@ public class TradeDetail {
         private String mobile;
         private String policyURL;
         private int relation;
-        private List<BenListBean> benList;
+        private List<?> benList;
 
         public String getBirthday() {
             return birthday;
@@ -394,16 +436,16 @@ public class TradeDetail {
             this.birthday = birthday;
         }
 
-        public String getDetailId() {
-            return detailId;
-        }
-
         public CarInfoBean getCarInfo() {
             return carInfo;
         }
 
         public void setCarInfo(CarInfoBean carInfo) {
             this.carInfo = carInfo;
+        }
+
+        public String getDetailId() {
+            return detailId;
         }
 
         public void setDetailId(String detailId) {
@@ -490,20 +532,20 @@ public class TradeDetail {
             this.policyURL = policyURL;
         }
 
-        public List<BenListBean> getBenList() {
-            return benList;
-        }
-
-        public void setBenList(List<BenListBean> benList) {
-            this.benList = benList;
-        }
-
         public int getRelation() {
             return relation;
         }
 
         public void setRelation(int relation) {
             this.relation = relation;
+        }
+
+        public List<?> getBenList() {
+            return benList;
+        }
+
+        public void setBenList(List<?> benList) {
+            this.benList = benList;
         }
 
         public static class CarInfoBean {
@@ -513,8 +555,8 @@ public class TradeDetail {
              * fuelType :
              * licenseNo : 浙12345
              * noLicenseFlag : 0
-             * registerDate : 20170221000000
-             * specialCarDate : 20170228000000
+             * registerDate : 2017-02-21
+             * specialCarDate : 2017-02-28
              * specialCarFlag : 1
              * vehicleFrameNo : 12345
              * vehicleModel : 宝马
@@ -611,140 +653,141 @@ public class TradeDetail {
                 this.vehicleModel = vehicleModel;
             }
         }
+    }
 
-        public static class BenListBean {
-            /**
-             * benId : 1
-             * benName : 测试
-             * idNo : 330621198903134672
-             * idType : 1
-             * mobile : 13989857704
-             * relation :
-             */
+    public static class TypeListBean {
+        /**
+         * insureList : [{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"600,000","insureName":"交强险"},{"amountUnit":"","desc":"","extraInsureList":[],"insureAmount":"600,000","insureName":"车船险"}]
+         * sumInsureAmount : 0
+         * typeId : 0
+         * typeName : 强制保险
+         */
 
-            private String benId;
-            private String benName;
-            private String idNo;
-            private String idType;
-            private String mobile;
-            private String relation;
+        private String sumInsureAmount;
+        private int typeId;
+        private String typeName;
+        private List<InsureListBean> insureList;
 
-            public String getBenId() {
-                return benId;
-            }
-
-            public void setBenId(String benId) {
-                this.benId = benId;
-            }
-
-            public String getBenName() {
-                return benName;
-            }
-
-            public void setBenName(String benName) {
-                this.benName = benName;
-            }
-
-            public String getIdNo() {
-                return idNo;
-            }
-
-            public void setIdNo(String idNo) {
-                this.idNo = idNo;
-            }
-
-            public String getIdType() {
-                return idType;
-            }
-
-            public void setIdType(String idType) {
-                this.idType = idType;
-            }
-
-            public String getMobile() {
-                return mobile;
-            }
-
-            public void setMobile(String mobile) {
-                this.mobile = mobile;
-            }
-
-            public String getRelation() {
-                return relation;
-            }
-
-            public void setRelation(String relation) {
-                this.relation = relation;
-            }
+        public String getSumInsureAmount() {
+            return sumInsureAmount;
         }
 
-        public static class Payment {
-            private String benId;
-            private String paymentName;
-            private String payTime;
-            private String payAmount;
-            private String refundTime;
-            private String refundOrganization;
-            private String refundAccount;
+        public void setSumInsureAmount(String sumInsureAmount) {
+            this.sumInsureAmount = sumInsureAmount;
+        }
 
-            public String getBenId() {
-                return benId;
+        public int getTypeId() {
+            return typeId;
+        }
+
+        public void setTypeId(int typeId) {
+            this.typeId = typeId;
+        }
+
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        public List<InsureListBean> getInsureList() {
+            return insureList;
+        }
+
+        public void setInsureList(List<InsureListBean> insureList) {
+            this.insureList = insureList;
+        }
+
+        public static class InsureListBean {
+            /**
+             * amountUnit :
+             * desc :
+             * extraInsureList : []
+             * insureAmount : 600,000
+             * insureName : 交强险
+             */
+
+            private String amountUnit;
+            private String desc;
+            private String insureAmount;
+            private String insureName;
+            private List<ExtraInsureBean> extraInsureList;
+
+            public String getAmountUnit() {
+                return amountUnit;
             }
 
-            public void setBenId(String benId) {
-                this.benId = benId;
+            public void setAmountUnit(String amountUnit) {
+                this.amountUnit = amountUnit;
             }
 
-            public String getRefundAccount() {
-                return refundAccount;
+            public String getDesc() {
+                return desc;
             }
 
-            public void setRefundAccount(String refundAccount) {
-                this.refundAccount = refundAccount;
+            public void setDesc(String desc) {
+                this.desc = desc;
             }
 
-            public String getRefundOrganization() {
-                return refundOrganization;
+            public String getInsureAmount() {
+                return insureAmount;
             }
 
-            public void setRefundOrganization(String refundOrganization) {
-                this.refundOrganization = refundOrganization;
+            public void setInsureAmount(String insureAmount) {
+                this.insureAmount = insureAmount;
             }
 
-            public String getRefundTime() {
-                return refundTime;
+            public String getInsureName() {
+                return insureName;
             }
 
-            public void setRefundTime(String refundTime) {
-                this.refundTime = refundTime;
+            public void setInsureName(String insureName) {
+                this.insureName = insureName;
             }
 
-            public String getPayTime() {
-                return payTime;
+            public List<ExtraInsureBean> getExtraInsureList() {
+                return extraInsureList;
             }
 
-            public void setPayTime(String payTime) {
-                this.payTime = payTime;
+            public void setExtraInsureList(List<ExtraInsureBean> extraInsureList) {
+                this.extraInsureList = extraInsureList;
             }
 
-            public String getPayAmount() {
-                return payAmount;
-            }
+            public static class ExtraInsureBean {
+//                "extraDesc": "",
+//                        "extraInsureAmount": "600,000",
+//                        "extraInsureName": "车辆不计免赔"
 
-            public void setPayAmount(String payAmount) {
-                this.payAmount = payAmount;
-            }
+                private String extraDesc;
+                private String extraInsureAmount;
+                private String extraInsureName;
 
-            public String getPaymentName() {
-                return paymentName;
-            }
+                public String getExtraDesc() {
+                    return extraDesc;
+                }
 
-            public void setPaymentName(String paymentName) {
-                this.paymentName = paymentName;
+                public void setExtraDesc(String extraDesc) {
+                    this.extraDesc = extraDesc;
+                }
+
+                public String getExtraInsureAmount() {
+                    return extraInsureAmount;
+                }
+
+                public void setExtraInsureAmount(String extraInsureAmount) {
+                    this.extraInsureAmount = extraInsureAmount;
+                }
+
+                public String getExtraInsureName() {
+                    return extraInsureName;
+                }
+
+                public void setExtraInsureName(String extraInsureName) {
+                    this.extraInsureName = extraInsureName;
+                }
             }
         }
     }
-
-
-
 }

@@ -41,6 +41,7 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <TextView
+        android:id="@+id/tv_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorDivider"

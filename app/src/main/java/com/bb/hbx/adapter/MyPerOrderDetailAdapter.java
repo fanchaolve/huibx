@@ -2,6 +2,7 @@ package com.bb.hbx.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,15 @@ import android.widget.TextView;
 
 import com.bb.hbx.R;
 import com.bb.hbx.bean.MyPerOrderDetailBean;
+import com.bb.hbx.bean.TradeDetailType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.bb.hbx.R.id.tv_line;
 
 /**我的--个险保单--保单详情
  * Created by Administrator on 2017/1/6.
@@ -21,11 +26,11 @@ import butterknife.ButterKnife;
 
 public class MyPerOrderDetailAdapter extends RecyclerView.Adapter<MyPerOrderDetailAdapter.MyViewHolder>{
 
-    ArrayList<MyPerOrderDetailBean> list;
-    Context mContext;
-    LayoutInflater inflater;
+    private List<TradeDetailType.InsureListBean> list;
+    private Context mContext;
+    private LayoutInflater inflater;
 
-    public MyPerOrderDetailAdapter(ArrayList<MyPerOrderDetailBean> list, Context mContext) {
+    public MyPerOrderDetailAdapter(List<TradeDetailType.InsureListBean> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
         inflater=LayoutInflater.from(mContext);
@@ -39,8 +44,16 @@ public class MyPerOrderDetailAdapter extends RecyclerView.Adapter<MyPerOrderDeta
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.title_tv.setText(list.get(position).getTitle());
-        holder.price_tv.setText(list.get(position).getPrice());
+        holder.title_tv.setText(list.get(position).getInsureName());
+        String money = list.get(position).getInsureAmount();
+        if (!TextUtils.isEmpty(money)) {
+            float money1 = Float.parseFloat(money);
+            money = (int)(money1 / 10000) + "万";
+        }
+        holder.price_tv.setText(money);
+        if (position == list.size() - 1) {
+            holder.tv_line.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -54,6 +67,9 @@ public class MyPerOrderDetailAdapter extends RecyclerView.Adapter<MyPerOrderDeta
         TextView title_tv;
         @BindView(R.id.price_tv)
         TextView price_tv;
+
+        @BindView(R.id.tv_line)
+        TextView tv_line;
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

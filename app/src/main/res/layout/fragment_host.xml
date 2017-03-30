@@ -25,6 +25,17 @@
             android:src="@drawable/setting" />
 
         <ImageView
+            android:id="@+id/iv_erweima"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="58dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gerenzhongxin_erweima" />
+
+        <ImageView
             android:id="@+id/message_iv"
             android:layout_width="22dp"
             android:layout_height="22dp"
