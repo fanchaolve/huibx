@@ -45,6 +45,8 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     TextView tv_cardNo;
     @BindView(R.id.tv_carMobile)
     TextView tv_carMobile;
+    @BindView(R.id.tv_adjust)
+    TextView tv_adjust;
     @BindView(R.id.tv_cpxq)
     TextView tv_cpxq;
     @BindView(R.id.tv_tbcs)
@@ -82,6 +84,7 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initListener() {
+        tv_adjust.setOnClickListener(this);
         tv_buy.setOnClickListener(this);
     }
 
@@ -109,7 +112,12 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
             benefitList.get(i).getChooseAmount();
         }
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerViewJQX.setLayoutManager(manager);
         MultiTypeAdapter adapterJQX = new MultiTypeAdapter();
         adapterJQX.applyGlobalMultiTypePool();
@@ -137,7 +145,12 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
         itemsJQX.add(beanJQX2);
         adapterJQX.setItems(itemsJQX);
 
-        LinearLayoutManager managerSYX = new LinearLayoutManager(this);
+        LinearLayoutManager managerSYX = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerViewSYX.setLayoutManager(managerSYX);
         MultiTypeAdapter adapterSYX = new MultiTypeAdapter();
         adapterSYX.applyGlobalMultiTypePool();
@@ -189,6 +202,9 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId())
         {
+            case R.id.tv_adjust:
+                showTip("调整投保方案");
+                break;
             case R.id.tv_buy:
                 Intent intent = new Intent(this, CarOrderReviewActivity.class);
                 startActivity(intent);

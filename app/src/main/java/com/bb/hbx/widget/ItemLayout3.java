@@ -15,8 +15,6 @@ import com.bb.hbx.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
 /**
  * Created by Administrator on 2017/1/20.
  */
@@ -82,6 +80,7 @@ public class ItemLayout3 extends LinearLayout {
     public void setListener(OnUpListener listener) {
         this.listener = listener;
     }
+
 
     public ItemLayout3(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -176,6 +175,18 @@ public class ItemLayout3 extends LinearLayout {
         tv_type.setText(left_name);
     }
 
+    //设置是否为选中状态
+    public void setCb_ceterChecked(boolean flag)
+    {
+        if (flag)
+        {
+            cb_ceter.setChecked(true);
+        }
+        else
+        {
+            cb_ceter.setChecked(false);
+        }
+    }
 
     public void setText(String text) {
         this.text = text;

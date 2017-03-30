@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.bb.hbx.widget.ItemLayout3
+        android:id="@+id/il_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:center_text3="@string/bjmp"
+        app:center_visible="true"
+        app:isline="true"
+        app:left_name3="@string/jdcssx"
+        app:right_butIcon3="@drawable/xialaicon_xiangshang"
+        app:right_icon3="@drawable/xialaicon"
+        app:text3="投保">
+
+    </com.bb.hbx.widget.ItemLayout3>
+</LinearLayout>

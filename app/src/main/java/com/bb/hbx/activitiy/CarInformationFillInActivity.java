@@ -227,7 +227,26 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
                                 int size = bean.getPlanList().size();
                                 bundle.putInt("size",size);
                                 for (int i = 0; i < size; i++) {
+                                    //发送商业险及其保额项
                                     bundle.putParcelableArrayList("syxList"+i, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getSyxList());
+                                    for (int j = 0; j < bean.getPlanList().get(i).getSyxList().size(); j++) {
+                                        bundle.putParcelableArrayList("amountList"+i+j, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getSyxList().get(j).getAmountList());
+                                    }
+                                    //发送交强险及其保额
+                                    bundle.putParcelableArrayList("jqxList"+i, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getJqxList());
+                                    for (int j = 0; j < bean.getPlanList().get(i).getJqxList().size(); j++) {
+                                        bundle.putParcelableArrayList("amountJqxList"+i+j, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getJqxList().get(j).getAmountList());
+                                    }
+                                    //发送附加险及其保额项
+                                    bundle.putParcelableArrayList("fjxList"+i, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getFjxList());
+                                    for (int j = 0; j < bean.getPlanList().get(i).getFjxList().size(); j++) {
+                                        bundle.putParcelableArrayList("amountFjxList"+i+j, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getFjxList().get(j).getAmountList());
+                                    }
+                                    //发送其他附加险及其保额
+                                    bundle.putParcelableArrayList("qtxList"+i, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getQtxList());
+                                    for (int j = 0; j < bean.getPlanList().get(i).getQtxList().size(); j++) {
+                                        bundle.putParcelableArrayList("amountQtxList"+i+j, (ArrayList<? extends Parcelable>) bean.getPlanList().get(i).getQtxList().get(j).getAmountList());
+                                    }
                                 }
                                 //bundle.putParcelable("carBean",bean);
                                 bundle.putString("serialId",serialId);

@@ -95,9 +95,37 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
         modelCode = bundle.getString("modelCode");
         int size = bundle.getInt("size", -1);
         for (int i = 0; i < size; i++) {
+            //接受并填充商业险及其保额项
             List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = bundle.getParcelableArrayList("syxList" + i);
+            for (int j = 0; j < syxList.size(); j++) {
+                List<ComCarPropsBean.PlanListBean.SyxListBean.AmountListBeanXXX> amountList=bundle.getParcelableArrayList("amountList" + i + j);
+                syxList.get(j).setAmountList(amountList);
+            }
+            //接受并填充交强险及其保额项
+            List<ComCarPropsBean.PlanListBean.JqxListBean> jqxList = bundle.getParcelableArrayList("jqxList" + i);
+            for (int j = 0; j < jqxList.size(); j++) {
+                List<ComCarPropsBean.PlanListBean.JqxListBean.AmountListBeanX> amountJqxList=bundle.getParcelableArrayList("amountJqxList" + i + j);
+                jqxList.get(j).setAmountList(amountJqxList);
+            }
+            //接受并填充附加险及其保额
+            List<ComCarPropsBean.PlanListBean.FjxListBean> fjxList = bundle.getParcelableArrayList("fjxList" + i);
+            for (int j = 0; j < fjxList.size(); j++) {
+                List<ComCarPropsBean.PlanListBean.FjxListBean.AmountListBean> amountFjxList=bundle.getParcelableArrayList("amountFjxList" + i + j);
+                fjxList.get(j).setAmountList(amountFjxList);
+            }
+            //接受并填充其他附加险及其保额
+            List<ComCarPropsBean.PlanListBean.QtxListBean> qtxList = bundle.getParcelableArrayList("qtxList" + i);
+            for (int j = 0; j < qtxList.size(); j++) {
+                List<ComCarPropsBean.PlanListBean.QtxListBean.AmountListBeanXX> amountQtxList=bundle.getParcelableArrayList("amountQtxList" + i + j);
+                qtxList.get(j).setAmountList(amountQtxList);
+            }
+
             ComCarPropsBean.PlanListBean planListBean = new ComCarPropsBean.PlanListBean();
+            //填充商业险
             planListBean.setSyxList(syxList);
+            planListBean.setFjxList(fjxList);
+            planListBean.setQtxList(qtxList);
+            planListBean.setJqxList(jqxList);
             planList.add(planListBean);
         }
 
@@ -169,11 +197,21 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
 
     private void getPlanPrice(final int position) {
         List<CarInsDetail.BenefitInCarIns> list=new ArrayList<>();
+        //添加商业险的
         List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = planList.get(position).getSyxList();
         for (int i = 0; i < syxList.size(); i++) {
             String chooseAmount = TextUtils.isEmpty(syxList.get(i).getChooseAmount())?"":syxList.get(i).getChooseAmount();
             String itemCode = TextUtils.isEmpty(syxList.get(i).getItemCode())?"":syxList.get(i).getItemCode();
             String franchiseFlag = TextUtils.isEmpty(syxList.get(i).getFranchiseFlag())?"":syxList.get(i).getFranchiseFlag();
+            CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
+            list.add(benefitInCarIns);
+        }
+        //添加交强险的
+        List<ComCarPropsBean.PlanListBean.JqxListBean> jqxList = planList.get(position).getJqxList();
+        for (int i = 0; i < jqxList.size(); i++) {
+            String chooseAmount = TextUtils.isEmpty(jqxList.get(i).getChooseAmount())?"":jqxList.get(i).getChooseAmount();
+            String itemCode = TextUtils.isEmpty(jqxList.get(i).getItemCode())?"":jqxList.get(i).getItemCode();
+            String franchiseFlag = TextUtils.isEmpty(jqxList.get(i).getFranchiseFlag())?"":jqxList.get(i).getFranchiseFlag();
             CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
             list.add(benefitInCarIns);
         }
@@ -216,7 +254,33 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(int position) {
                 //showTip("position:投保方案"+position);
-                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, null);
+                Bundle bundle = new Bundle();
+                //传递商业险及其保额项
+                bundle.putParcelableArrayList("syxList", (ArrayList<? extends Parcelable>) planList.get(position).getSyxList());
+                for (int i = 0; i < planList.get(position).getSyxList().size(); i++) {
+                    bundle.putParcelableArrayList("amountList"+i, (ArrayList<? extends Parcelable>) planList.get(position).getSyxList().get(i).getAmountList());
+                }
+                //传递交强险及其保额项
+                bundle.putParcelableArrayList("jqxList", (ArrayList<? extends Parcelable>) planList.get(position).getJqxList());
+                for (int i = 0; i < planList.get(position).getJqxList().size(); i++) {
+                    bundle.putParcelableArrayList("amountJqxList"+i, (ArrayList<? extends Parcelable>) planList.get(position).getJqxList().get(i).getAmountList());
+                }
+                //传递附加险及其保额项
+                bundle.putParcelableArrayList("fjxList", (ArrayList<? extends Parcelable>) planList.get(position).getFjxList());
+                for (int i = 0; i < planList.get(position).getFjxList().size(); i++) {
+                    bundle.putParcelableArrayList("amountFjxList"+i, (ArrayList<? extends Parcelable>) planList.get(position).getFjxList().get(i).getAmountList());
+                }
+                //传递其他附加险及其保额项
+                bundle.putParcelableArrayList("qtxList", (ArrayList<? extends Parcelable>) planList.get(position).getQtxList());
+                for (int i = 0; i < planList.get(position).getQtxList().size(); i++) {
+                    bundle.putParcelableArrayList("amountQtxList"+i, (ArrayList<? extends Parcelable>) planList.get(position).getQtxList().get(i).getAmountList());
+                }
+                //serialId,modelCode,carPrice,carExtras
+                bundle.putString("serialId",serialId);
+                bundle.putString("modelCode",modelCode);
+                bundle.putString("carPrice",carPrice);
+                bundle.putString("carExtras",carExtras);
+                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, bundle);
             }
         });
         mCardAdapter.setOnItemClickListener(new CardPagerAdapter.OnItemClickListener() {
@@ -252,7 +316,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                 bundle.putString("mobile",mobile);
                 bundle.putString("insureName",insureName);
                 bundle.putString("city",city);
-                bundle.putString("carPrice",carPrice);
+                bundle.putString("carPrice",getCarInsCalcBean.getTotalPreium());
                 AppManager.getInstance().showActivity(CarOrderConfirmActivity.class, bundle);
                 break;
             default:

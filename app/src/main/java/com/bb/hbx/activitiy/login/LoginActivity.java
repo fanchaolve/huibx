@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.PwdLoginActivity;
 import com.bb.hbx.activitiy.RegisteActivity;
@@ -346,14 +347,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
                         db.close();
                         showTip(body.getRespMsg());
 
-                        user.setUserQrcode(userQrcode);
-                        user.setUserId(userId);
-                        user.setMobile(phone);
-                        user.setGender(gender);
-                        user.setLoginPwd(loginPwd);
-                        user.setPaymentPwd(paymentPwd);
-                        user.setSessionId(sessionId);
-                        user.setIsBClient(isBClient.equals("true")?true:false);
+                        MyApplication.user.setUserQrcode(userQrcode);
+                        MyApplication.user.setUserId(userId);
+                        MyApplication.user.setMobile(phone);
+                        MyApplication.user.setGender(gender);
+                        MyApplication.user.setLoginPwd(loginPwd);
+                        MyApplication.user.setPaymentPwd(paymentPwd);
+                        MyApplication.user.setSessionId(sessionId);
+                        MyApplication.user.setIsBClient(isBClient.equals("true")?true:false);
 
                         //AppManager.getInstance().showActivity(HomeActivity.class, null);
                         finish();

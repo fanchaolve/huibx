@@ -49,8 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                app:center_visible="false"
-                app:isline="false"
+                app:center_visible="true"
+                app:center_text3="@string/bjmp"
+                app:isline="true"
                 app:left_name3="@string/jqx2"
                 app:right_butIcon3="@drawable/xialaicon_xiangshang"
                 app:right_icon3="@drawable/xialaicon"
@@ -68,12 +69,13 @@
                 android:textAppearance="@style/TextAppear.Theme.A4_Size12" />
 
             <LinearLayout
+                android:id="@+id/ll_syx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
-
-                <com.bb.hbx.widget.ItemLayout3
+<!--
+    <com.bb.hbx.widget.ItemLayout3
                     android:id="@+id/il_jdcssx"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,10 +89,7 @@
                     app:text3="投保">
 
                 </com.bb.hbx.widget.ItemLayout3>
-
-
-            </LinearLayout>
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -182,6 +181,12 @@
 
 
             </LinearLayout>
+-->
+
+
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -192,12 +197,18 @@
                 android:textAppearance="@style/TextAppear.Theme.A4_Size12" />
 
             <LinearLayout
+                android:id="@+id/ll_fjx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <com.bb.hbx.widget.ItemLayout3
+
+
+
+            </LinearLayout>
+            <!--
+            <com.bb.hbx.widget.ItemLayout3
                     android:id="@+id/il_ssx"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,10 +221,7 @@
                     app:text3="不投保">
 
                 </com.bb.hbx.widget.ItemLayout3>
-
-
-            </LinearLayout>
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -279,6 +287,8 @@
 
 
             </LinearLayout>
+            -->
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -290,13 +300,13 @@
                 android:textAppearance="@style/TextAppear.Theme.A4_Size12" />
 
             <LinearLayout
-                android:id="@+id/lin_content"
+                android:id="@+id/ll_qtx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
-
-                <com.bb.hbx.widget.ItemLayout3
+<!--
+<com.bb.hbx.widget.ItemLayout3
                     android:id="@+id/il_addItem1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -310,6 +320,8 @@
                     app:text3="不投保">
 
                 </com.bb.hbx.widget.ItemLayout3>
+-->
+
 
 
             </LinearLayout>

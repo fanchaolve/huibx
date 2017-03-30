@@ -264,10 +264,37 @@
                         android:textAppearance="@style/TextAppear.Theme.A3_Size14"
                         tools:text="平安车险" />
 
+                    <TextView
+                        android:layout_below="@id/tv_cpxq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tbcs1"
+                        android:layout_marginTop="@dimen/y28"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14" />
 
+                    <TextView
+                        android:id="@+id/tv_tbcs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_cpxq"
+                        android:layout_marginTop="@dimen/y28"
+                        android:layout_marginLeft="@dimen/x163"
+                        android:textAppearance="@style/TextAppear.Theme.A3_Size14"
+                        tools:text="杭州市" />
+                    <TextView
+                        android:id="@+id/tv_adjust"
+                        android:layout_width="84dp"
+                        android:layout_height="24dp"
+                        android:text="调整投保方案"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x36"
+                        android:textAppearance="@style/TextAppear.Theme.A1_Size11"
+                        android:background="@drawable/shape_a1_white"/>
                 </RelativeLayout>
 
-                <RelativeLayout
+                <!--
+                        <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/y28">
@@ -288,6 +315,8 @@
 
 
                 </RelativeLayout>
+                -->
+
 
                 <LinearLayout
                     android:id="@+id/lin_jqx"
@@ -296,7 +325,8 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
-                    <include layout="@layout/line_e" />
+                    <!--<include layout="@layout/line_e" />-->
+
 
                     <TextView
                         android:id="@+id/tv_jqx"

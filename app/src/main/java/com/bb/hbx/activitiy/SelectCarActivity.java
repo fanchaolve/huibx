@@ -154,9 +154,40 @@ public class SelectCarActivity extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 for (int i = 0; i < size; i++) {
+                    //接受并下发商业险及其保额项
                     List<ComCarPropsBean.PlanListBean.SyxListBean> syxList = bundleFromCarInfo.getParcelableArrayList("syxList" + i);
                     bundle.putParcelableArrayList("syxList"+i, (ArrayList<? extends Parcelable>) syxList);
+                    for (int j = 0; j < syxList.size(); j++) {
+                        List<ComCarPropsBean.PlanListBean.SyxListBean.AmountListBeanXXX> amountList =
+                                bundleFromCarInfo.getParcelableArrayList("amountList" + i + j);
+                        bundle.putParcelableArrayList("amountList"+i+j, (ArrayList<? extends Parcelable>) amountList);
+                    }
+                    //接受并下发交强险及其保额项
+                    List<ComCarPropsBean.PlanListBean.JqxListBean> jqxList = bundleFromCarInfo.getParcelableArrayList("jqxList" + i);
+                    bundle.putParcelableArrayList("jqxList"+i, (ArrayList<? extends Parcelable>) jqxList);
+                    for (int j = 0; j < jqxList.size(); j++) {
+                        List<ComCarPropsBean.PlanListBean.JqxListBean.AmountListBeanX> amountJqxList =
+                                bundleFromCarInfo.getParcelableArrayList("amountJqxList" + i + j);
+                        bundle.putParcelableArrayList("amountJqxList"+i+j, (ArrayList<? extends Parcelable>) amountJqxList);
+                    }
+                    //接受并下发附加险及其保额项
+                    List<ComCarPropsBean.PlanListBean.FjxListBean> fjxList = bundleFromCarInfo.getParcelableArrayList("fjxList" + i);
+                    bundle.putParcelableArrayList("fjxList"+i, (ArrayList<? extends Parcelable>) fjxList);
+                    for (int j = 0; j < fjxList.size(); j++) {
+                        List<ComCarPropsBean.PlanListBean.FjxListBean.AmountListBean> amountFjxList =
+                                bundleFromCarInfo.getParcelableArrayList("amountFjxList" + i + j);
+                        bundle.putParcelableArrayList("amountFjxList"+i+j, (ArrayList<? extends Parcelable>) amountFjxList);
+                    }
+                    //接受并下发其他附加险及其保额项
+                    List<ComCarPropsBean.PlanListBean.QtxListBean> qtxList = bundleFromCarInfo.getParcelableArrayList("qtxList" + i);
+                    bundle.putParcelableArrayList("qtxList"+i, (ArrayList<? extends Parcelable>) qtxList);
+                    for (int j = 0; j < qtxList.size(); j++) {
+                        List<ComCarPropsBean.PlanListBean.QtxListBean.AmountListBeanXX> amountQtxList =
+                                bundleFromCarInfo.getParcelableArrayList("amountQtxList" + i + j);
+                        bundle.putParcelableArrayList("amountQtxList"+i+j, (ArrayList<? extends Parcelable>) amountQtxList);
+                    }
                 }
+
                 AppManager.getInstance().showActivity(InsurancePlanActivity.class, bundle);
                 break;
             default:
