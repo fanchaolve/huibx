@@ -59,6 +59,11 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         this.mData = list;
     }
 
+    public void addViewCount()
+    {
+        mViews.add(null);
+    }
+
     public ShadowTransformer getTransformer() {
         return transformer;
     }

@@ -81,6 +81,7 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
     EditText transferDate_et;
 
     String serialId;
+    String insurerId;
     String city;
     String licenseNo;
     String insureName;
@@ -131,6 +132,7 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         serialId = bundle.getString("serialId");
+        insurerId = bundle.getString("insurerId");
         city = bundle.getString("city");
         licenseNo = bundle.getString("licenseNo");
         insureName = bundle.getString("insureName");
@@ -250,6 +252,7 @@ public class CarInformationFillInActivity extends BaseActivity implements View.O
                                 }
                                 //bundle.putParcelable("carBean",bean);
                                 bundle.putString("serialId",serialId);
+                                bundle.putString("insurerId",insurerId);
                                 bundle.putString("carExtras",bean.getExtraJson());
                                 bundle.putString("licenseNo",licenseNo);
                                 bundle.putString("driveName",driveName);

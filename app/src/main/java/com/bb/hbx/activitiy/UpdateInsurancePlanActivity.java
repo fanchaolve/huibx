@@ -2,6 +2,7 @@ package com.bb.hbx.activitiy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -556,10 +557,17 @@ public class UpdateInsurancePlanActivity extends BaseActivity implements
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra("customSyxPlan", (ArrayList<? extends Parcelable>) syxList);
+                intent.putParcelableArrayListExtra("customJqxPlan", (ArrayList<? extends Parcelable>) jqxList);
+                intent.putParcelableArrayListExtra("customFjxPlan", (ArrayList<? extends Parcelable>) fjxList);
+                intent.putParcelableArrayListExtra("customQtxPlan", (ArrayList<? extends Parcelable>) qtxList);
+                setResult(200, intent);
                 finish();
             }
         });
         tv_search.setOnClickListener(this);
+        tv_recover.setOnClickListener(this);
         //il_jqx.setOnClickListener(this);
     }
 
@@ -589,8 +597,140 @@ public class UpdateInsurancePlanActivity extends BaseActivity implements
             case R.id.tv_search:
                 searchForPrice();
                 break;
+            case R.id.tv_recover:
+                repeatItem();
+                break;
             default:
                 break;
+        }
+    }
+
+    //恢复为出厂设置
+    private void repeatItem() {
+        //恢复商业险部分为初始状态
+        for (int i = 0; i < syxList.size(); i++) {
+            //恢复为初值
+            String itemCode = syxList.get(i).getItemCode();
+            String chooseAmount=syxList.get(i).getChooseAmount();
+            String franchiseFlag=syxList.get(i).getFranchiseFlag();
+            CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
+            removeRepeat(itemCode);
+            benefitList.add(benefitInCarIns);
+
+            if ("1".equals(syxList.get(i).getChooseAmount()))
+            {
+                syxViewList.get(i).setText("投保");
+            }
+            else if ("0".equals(syxList.get(i).getChooseAmount()))
+            {
+                syxViewList.get(i).setText("不投保");
+            }
+            else
+            {
+                syxViewList.get(i).setText(syxList.get(i).getChooseAmount());
+            }
+            if ("1".equals(syxList.get(i).getFranchiseFlag()))
+            {
+                syxViewList.get(i).setCb_ceterChecked(true);
+            }
+            else if ("0".equals(syxList.get(i).getFranchiseFlag()))
+            {
+                syxViewList.get(i).setCb_ceterChecked(false);
+            }
+        }
+        //恢复交强险为初始状态
+        if (jqxList.size()>0)
+        {
+            //恢复为初值
+            String itemCode = jqxList.get(0).getItemCode();
+            String chooseAmount=jqxList.get(0).getChooseAmount();
+            String franchiseFlag=jqxList.get(0).getFranchiseFlag();
+            CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
+            removeRepeat(itemCode);
+            benefitList.add(benefitInCarIns);
+
+            if ("1".equals(jqxList.get(0).getChooseAmount()))
+            {
+                il_jqx.setText("投保");
+            }
+            else if ("0".equals(jqxList.get(0).getChooseAmount()))
+            {
+                il_jqx.setText("不投保");
+            }
+            else
+            {
+                il_jqx.setText(jqxList.get(0).getChooseAmount());
+            }
+            if ("1".equals(jqxList.get(0).getFranchiseFlag()))
+            {
+                il_jqx.setCb_ceterChecked(true);
+            }
+            else if ("0".equals(jqxList.get(0).getFranchiseFlag()))
+            {
+                il_jqx.setCb_ceterChecked(false);
+            }
+        }
+        //恢复附加险为初始状态
+        for (int i = 0; i < fjxList.size(); i++) {
+            //恢复为初值
+            String itemCode = fjxList.get(i).getItemCode();
+            String chooseAmount=fjxList.get(i).getChooseAmount();
+            String franchiseFlag=fjxList.get(i).getFranchiseFlag();
+            CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
+            removeRepeat(itemCode);
+            benefitList.add(benefitInCarIns);
+
+            if ("1".equals(fjxList.get(i).getChooseAmount()))
+            {
+                fjxViewList.get(i).setText("投保");
+            }
+            else if ("0".equals(fjxList.get(i).getChooseAmount()))
+            {
+                fjxViewList.get(i).setText("不投保");
+            }
+            else
+            {
+                fjxViewList.get(i).setText(fjxList.get(i).getChooseAmount());
+            }
+            if ("1".equals(fjxList.get(i).getFranchiseFlag()))
+            {
+                fjxViewList.get(i).setCb_ceterChecked(true);
+            }
+            else if ("0".equals(fjxList.get(i).getFranchiseFlag()))
+            {
+                fjxViewList.get(i).setCb_ceterChecked(false);
+            }
+        }
+        //恢复其他附加险为初始状态
+        for (int i = 0; i < qtxList.size(); i++) {
+            //恢复为初值
+            String itemCode = qtxList.get(i).getItemCode();
+            String chooseAmount=qtxList.get(i).getChooseAmount();
+            String franchiseFlag=qtxList.get(i).getFranchiseFlag();
+            CarInsDetail.BenefitInCarIns benefitInCarIns = new CarInsDetail.BenefitInCarIns(itemCode, franchiseFlag, chooseAmount);
+            removeRepeat(itemCode);
+            benefitList.add(benefitInCarIns);
+
+            if ("1".equals(qtxList.get(i).getChooseAmount()))
+            {
+                qtxViewList.get(i).setText("投保");
+            }
+            else if ("0".equals(qtxList.get(i).getChooseAmount()))
+            {
+                qtxViewList.get(i).setText("不投保");
+            }
+            else
+            {
+                qtxViewList.get(i).setText(qtxList.get(i).getChooseAmount());
+            }
+            if ("1".equals(qtxList.get(i).getFranchiseFlag()))
+            {
+                qtxViewList.get(i).setCb_ceterChecked(true);
+            }
+            else if ("0".equals(qtxList.get(i).getFranchiseFlag()))
+            {
+                qtxViewList.get(i).setCb_ceterChecked(false);
+            }
         }
     }
 
@@ -606,6 +746,7 @@ public class UpdateInsurancePlanActivity extends BaseActivity implements
                 if (body.isSuccess())
                 {
                     showTip("success");
+                    //finish();
                 }
                 else
                 {

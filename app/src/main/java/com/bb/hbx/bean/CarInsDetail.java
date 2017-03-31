@@ -1,18 +1,24 @@
 package com.bb.hbx.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/3/27.
  */
 
-public class CarInsDetail {
+public class CarInsDetail implements Parcelable{
 
     private String serialId;
     private String modelCode;
     private String carPrice;
     private String carExtras;
     private List<BenefitInCarIns> benefitList;
+
+    public CarInsDetail() {
+    }
 
     public CarInsDetail(String serialId, String modelCode, String carPrice, String carExtras, List<BenefitInCarIns> list) {
         this.serialId = serialId;
@@ -21,6 +27,25 @@ public class CarInsDetail {
         this.carExtras = carExtras;
         this.benefitList = list;
     }
+
+    protected CarInsDetail(Parcel in) {
+        serialId = in.readString();
+        modelCode = in.readString();
+        carPrice = in.readString();
+        carExtras = in.readString();
+    }
+
+    public static final Creator<CarInsDetail> CREATOR = new Creator<CarInsDetail>() {
+        @Override
+        public CarInsDetail createFromParcel(Parcel in) {
+            return new CarInsDetail(in);
+        }
+
+        @Override
+        public CarInsDetail[] newArray(int size) {
+            return new CarInsDetail[size];
+        }
+    };
 
     public String getSerialId() {
         return serialId;
@@ -62,7 +87,20 @@ public class CarInsDetail {
         this.benefitList = list;
     }
 
-    public static class BenefitInCarIns {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(serialId);
+        dest.writeString(modelCode);
+        dest.writeString(carPrice);
+        dest.writeString(carExtras);
+    }
+
+    public static class BenefitInCarIns implements Parcelable{
 
         private String itemCode;
         private String franchiseFlag;
@@ -73,6 +111,24 @@ public class CarInsDetail {
             this.franchiseFlag = franchiseFlag;
             this.chooseAmount = chooseAmount;
         }
+
+        protected BenefitInCarIns(Parcel in) {
+            itemCode = in.readString();
+            franchiseFlag = in.readString();
+            chooseAmount = in.readString();
+        }
+
+        public static final Creator<BenefitInCarIns> CREATOR = new Creator<BenefitInCarIns>() {
+            @Override
+            public BenefitInCarIns createFromParcel(Parcel in) {
+                return new BenefitInCarIns(in);
+            }
+
+            @Override
+            public BenefitInCarIns[] newArray(int size) {
+                return new BenefitInCarIns[size];
+            }
+        };
 
         public String getItemCode() {
             return itemCode;
@@ -96,6 +152,18 @@ public class CarInsDetail {
 
         public void setChooseAmount(String chooseAmount) {
             this.chooseAmount = chooseAmount;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(itemCode);
+            dest.writeString(franchiseFlag);
+            dest.writeString(chooseAmount);
         }
     }
 }

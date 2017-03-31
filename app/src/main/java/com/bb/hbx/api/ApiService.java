@@ -12,6 +12,8 @@ import com.bb.hbx.bean.CarOrderBean;
 import com.bb.hbx.bean.CheckCarInsStateBean;
 import com.bb.hbx.bean.CollectionBean;
 import com.bb.hbx.bean.ComCarPropsBean;
+import com.bb.hbx.bean.CommitCarIns;
+import com.bb.hbx.bean.CommitCarInsDetail;
 import com.bb.hbx.bean.Consignees;
 import com.bb.hbx.bean.DeleteConsignee;
 import com.bb.hbx.bean.FilterBean;
@@ -492,6 +494,16 @@ public interface ApiService {
     //车险保费计算
     @POST("api.do?method=getCarInsCalc&type=post")
     Call<Result_Api<GetCarInsCalcBean>> getCarInsCalc(@Body CarInsDetail carInsDetail);
+
+    //车险提交保核
+    @POST("api.do?method=commitCarIns&type=post")
+    Call<Result_Api<CommitCarIns>> commitCarIns(@Body CommitCarInsDetail commitCarInsDetail);
+
+    //车险支付请求
+    @FormUrlEncoded
+    @POST("api.do?method=reqCarInsPay&type=post")
+    Call<Result_Api> reqCarInsPay(@Field("userId") String userId,
+                                  @Field("tradeId") String tradeId);
 
 
     //查看订单（保单）详情(getTradeDetail)(个险)

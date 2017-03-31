@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.bb.hbx.R;
 import com.bb.hbx.base.BaseActivity;
+import com.bb.hbx.widget.MyWebView;
 
 import butterknife.BindView;
 
@@ -13,6 +14,8 @@ public class CarConfirmPayActivity extends BaseActivity implements View.OnClickL
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.webview_wv)
+    MyWebView webview_wv;
 
     @Override
     public int getLayoutId() {

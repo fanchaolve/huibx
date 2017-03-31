@@ -57,6 +57,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
     GetCarInsCalcBean getCarInsCalcBean;
     int prePosition=0;//2---------------
 
+    String insurerId="";
     String serialId="";
     String city;
     String licenseNo;
@@ -67,6 +68,12 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
     String carExtras="";
     String carPrice="";
     String modelCode="";
+    String carExtrasForPay="";
+
+    List<ComCarPropsBean.PlanListBean.SyxListBean> customSyxPlan=new ArrayList<>();
+    List<ComCarPropsBean.PlanListBean.JqxListBean> customJqxPlan=new ArrayList<>();
+    List<ComCarPropsBean.PlanListBean.FjxListBean> customFjxPlan=new ArrayList<>();
+    List<ComCarPropsBean.PlanListBean.QtxListBean> customQtxPlan=new ArrayList<>();
     @Override
     public int getLayoutId() {
         //initState();
@@ -82,6 +89,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        insurerId = bundle.getString("insurerId");
         serialId = bundle.getString("serialId");
         city = bundle.getString("city");
         licenseNo = bundle.getString("licenseNo");
@@ -225,6 +233,7 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                 if (body.isSuccess())
                 {
                     getCarInsCalcBean = (GetCarInsCalcBean) body.getOutput();
+                    carExtrasForPay=getCarInsCalcBean.getCarExtras();
                     mCardAdapter.getTextViewList().get(position).setText("¥"+getCarInsCalcBean.getTotalPreium());
                     benefitTotalList.clear();
                     benefitTotalList.addAll(getCarInsCalcBean.getBenefitList());
@@ -280,7 +289,8 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                 bundle.putString("modelCode",modelCode);
                 bundle.putString("carPrice",carPrice);
                 bundle.putString("carExtras",carExtras);
-                AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, bundle);
+                //AppManager.getInstance().showActivity(UpdateInsurancePlanActivity.class, bundle);
+                AppManager.getInstance().showActivityForResult(UpdateInsurancePlanActivity.class, bundle,100);
             }
         });
         mCardAdapter.setOnItemClickListener(new CardPagerAdapter.OnItemClickListener() {
@@ -310,17 +320,60 @@ public class InsurancePlanActivity extends BaseActivity implements View.OnClickL
                     showTip("正在准备套餐信息");
                     return;
                 }
+                bundle.putString("insurerId",insurerId);
+                bundle.putString("serialId",serialId);
                 bundle.putString("licenseNo",licenseNo);
                 bundle.putString("driveName",driveName);
                 bundle.putString("idNo",idNo);
                 bundle.putString("mobile",mobile);
                 bundle.putString("insureName",insureName);
                 bundle.putString("city",city);
+                bundle.putString("carExtras",carExtrasForPay);
                 bundle.putString("carPrice",getCarInsCalcBean.getTotalPreium());
                 AppManager.getInstance().showActivity(CarOrderConfirmActivity.class, bundle);
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (100==requestCode&&200==resultCode)
+        {
+            if (data==null)
+            {
+                return;
+            }
+            customSyxPlan = data.getParcelableArrayListExtra("customSyxPlan");
+            customJqxPlan = data.getParcelableArrayListExtra("customJqxPlan");
+            customFjxPlan = data.getParcelableArrayListExtra("customFjxPlan");
+            customQtxPlan = data.getParcelableArrayListExtra("customQtxPlan");
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ImageView dotView = new ImageView(mContext);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(10, 10);
+        lp.leftMargin = 10;
+        dotView.setLayoutParams(lp);
+        dotView.setBackgroundResource(R.drawable.dot_selected);
+        dotView.setAlpha(0.38f);
+        dotList.add(dotView);
+        lin_add.addView(dotView);
+        ComCarPropsBean.PlanListBean newBean = new ComCarPropsBean.PlanListBean();
+        newBean.setSyxList(customSyxPlan);
+        newBean.setJqxList(customJqxPlan);
+        newBean.setFjxList(customFjxPlan);
+        newBean.setQtxList(customQtxPlan);
+        //planList.add(newBean);
+        planList.add(prePosition,newBean);
+        //添加小点
+        mCardAdapter.addViewCount();
+        mCardAdapter.notifyDataSetChanged();
+        vp_tb.setCurrentItem(prePosition);
     }
 }

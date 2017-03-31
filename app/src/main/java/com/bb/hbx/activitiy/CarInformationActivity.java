@@ -148,6 +148,7 @@ public class CarInformationActivity extends BaseActivity<CarInfomationPresenter,
                             {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("serialId",bean.getSerialId());
+                                bundle.putString("insurerId",product.getInsurerId());
                                 bundle.putString("city",city);
                                 bundle.putString("licenseNo",licenseNo);
                                 bundle.putString("insureName",tv_title.getText().toString().trim());

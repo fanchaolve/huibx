@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bb.hbx.R;
@@ -33,6 +34,11 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.recyclerViewSYX)
     RecyclerView recyclerViewSYX;
 
+    @BindView(R.id.rl_selectedAdd)
+    RelativeLayout rl_selectedAdd;
+    @BindView(R.id.rl_unselectedAdd)
+    RelativeLayout rl_unselectedAdd;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_address)
@@ -57,12 +63,15 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
     TextView tv_price;
 
     String city;
+    String insurerId="";
+    String serialId="";
     String licenseNo;
     String insureName;
     String driveName="";
     String idNo="";
     String mobile="";
     String carPrice="";
+    String carExtras="";
 
     @Override
     public int getLayoutId() {
@@ -84,6 +93,8 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void initListener() {
+        rl_selectedAdd.setOnClickListener(this);
+        rl_unselectedAdd.setOnClickListener(this);
         tv_adjust.setOnClickListener(this);
         tv_buy.setOnClickListener(this);
     }
@@ -93,12 +104,15 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         city = bundle.getString("city");
+        insurerId = bundle.getString("insurerId");
+        serialId = bundle.getString("serialId");
         licenseNo = bundle.getString("licenseNo");
         insureName = bundle.getString("insureName");
         driveName = bundle.getString("driveName");
         idNo = bundle.getString("idNo");
         mobile = bundle.getString("mobile");
         carPrice = bundle.getString("carPrice");
+        carExtras = bundle.getString("carExtras");
         cardLicense_tv.setText(licenseNo);
         tv_carHolder.setText(driveName);
         tv_cardNo.setText(idNo);
@@ -200,13 +214,31 @@ public class CarOrderConfirmActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId())
         {
+            case R.id.rl_unselectedAdd:
+                intent.setClass(this,AddressManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rl_selectedAdd:
+                intent.setClass(this,AddressManagerActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_adjust:
                 showTip("调整投保方案");
                 break;
             case R.id.tv_buy:
-                Intent intent = new Intent(this, CarOrderReviewActivity.class);
+                //Intent intent = new Intent(this, CarOrderReviewActivity.class);
+                intent.setClass(this, CarOrderReviewActivity.class);
+                intent.putExtra("serialId",serialId);
+                intent.putExtra("licenseNo",licenseNo);
+                intent.putExtra("insurerId",insurerId);
+                intent.putExtra("carPrice",carPrice);
+                intent.putExtra("driveName",driveName);
+                intent.putExtra("idNo",idNo);
+                intent.putExtra("mobile",mobile);
+                intent.putExtra("carExtras",carExtras);
                 startActivity(intent);
                 break;
             default:

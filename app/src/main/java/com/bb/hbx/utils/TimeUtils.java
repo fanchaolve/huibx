@@ -196,4 +196,13 @@ public class TimeUtils {
         String string = formatter.format(date);
         return string;
     }
+
+    public static String getCurrentHour()
+    {
+        long time=System.currentTimeMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:");
+        Date date = new Date(time);
+        String string = formatter.format(date);
+        return string;
+    }
 }
