@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/divider_tv"
         android:layout_width="match_parent"
         android:layout_height="13dp"
-        android:background="@color/A7"/>
+        android:background="@color/A7" />
+
     <RelativeLayout
         android:id="@+id/choice_layout"
         android:layout_width="match_parent"
@@ -18,40 +19,44 @@
         android:background="@color/white"
         android:paddingLeft="59dp"
         android:paddingRight="59dp">
+
         <TextView
             android:id="@+id/fromContacts_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="41dp"
+            android:layout_marginTop="31dp"
             android:text="通讯录导入"
             android:textColor="@color/A3"
-            android:textSize="18sp"
-            android:layout_marginTop="31dp"
-            android:layout_marginBottom="41dp"/>
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/fromManual_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="41dp"
+            android:layout_marginTop="31dp"
             android:text="手动添加"
             android:textColor="@color/A3"
-            android:textSize="18sp"
-            android:layout_marginTop="31dp"
-            android:layout_marginBottom="41dp"
-            android:layout_alignParentRight="true"/>
+            android:textSize="18sp" />
+
         <ImageView
             android:layout_width="13dp"
             android:layout_height="23dp"
-            android:src="@drawable/tongxunlu_line"
-            android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"/>
+            android:layout_marginTop="28dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tongxunlu_line" />
     </RelativeLayout>
+
     <com.bb.hbx.widget.IndexBar
         android:id="@+id/indexBar"
         android:layout_width="24dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/choice_layout"
         android:layout_gravity="right"
-        android:layout_alignParentRight="true"
         app:pressBackground="@color/partTranslucent"
         app:textSize="8sp" />
 
@@ -60,8 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/choice_layout"
-        android:layout_toLeftOf="@id/indexBar"
-        android:layout_marginRight="13dp">
+        android:layout_marginRight="13dp"
+        android:layout_toLeftOf="@id/indexBar">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -77,4 +82,35 @@
         android:visibility="gone"
         tools:text="A"
         tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_grey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_contact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/A7"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+            <ListView
+                android:id="@+id/lv_contact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

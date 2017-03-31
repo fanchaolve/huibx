@@ -27,6 +27,7 @@
     <string name="condition_sale">销量排序</string>
     <string name="condition_filter">筛选</string>
     <string name="searchproduct">搜索产品</string>
+    <string name="searchcontact">搜索客户</string>
     <string name="howPrice">￥ %1$s</string>
     <string name="hotsearch">热门搜索</string>
     <string name="lishisearch">历史搜索</string>

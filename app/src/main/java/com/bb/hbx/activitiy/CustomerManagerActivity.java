@@ -2,8 +2,13 @@ package com.bb.hbx.activitiy;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,8 +19,11 @@ import com.bb.hbx.api.Result_Api;
 import com.bb.hbx.api.RetrofitFactory;
 import com.bb.hbx.base.BaseActivity;
 import com.bb.hbx.bean.GetInsured;
+import com.bb.hbx.bean.LishiSearchBean;
 import com.bb.hbx.fragment.CustomersManagerFragment;
 import com.bb.hbx.fragment.RemindingFragment;
+import com.bb.hbx.widget.CustomerSearchEditText;
+import com.bb.hbx.widget.LoginTelEdit;
 
 import java.util.List;
 
@@ -23,6 +31,8 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.bb.hbx.R.id.le_search;
 
 public class CustomerManagerActivity extends BaseActivity implements View.OnClickListener{
 
@@ -47,6 +57,23 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.nullFromManual_tv)
     TextView nullFromManual_tv;
 
+    @BindView(R.id.ll_grey)
+    LinearLayout ll_grey;
+
+    @BindView(R.id.ll_search)
+    LinearLayout ll_search;
+
+    @BindView(R.id.topbar_layout)
+    RelativeLayout topbar_layout;
+
+    @BindView(R.id.tv_cancel)
+    TextView tv_cancel;
+
+    @BindView(R.id.et_search)
+    EditText et_search;
+
+    @BindView(R.id.iv_del)
+    ImageView iv_del;
 
     FragmentManager fragmentManager;
     CustomersManagerFragment customersManagerFragment;
@@ -67,7 +94,7 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
         fragmentManager = getSupportFragmentManager();
         customersManagerFragment = new CustomersManagerFragment();
         remindingFragment = new RemindingFragment();
-
+//        et_search = new CustomerSearchEditText(mContext);
         uiDisplay();
         /*if (!isEmpty)
         {
@@ -83,7 +110,8 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
         reminding_tv.setOnClickListener(this);
         nullFromContact_tv.setOnClickListener(this);
         nullFromManual_tv.setOnClickListener(this);
-
+        tv_cancel.setOnClickListener(this);
+        iv_del.setOnClickListener(this);
     }
 
     @Override
@@ -130,6 +158,7 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
                     if (!customersManagerFragment.isAdded())
                     {
                         fragmentManager.beginTransaction().add(R.id.content_layout,customersManagerFragment).commit();
+                        search_iv.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -149,8 +178,20 @@ public class CustomerManagerActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.search_iv:
-                showTip("搜索");
-
+//                showTip("搜索");
+                topbar_layout.setVisibility(View.INVISIBLE);
+                ll_search.setVisibility(View.VISIBLE);
+                customersManagerFragment.getLl_grey().setVisibility(View.VISIBLE);
+                customersManagerFragment.getLl_grey().setBackgroundResource(R.color.A3);
+                customersManagerFragment.getLl_grey().getBackground().setAlpha(51);
+                break;
+            case R.id.tv_cancel:
+                ll_search.setVisibility(View.INVISIBLE);
+                topbar_layout.setVisibility(View.VISIBLE);
+                customersManagerFragment.getLl_grey().setVisibility(View.GONE);
+                break;
+            case R.id.iv_del:
+                et_search.setText("");
                 break;
             case R.id.customers_tv:
                 //showTip("客户管理");

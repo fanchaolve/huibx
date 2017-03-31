@@ -164,7 +164,7 @@ public class SearchActivity extends BaseActivity<SearchHistoryPresenter, SearchH
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (!TextUtils.isEmpty(le_search.getText())) {
                         mPresenter.addHistoryBean(new LishiSearchBean(le_search.getText().toString().trim()));
-                        showTip("添加成功....");
+//                        showTip("添加成功....");
 
 
                     }

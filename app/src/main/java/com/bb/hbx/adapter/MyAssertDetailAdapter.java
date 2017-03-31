@@ -52,7 +52,7 @@ public class MyAssertDetailAdapter extends RecyclerView.Adapter<MyAssertDetailAd
         if (tradeType==10||tradeType==21||tradeType==31)//判断是收入还是支出
         {
 //            holder.price_tv.setText("+ "+(tradeAmount/100)+"."+(tradeAmount/10%10)+(tradeAmount%10));
-            holder.price_tv.setText("+ " + (float) tradeAmount / 100);
+            holder.price_tv.setText("+" + (float) tradeAmount / 100);
         }
         else
         {

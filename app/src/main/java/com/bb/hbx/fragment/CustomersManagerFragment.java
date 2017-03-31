@@ -9,6 +9,8 @@ import android.provider.ContactsContract;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bb.hbx.MyApplication;
@@ -44,14 +46,24 @@ import static com.bb.hbx.activitiy.MyCustomActivity.insuredInfolBean;
  * Created by Administrator on 2017/2/8.
  */
 
-public class CustomersManagerFragment extends BaseFragment implements View.OnClickListener{
+public class CustomersManagerFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = "zxt";
     @BindView(R.id.rv)
     RecyclerView mRv;
+
+    @BindView(R.id.ll_grey)
+    LinearLayout ll_grey;
+
+    @BindView(R.id.ll_contact)
+    LinearLayout ll_contact;
+
+    @BindView(R.id.lv_contact)
+    ListView lv_contact;
+
     private ContactAdapter mAdapter;
     private LinearLayoutManager mManager;
-    private List<ContactBean> mDatas=new ArrayList<>();
+    private List<ContactBean> mDatas = new ArrayList<>();
 
     private TitleItemDecoration mDecoration;
 
@@ -73,17 +85,30 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
     private Context mContext;
 
     int scrollY;
-    int pageIndex=1;
+    int pageIndex = 1;
     int pageSize;
     int totalCount;
     List<GetInsured.InsuredListBean> insuredList;
     //String [] nameTotalData;
-    List<String> nameTotalList=new ArrayList<>();
+    public List<String> nameTotalList = new ArrayList<>();
+
     //int count=0;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
+    }
+
+    public LinearLayout getLl_grey() {
+        return ll_grey;
+    }
+
+    public LinearLayout getLl_contact() {
+        return ll_contact;
+    }
+
+    public ListView getLv_contact() {
+        return lv_contact;
     }
 
     @Override
@@ -123,17 +148,16 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 //Log.e("===dy===","======"+dy);
-                scrollY=dy;
+                scrollY = dy;
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     //得到当前显示的最后一个item的view
                     View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount() - 1);
-                    if (lastChildView!=null)
-                    {
+                    if (lastChildView != null) {
                         //得到lastChildView的bottom的坐标值
                         int lastChildBottom = lastChildView.getBottom();
                         //得到recyclerview的底部坐标减去底部padding值,也就是显示内容最底部的坐标
@@ -150,16 +174,12 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
                     {
                         Toast.makeText(mContext,lastChildBottom+"false"+recyclerBottom,Toast.LENGTH_SHORT).show();
                     }*/
-                        if (scrollY>0&&/*lastChildBottom==recyclerBottom&&*/lastPosition==recyclerView.getLayoutManager().getItemCount()-1)
-                        {
+                        if (scrollY > 0 &&/*lastChildBottom==recyclerBottom&&*/lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
                             pageIndex++;
-                            if (pageIndex>((totalCount/10)+1))
-                            {
+                            if (pageIndex > ((totalCount / 10) + 1)) {
                                 showTip("已经到底啦!");
                                 pageIndex--;
-                            }
-                            else
-                            {
+                            } else {
                                 expandInsuredList();
                             }
                         }
@@ -170,19 +190,17 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
         mAdapter.setOnMyItemClickListener(new OnItemClickListener() {
             @Override
             public void onMyItemClickListener(int position) {
-                if (mDatas!=null&&mDatas.size()>0)
-                {
+                if (mDatas != null && mDatas.size() > 0) {
                     for (int i = 0; i < mDatas.size(); i++) {
-                        if (mDatas.get(position).getCity().equals(insuredList.get(i).getInsuredName()))
-                        {
-                            position=i;
+                        if (mDatas.get(position).getCity().equals(insuredList.get(i).getInsuredName())) {
+                            position = i;
                             break;
                         }
                     }
                     Intent intent = new Intent(mContext, MyCustomActivity.class);
                     String birthday = insuredList.get(position).getBirthday();
                     String email = insuredList.get(position).getEmail();
-                    String gender = "1".equals(insuredList.get(position).getGender())?"男":"女";
+                    String gender = "1".equals(insuredList.get(position).getGender()) ? "男" : "女";
                     String idNo = insuredList.get(position).getIdNo();
                     String idType = insuredList.get(position).getIdType();
                     String insurantDesc = insuredList.get(position).getInsurantDesc();
@@ -198,20 +216,17 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
                     String areaId = "";
                     String area = "";
 
-                    InsuredInfolBean insuredInfolBean = new InsuredInfolBean(birthday,email,gender,idNo,idType,insurantDesc,insuredAbbr,insuredAddress,
-                            insuredEname,insuredId,insuredName,mobile,occupation,relation,areaId,area);
+                    InsuredInfolBean insuredInfolBean = new InsuredInfolBean(birthday, email, gender, idNo, idType, insurantDesc, insuredAbbr, insuredAddress,
+                            insuredEname, insuredId, insuredName, mobile, occupation, relation, areaId, area);
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("insuredInfolBean",insuredInfolBean);
-                    intent.putExtra("insuredInfolBean",bundle);
-                    CustomerManagerActivity.intentFromProDetail.putExtra(Constants.TRANSTATION,insuredInfolBean);
+                    bundle.putParcelable("insuredInfolBean", insuredInfolBean);
+                    intent.putExtra("insuredInfolBean", bundle);
+                    CustomerManagerActivity.intentFromProDetail.putExtra(Constants.TRANSTATION, insuredInfolBean);
                     //CustomerManagerActivity.intentFromProDetail.putExtra("insuredInfolBean",bundle);
-                    if (CustomerManagerActivity.typeFromProDetail==Constants.GETSURED)
-                    {
-                        getActivity().setResult(Activity.RESULT_OK,CustomerManagerActivity.intentFromProDetail);
+                    if (CustomerManagerActivity.typeFromProDetail == Constants.GETSURED) {
+                        getActivity().setResult(Activity.RESULT_OK, CustomerManagerActivity.intentFromProDetail);
                         getActivity().finish();
-                    }
-                    else
-                    {
+                    } else {
                         startActivity(intent);
                     }
 
@@ -222,29 +237,27 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
 
     private void expandInsuredList() {
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getInsured(MyApplication.user.getUserId(),MyApplication.user.getMobile(),pageIndex+"","10");
+        Call call = service.getInsured(MyApplication.user.getUserId(), MyApplication.user.getMobile(), pageIndex + "", "10");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
                 GetInsured bean = (GetInsured) body.getOutput();
-                if (bean!=null)
-                {
+                if (bean != null) {
                     String pageSizeString = bean.getPageSize();
                     String totalCountString = bean.getTotalCount();
-                    pageSize=Integer.parseInt(pageSizeString);
-                    totalCount=Integer.parseInt(totalCountString);
+                    pageSize = Integer.parseInt(pageSizeString);
+                    totalCount = Integer.parseInt(totalCountString);
                     List<GetInsured.InsuredListBean> insuredBufList = bean.getInsuredList();
                     int listSize = insuredBufList.size();
-                    String [] nameData=new String[listSize];
+                    String[] nameData = new String[listSize];
                     for (int i = 0; i < listSize; i++) {
-                        nameData[i]= insuredBufList.get(i).getInsuredName();
+                        nameData[i] = insuredBufList.get(i).getInsuredName();
                         //nameTotalData[count-1]= insuredBufList.get(i).getInsuredName();
                         nameTotalList.add(insuredBufList.get(i).getInsuredName());
                         //count++;
                     }
-                    if (listSize>0)
-                    {
+                    if (listSize > 0) {
                         insuredList.addAll(insuredBufList);
                         //initDatas(nameTotalData);
                         initDataInOtherWay(nameTotalList);
@@ -294,34 +307,32 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
     }
 
     private void getInsuredList() {
-        pageIndex=1;
+        pageIndex = 1;
         //count=0;
         ApiService service = RetrofitFactory.getINSTANCE().create(ApiService.class);
-        Call call=service.getInsured(MyApplication.user.getUserId(),MyApplication.user.getMobile(),pageIndex+"","10");
+        Call call = service.getInsured(MyApplication.user.getUserId(), MyApplication.user.getMobile(), pageIndex + "", "10");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Result_Api body = (Result_Api) response.body();
                 GetInsured bean = (GetInsured) body.getOutput();
-                if (bean!=null)
-                {
+                if (bean != null) {
                     String pageSizeString = bean.getPageSize();
                     String totalCountString = bean.getTotalCount();
-                    pageSize=Integer.parseInt(pageSizeString);
-                    totalCount=Integer.parseInt(totalCountString);
+                    pageSize = Integer.parseInt(pageSizeString);
+                    totalCount = Integer.parseInt(totalCountString);
                     insuredList = bean.getInsuredList();
                     int listSize = insuredList.size();
-                    String [] nameData=new String[listSize];
+                    String[] nameData = new String[listSize];
                     //nameTotalData=new String[totalCount];
                     nameTotalList.clear();
                     for (int i = 0; i < listSize; i++) {
-                        nameData[i]=insuredList.get(i).getInsuredName();
+                        nameData[i] = insuredList.get(i).getInsuredName();
                         //nameTotalData[i]=insuredList.get(i).getInsuredName();
                         nameTotalList.add(insuredList.get(i).getInsuredName());
                         //count++;
                     }
-                    if (listSize>0)
-                    {
+                    if (listSize > 0) {
                         initDatas(nameData);
                         mAdapter.notifyDataSetChanged();
                         mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
@@ -332,6 +343,7 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
                     }
                 }
             }
+
             @Override
             public void onFailure(Call call, Throwable t) {
 
@@ -342,14 +354,13 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
     @Override
     public void onClick(View v) {
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.fromContacts_tv:
                 //showTip("通讯录导入");
                 //Toast.makeText(mContext,"通讯录导入", Toast.LENGTH_SHORT).show();
                 Uri uri = ContactsContract.Contacts.CONTENT_URI;
-                Intent intentBuf = new Intent(Intent.ACTION_PICK,uri);
-                startActivityForResult(intentBuf,0);
+                Intent intentBuf = new Intent(Intent.ACTION_PICK, uri);
+                startActivityForResult(intentBuf, 0);
                 break;
             case R.id.fromManual_tv:
                 //showTip("手动添加");
@@ -365,18 +376,17 @@ public class CustomersManagerFragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 0:
-                if(data==null)
-                {
+                if (data == null) {
                     return;
                 }
                 //处理返回的data,获取选择的联系人信息
-                Uri uri=data.getData();
-                String[] contacts= GetPhoneContactsUtil.getPhoneContacts(mContext,uri);
+                Uri uri = data.getData();
+                String[] contacts = GetPhoneContactsUtil.getPhoneContacts(mContext, uri);
                 Intent intent = new Intent(mContext, AddContactActivity.class);
-                intent.putExtra("name",contacts[0]);
-                intent.putExtra("phone",contacts[1]);
+                intent.putExtra("name", contacts[0]);
+                intent.putExtra("phone", contacts[1]);
                 startActivity(intent);
                 //name_et.setText(contacts[0]);
                 //phone_et.setText(contacts[1]);

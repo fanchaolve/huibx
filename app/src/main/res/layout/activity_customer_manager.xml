@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_customer_manager"
     android:layout_width="match_parent"
@@ -13,7 +14,8 @@
         android:layout_height="44dp"
         android:background="@color/white"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/back_layout"
@@ -29,6 +31,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/fanhui" />
         </RelativeLayout>
+
         <!--android:background="@drawable/shape_select_left_custom"-->
         <RelativeLayout
             android:id="@+id/complex_layout"
@@ -81,41 +84,141 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/content_layout"
+    <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topbar_layout"
-        android:background="@color/white"></RelativeLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="7dp"
+        android:paddingLeft="@dimen/x36"
+        android:paddingRight="@dimen/x36"
+        android:paddingTop="7dp"
+        android:visibility="invisible">
 
-    <RelativeLayout
-        android:id="@+id/null_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topbar_layout"
-        android:background="@drawable/kehuguanli"
-        android:paddingLeft="35dp"
-        android:paddingRight="35dp">
+
+        <LinearLayout
+            android:id="@+id/lin_search"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_alpha_a6"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sousuo_siusuoyemian" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/searchproduct"
+                    android:imeOptions="actionDone"
+                    android:letterSpacing="0.1"
+                    android:paddingRight="@dimen/x28"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppear.Theme.A3_Size12"
+                    android:textColorHint="@color/A4" />
+
+                <ImageView
+                    android:id="@+id/iv_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/shanchu_sousuoyemain" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/nullFromContact_tv"
-            android:layout_width="140dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="380dp"
-            android:gravity="center"
-            android:text="通讯录录入"
-            android:textColor="@color/A1"
-            android:textSize="17sp" />
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:text="取消"
+            android:textAppearance="@style/TextAppear.Theme.A1_Size16" />
 
-        <TextView
-            android:id="@+id/nullFromManual_tv"
-            android:layout_width="140dp"
-            android:layout_height="44dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="380dp"
-            android:gravity="center"
-            android:text="手动添加"
-            android:textColor="@color/A1"
-            android:textSize="17sp" />
-    </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_alpha_white">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topbar_layout">
+        <LinearLayout
+            android:id="@+id/ll_grey"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/null_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topbar_layout"
+            android:background="@drawable/kehuguanli"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <TextView
+                android:id="@+id/nullFromContact_tv"
+                android:layout_width="140dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="380dp"
+                android:gravity="center"
+                android:text="通讯录录入"
+                android:textColor="@color/A1"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/nullFromManual_tv"
+                android:layout_width="140dp"
+                android:layout_height="44dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="380dp"
+                android:gravity="center"
+                android:text="手动添加"
+                android:textColor="@color/A1"
+                android:textSize="17sp" />
+        </RelativeLayout>
+    </FrameLayout>
 </RelativeLayout>

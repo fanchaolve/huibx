@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bb.hbx.MyApplication;
 import com.bb.hbx.R;
 import com.bb.hbx.activitiy.CarInsuOrderActivity;
 import com.bb.hbx.activitiy.CustomServiceActivity;
@@ -43,6 +44,7 @@ import com.bb.hbx.bean.UserInfo;
 import com.bb.hbx.db.DatabaseImpl;
 import com.bb.hbx.utils.GlideUtil;
 import com.bb.hbx.utils.ShareSPUtils;
+import com.bb.hbx.widget.occupation.MyErweimaDialog;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -380,13 +382,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.iv_erweima:
-
+                String imgUrl = MyApplication.user.getUserQrcode();
+                MyErweimaDialog myErweimaDialog = new MyErweimaDialog(mContext, userNickName, imgUrl);
+                myErweimaDialog.setCanceledOnTouchOutside(true);
+                myErweimaDialog.show();
                 break;
             default:
                 break;
         }
     }
 
+    private String userNickName;
     //用户已经登录后,更改显示的页面
     public void hasLoginShow() {
         boolean hasLogined = ShareSPUtils.sp.getBoolean("hasLogined", false);
@@ -416,6 +422,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                     UserInfo userInfo = (UserInfo) body.getOutput();
                                     if (userInfo != null) {
                                         String userName1 = userInfo.getUserName();
+
                                     }
                                 } else {
                                     Toast.makeText(mContext, "服务器异常!", Toast.LENGTH_SHORT);
@@ -450,6 +457,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                });
             }
             if (!TextUtils.isEmpty(userName)) {
+                userNickName = userName;
                 hasLogin_tv.setText(userName);
             } else {
                 Toast.makeText(mContext, "用户名为空", Toast.LENGTH_SHORT);
