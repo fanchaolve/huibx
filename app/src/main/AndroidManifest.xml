@@ -29,9 +29,7 @@
     <!-- </intent-filter> -->
     <!-- </service> -->
 
-    <meta-data
-        android:name="com.bb.hbx.utils.MyGlideModule"
-        android:value="GlideModule" />
+ 
 
     <application
         android:name=".MyApplication"
